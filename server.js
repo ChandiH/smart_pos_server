@@ -1,18 +1,23 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
-const customerRouter = require("./routes/customer");
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
+// middleware
+const jwt = require("./middleware/authJWT");
+// routes
+const customerRouter = require("./routes/customer");
+const authRouter = require("./routes/auth.routes");
 
 const app = express();
+
 app.use(express.json());
 // app.use(express.urlencoded());
 
 app.use("/assets", express.static(path.join(__dirname, "public")));
-
-app.use("/customer", customerRouter);
+app.use("/auth", authRouter);
+app.use("/customer", jwt.verifyToken, customerRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

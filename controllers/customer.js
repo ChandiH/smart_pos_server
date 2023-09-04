@@ -8,6 +8,7 @@ module.exports = {
   },
   getCustomer(req, res, next) {
     const { id } = req.params;
+    console.log(req.headers);
     Customer.getCustomer(id)
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
