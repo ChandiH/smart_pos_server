@@ -148,3 +148,82 @@ CREATE TABLE branch (
     address VARCHAR(200) NOT NULL
 );
 
+--add constraints
+ALTER TABLE user_access
+    ADD CONSTRAINT fk_role_ID
+	FOREIGN KEY (role_ID)
+	REFERENCES user_role (role_ID) 
+	ON DELETE CASCADE;
+ALTER TABLE user_access
+    ADD CONSTRAINT fk_access_type_ID
+	FOREIGN KEY (access_type_ID) 
+	REFERENCES access_type (access_type_ID)
+	ON DELETE CASCADE;
+	
+ALTER TABLE product
+	ADD CONSTRAINT fk_product_category
+	FOREIGN KEY (category_ID) 
+	REFERENCES category (category_ID)
+	ON DELETE CASCADE;
+ALTER TABLE product
+	ADD CONSTRAINT fk_supplier_ID 
+	FOREIGN KEY (supplier_ID)
+	REFERENCES supplier (supplier_ID);
+ALTER TABLE product
+	ADD CONSTRAINT fk_product_measure
+	FOREIGN KEY (measure_of_unit_id) 
+	REFERENCES units_of_measure(uom_ID)  ;
+
+ALTER TABLE inventory 
+	ADD CONSTRAINT fk_inventory_product
+	FOREIGN KEY (product_id)
+	REFERENCES product (product_ID)
+	ON DELETE CASCADE;
+ALTER TABLE inventory
+	ADD CONSTRAINT fk_inventory_branch
+	FOREIGN KEY (branch_id) 
+	REFERENCES branch (ID)
+	ON DELETE CASCADE;
+
+ALTER TABLE cart
+	ADD CONSTRAINT fk_cart_product	
+	FOREIGN KEY (product_id) 
+	REFERENCES product (product_ID) 
+	ON DELETE CASCADE;
+ALTER TABLE cart
+	ADD CONSTRAINT fk_transaction_number 
+	FOREIGN KEY (transaction_number) 
+	REFERENCES sales_history (transaction_number)
+	ON DELETE CASCADE;
+
+ALTER TABLE sales_history
+	ADD CONSTRAINT fk_sales_history_customer
+	FOREIGN KEY (customer_id) 
+	REFERENCES customer (customer_ID)
+	ON DELETE CASCADE;
+ALTER TABLE sales_history
+	ADD CONSTRAINT fk_sales_history_employee 
+	FOREIGN KEY (cashier_id) 
+	REFERENCES employee (employee_ID) 
+	ON DELETE CASCADE;
+ALTER TABLE sales_history 
+	ADD CONSTRAINT fk_sales_history_payment_method
+	FOREIGN KEY (payment_method_id)
+	REFERENCES payment_method (ID) 
+	ON DELETE CASCADE;
+
+ALTER TABLE employee
+	ADD CONSTRAINT fk_employee_role
+	FOREIGN KEY (role_id)
+	REFERENCES user_role (role_ID);
+
+ALTER TABLE employee
+	ADD CONSTRAINT fk_employee_branch
+	FOREIGN KEY (branch_id)
+	REFERENCES branch (ID);
+
+
+
+
+
+
