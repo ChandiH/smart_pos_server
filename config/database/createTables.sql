@@ -2,35 +2,33 @@
 
 -- User roles
 CREATE TABLE user_role (
-    role_ID SERIAL PRIMARY KEY,
+    role_ID INTEGER PRIMARY KEY,
     role_name VARCHAR(100) NOT NULL,
     role_desc VARCHAR(200) NOT NULL
 );
 
 -- Access type
 CREATE TABLE access_type (
-    access_type_ID SERIAL PRIMARY KEY,
+    access_type_ID INTEGER PRIMARY KEY,
     access_name VARCHAR(100) NOT NULL
 );
 
-
-
 -- User access
 CREATE TABLE user_access (
-    user_access_ID BIGSERIAL PRIMARY KEY,
+    user_access_ID INTEGER PRIMARY KEY,
     role_ID INTEGER NOT NULL,
     access_type_ID INTEGER NOT NULL
 );
 
 -- Category
 CREATE TABLE category (
-    category_ID SERIAL PRIMARY KEY,
+    category_ID INTEGER PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
 
 -- Products
 CREATE TABLE product (
-    product_ID SERIAL PRIMARY KEY,
+    product_ID INTEGER PRIMARY KEY,
     product_name VARCHAR(100) NOT NULL,
     products_desc VARCHAR(200),
     category_ID INTEGER ,
@@ -47,17 +45,18 @@ CREATE TABLE product (
 
 -- Inventory
 CREATE TABLE inventory (
-    ID SERIAL PRIMARY KEY,
+    
     product_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,
     quantity INTEGER,
     updated_on DATE,
-    reorder_level INTEGER
+    reorder_level INTEGER,
+     PRIMARY KEY(product_id, branch_id)
 );
 
 -- Cart
 CREATE TABLE cart (
-    cart_ID SERIAL PRIMARY KEY,
+    cart_ID INTEGER PRIMARY KEY,
     transaction_number VARCHAR(255),
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
@@ -80,25 +79,25 @@ CREATE TABLE sales_history (
 
 -- Units of measure
 CREATE TABLE units_of_measure (
-    uom_ID SERIAL PRIMARY KEY,
+    uom_ID INTEGER PRIMARY KEY,
     uom_name VARCHAR(60) NOT NULL,
     abbreviations VARCHAR(30) NOT NULL
 );
 
 -- Customer
 CREATE TABLE customer (
-    customer_ID SERIAL PRIMARY KEY,
+    customer_ID INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255),
-   phone VARCHAR(13) NOT NULL,
+    phone VARCHAR(13) NOT NULL,
     address VARCHAR(200),
     visit_count INTEGER,
-    points INTEGER
+    rewards_points NUMERIC(1000, 2)
 );
 
 -- Employee
 CREATE TABLE employee (
-    employee_ID SERIAL PRIMARY KEY,
+    employee_ID INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(200) NOT NULL, 
@@ -112,7 +111,7 @@ CREATE TABLE employee (
 
 -- Suppliers
 CREATE TABLE supplier (
-    supplier_ID SERIAL PRIMARY KEY,
+    supplier_ID INTEGER PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     email VARCHAR(255),
    phone VARCHAR(13) NOT NULL,
@@ -121,13 +120,13 @@ CREATE TABLE supplier (
 
 -- Payment method
 CREATE TABLE payment_method (
-    ID SERIAL PRIMARY KEY,
+    ID INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
 -- Discounts and promotions
 CREATE TABLE discounts_and_promotions (
-    ID SERIAL PRIMARY KEY,
+    ID INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(200),
     discount_percentage NUMERIC(5, 2) NOT NULL
@@ -135,17 +134,18 @@ CREATE TABLE discounts_and_promotions (
 
 -- Gift cards
 CREATE TABLE gift_cards (
-    ID SERIAL PRIMARY KEY,
-    card_number VARCHAR(255) NOT NULL,
+    card_number VARCHAR(255) PRIMARY KEY,
     card_value NUMERIC(1000, 2),
-    expire_date DATE
+    expired_date DATE
 );
 
 -- Branch
 CREATE TABLE branch (
-    ID SERIAL PRIMARY KEY,
+    ID INTEGER PRIMARY KEY,
     city VARCHAR(255) NOT NULL,
-    address VARCHAR(200) NOT NULL
+    address VARCHAR(200) NOT NULL,
+    phone VARCHAR(13) NOT NULL,
+    email VARCHAR(255) NOT NULL
 );
 
 --add constraints
