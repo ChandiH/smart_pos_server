@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const customerRouter = require("./routes/customer");
+const employeeRouter = require("./routes/employee");
+const productRouter = require("./routes/product");
+
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
@@ -13,6 +16,9 @@ app.use(express.json());
 app.use("/assets", express.static(path.join(__dirname, "public")));
 
 app.use("/customer", customerRouter);
+app.use("/employee", employeeRouter);
+app.use("/product", productRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

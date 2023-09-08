@@ -13,9 +13,18 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
   addCustomer(req, res, next) {
-    const { name, contact } = req.body;
-    Customer.addCustomer(name, contact)
+    const { name, email, phone, address} = req.body;
+    Customer.addCustomer(name, email, phone, address)
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
+
+  updateCustomer(req, res, next) {
+    const { id } = req.params;
+    const { name, email, phone, address} = req.body;
+    Customer.updateCustomer(id, name, email, phone, address)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
+
 };

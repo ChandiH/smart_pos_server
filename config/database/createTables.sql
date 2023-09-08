@@ -2,34 +2,34 @@
 
 -- User roles
 CREATE TABLE user_role (
-    role_ID INTEGER PRIMARY KEY,
+    role_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     role_name VARCHAR(100) NOT NULL,
     role_desc VARCHAR(200) NOT NULL
 );
 
 -- Access type
 CREATE TABLE access_type (
-    access_type_ID INTEGER PRIMARY KEY,
+    access_type_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     access_name VARCHAR(100) NOT NULL
 );
 
 -- User access
 CREATE TABLE user_access (
-    user_access_ID INTEGER PRIMARY KEY,
+    user_access_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     role_ID INTEGER NOT NULL,
     access_type_ID INTEGER NOT NULL
 );
 
 -- Category
 CREATE TABLE category (
-    category_ID INTEGER PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
+    category_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Products
 CREATE TABLE product (
-    product_ID INTEGER PRIMARY KEY,
-    product_name VARCHAR(100) NOT NULL,
+    product_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL UNIQUE,
     products_desc VARCHAR(200),
     category_ID INTEGER ,
     product_image VARCHAR(200),
@@ -37,59 +37,58 @@ CREATE TABLE product (
     buying_ppu NUMERIC(1000, 2),
     retail_ppu NUMERIC(1000, 2),
     supplier_ID INTEGER ,
-    barcode VARCHAR(255) NOT NULL,
+    barcode VARCHAR(255) NOT NULL UNIQUE,
     quantity INTEGER NOT NULL,
-    created_on DATE,
-    updated_on DATE
+    created_on DATE DEFAULT CURRENT_DATE,
+    updated_on DATE DEFAULT '1000-01-01'
 );
 
 -- Inventory
 CREATE TABLE inventory (
-    
     product_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,
     quantity INTEGER,
     updated_on DATE,
     reorder_level INTEGER,
-     PRIMARY KEY(product_id, branch_id)
+    PRIMARY KEY(product_id, branch_id)
 );
 
 -- Cart
 CREATE TABLE cart (
-    cart_ID INTEGER PRIMARY KEY,
-    transaction_number VARCHAR(255),
+    cart_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    transaction_number INTEGER ,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    discount_percentage NUMERIC(5,2),
-    discount NUMERIC(1000, 2),
+    --discount_percentage NUMERIC(5,2),
+    --discount NUMERIC(1000, 2),
     total_amount NUMERIC(1000, 2),
-    date DATE,
+    date DATE DEFAULT current_date,
     status VARCHAR(10) DEFAULT 'pending'
 );
 
 -- Orders
 CREATE TABLE sales_history (
-    transaction_number VARCHAR(255) PRIMARY KEY,
-    customer_id INTEGER NOT NULL,
+    transaction_number INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_id INTEGER NOT NULL DEFAULT 1,
     cashier_id INTEGER NOT NULL,
-    datetime TIMESTAMP,
-    total_payment NUMERIC(1000,2),
-    payment_method_id INTEGER NOT NULL
+    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_payment NUMERIC(1000,2) DEFAULT 0.00,
+    payment_method_id INTEGER NOT NULL DEFAULT 1
 );
 
 -- Units of measure
 CREATE TABLE units_of_measure (
-    uom_ID INTEGER PRIMARY KEY,
-    uom_name VARCHAR(60) NOT NULL,
+    uom_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    uom_name VARCHAR(60) NOT NULL UNIQUE,
     abbreviations VARCHAR(30) NOT NULL
 );
 
 -- Customer
 CREATE TABLE customer (
-    customer_ID INTEGER PRIMARY KEY,
+    customer_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255),
-    phone VARCHAR(13) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(13) NOT NULL UNIQUE,
     address VARCHAR(200),
     visit_count INTEGER,
     rewards_points NUMERIC(1000, 2)
@@ -97,21 +96,21 @@ CREATE TABLE customer (
 
 -- Employee
 CREATE TABLE employee (
-    employee_ID INTEGER PRIMARY KEY,
+    employee_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    username VARCHAR(30) NOT NULL,
-    password VARCHAR(200) NOT NULL, 
+    username VARCHAR(30) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL UNIQUE, 
     role_id INTEGER NOT NULL,
-    hired_date DATE,
-    email VARCHAR(255),
-    phone VARCHAR(13) NOT NULL,
+    hired_date DATE DEFAULT CURRENT_DATE,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(13) NOT NULL ,
     branch_id INTEGER NOT NULL,
-    updated_on DATE
+    updated_on DATE DEFAULT '1000-01-01'
 );
 
 -- Suppliers
 CREATE TABLE supplier (
-    supplier_ID INTEGER PRIMARY KEY,
+    supplier_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     email VARCHAR(255),
    phone VARCHAR(13) NOT NULL,
@@ -120,13 +119,13 @@ CREATE TABLE supplier (
 
 -- Payment method
 CREATE TABLE payment_method (
-    ID INTEGER PRIMARY KEY,
+    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
 -- Discounts and promotions
 CREATE TABLE discounts_and_promotions (
-    ID INTEGER PRIMARY KEY,
+    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(200),
     discount_percentage NUMERIC(5, 2) NOT NULL
@@ -134,14 +133,14 @@ CREATE TABLE discounts_and_promotions (
 
 -- Gift cards
 CREATE TABLE gift_cards (
-    card_number VARCHAR(255) PRIMARY KEY,
+    card_number INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     card_value NUMERIC(1000, 2),
-    expired_date DATE
-);
+    expired_date DATE,
+    barcode VARCHAR(255));
 
 -- Branch
 CREATE TABLE branch (
-    ID INTEGER PRIMARY KEY,
+    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     city VARCHAR(255) NOT NULL,
     address VARCHAR(200) NOT NULL,
     phone VARCHAR(13) NOT NULL,
