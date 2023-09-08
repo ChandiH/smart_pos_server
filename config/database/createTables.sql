@@ -73,7 +73,9 @@ CREATE TABLE sales_history (
     cashier_id INTEGER NOT NULL,
     datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_payment NUMERIC(1000,2) DEFAULT 0.00,
-    payment_method_id INTEGER NOT NULL DEFAULT 1
+    payment_method_id INTEGER NOT NULL DEFAULT 1,
+    status VARCHAR(10) DEFAULT 'not paid'
+);
 );
 
 -- Units of measure
