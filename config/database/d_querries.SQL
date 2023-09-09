@@ -1,9 +1,9 @@
 ----
-DELETE FROM cart WHERE status = 'pending';
+--DELETE FROM cart WHERE status = 'pending';
 --
 
 -- create a new cart
-INSERT INTO sales_history (cashier_id) VALUES (4);
+--INSERT INTO sales_history (cashier_id) VALUES (4);
 
 -- Create a function to get the last transaction number
 CREATE OR REPLACE FUNCTION fn_get_last_transaction_number()
@@ -12,10 +12,10 @@ $body$
     SELECT MAX(transaction_number) FROM sales_history;
 $body$
 LANGUAGE SQL;
-SELECT fn_get_last_transaction_number();
+--SELECT fn_get_last_transaction_number();
 
 -- add items to the cart
-INSERT INTO cart (transaction_number, product_id, quantity) SELECT fn_get_last_transaction_number(), 1, 1;
+--INSERT INTO cart (transaction_number, product_id, quantity) SELECT fn_get_last_transaction_number(), 1, 1;
 
 -- update the cart  subtotal amount
 CREATE OR REPLACE FUNCTION update_cart_total_amount()
@@ -69,36 +69,31 @@ EXECUTE FUNCTION update_product_quantity();
 
 
 -- updating the cart quantity of a choosen product
-UPDATE cart
-SET quantity = 8
-WHERE 
-transaction_number = (SELECT fn_get_last_transaction_number())
-AND product_id = 2; --check with cart id
+-- UPDATE cart SET quantity = 8 WHERE transaction_number = (SELECT fn_get_last_transaction_number())AND product_id = 2; --check with cart id
 
 
-
--- show total in sale_history
--- Create a trigger function to update the total_payment in sales_history
-CREATE OR REPLACE FUNCTION update_sales_history_total_payment()
+CREATE OR REPLACE FUNCTION update_z_payment()
 RETURNS TRIGGER AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
         -- Calculate the new total_payment for inserts
-        INSERT INTO sales_history (transaction_number, total_payment)
-        VALUES (NEW.transaction_number, (
-            SELECT SUM(cart.quantity * product.retail_ppu)
+        update sales_history
+		set  total_payment = 
+       (
+            SELECT SUM(total_amount)
             FROM cart
-            JOIN product ON cart.product_id = product.product_id
-            WHERE cart.transaction_number = NEW.transaction_number
-        ));
+            where cart.transaction_number = (SELECT fn_get_last_transaction_number())
+         
+        )
+		WHERE transaction_number = NEW.transaction_number;
     ELSIF TG_OP = 'UPDATE' THEN
         -- Calculate the new total_payment for updates
         UPDATE sales_history
         SET total_payment = (
-            SELECT SUM(cart.quantity * product.retail_ppu)
+            SELECT SUM(total_amount)
             FROM cart
-            JOIN product ON cart.product_id = product.product_id
-            WHERE cart.transaction_number = NEW.transaction_number
+             where cart.transaction_number = (SELECT fn_get_last_transaction_number())
+         
         )
         WHERE transaction_number = NEW.transaction_number;
     END IF;
@@ -107,10 +102,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 -- Create a trigger that fires before INSERT or UPDATE on the cart table
-CREATE TRIGGER cart_insert_update_trigger
-BEFORE INSERT OR UPDATE ON cart
+CREATE TRIGGER cart_z_trigger
+AFTER INSERT OR UPDATE ON cart
 FOR EACH ROW
-EXECUTE FUNCTION update_sales_history_total_payment();
+EXECUTE FUNCTION update_z_payment();
+
+
 
 
 -- updating the cart and sales_history status after payment done
@@ -122,7 +119,7 @@ BEGIN
     IF OLD.status = 'not paid' AND NEW.status = 'paid' THEN
         -- Update the status in the cart table
         UPDATE cart
-        SET status = 'sold'
+        SET status = 'SOLD'
         WHERE transaction_number = NEW.transaction_number; 
     END IF;
     RETURN NEW;
@@ -135,9 +132,9 @@ FOR EACH ROW
 EXECUTE FUNCTION update_cart_and_sales_status();
 
 -- updating the cart and sales_history status after payment done STATEMENT
-update sales_history set status='paid' where transaction_number=25;
+--update sales_history set status='paid' where transaction_number=25;
 
 
-//create trigger whenever the cart is updated  deleted the total payment of relavant transaction_number will be updated 
-in sales_history, and the product quantity will be updated in product table
+--create trigger whenever the cart is updated  deleted the total payment of relavant transaction_number will be updated 
+--in sales_history, and the product quantity will be updated in product table
 

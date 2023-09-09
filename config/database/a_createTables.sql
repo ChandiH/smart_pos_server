@@ -2,33 +2,33 @@
 
 -- User roles
 CREATE TABLE user_role (
-    role_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    role_name VARCHAR(100) NOT NULL,
+    role_ID INTEGER PRIMARY KEY,
+    role_name VARCHAR(100) NOT NULL UNIQUE,
     role_desc VARCHAR(200) NOT NULL
 );
 
 -- Access type
 CREATE TABLE access_type (
-    access_type_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    access_name VARCHAR(100) NOT NULL
+    access_type_ID INTEGER PRIMARY KEY,
+    access_name VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- User access
 CREATE TABLE user_access (
-    user_access_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_access_ID INTEGER  PRIMARY KEY,
     role_ID INTEGER NOT NULL,
     access_type_ID INTEGER NOT NULL
 );
 
 -- Category
 CREATE TABLE category (
-    category_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    category_ID INTEGER PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Products
 CREATE TABLE product (
-    product_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    product_ID INTEGER  PRIMARY KEY,
     product_name VARCHAR(100) NOT NULL UNIQUE,
     products_desc VARCHAR(200),
     category_ID INTEGER ,
@@ -55,7 +55,7 @@ CREATE TABLE inventory (
 
 -- Cart
 CREATE TABLE cart (
-    cart_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cart_ID INTEGER  PRIMARY KEY,
     transaction_number INTEGER ,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE cart (
 
 -- Orders
 CREATE TABLE sales_history (
-    transaction_number INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    transaction_number INTEGER  PRIMARY KEY,
     customer_id INTEGER NOT NULL DEFAULT 1,
     cashier_id INTEGER NOT NULL,
     datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -76,18 +76,17 @@ CREATE TABLE sales_history (
     payment_method_id INTEGER NOT NULL DEFAULT 1,
     status VARCHAR(10) DEFAULT 'not paid'
 );
-);
 
 -- Units of measure
 CREATE TABLE units_of_measure (
-    uom_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    uom_ID INTEGER  PRIMARY KEY,
     uom_name VARCHAR(60) NOT NULL UNIQUE,
     abbreviations VARCHAR(30) NOT NULL
 );
 
 -- Customer
 CREATE TABLE customer (
-    customer_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_ID INTEGER  PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE,
     phone VARCHAR(13) NOT NULL UNIQUE,
@@ -98,7 +97,7 @@ CREATE TABLE customer (
 
 -- Employee
 CREATE TABLE employee (
-    employee_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    employee_ID INTEGER  PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(200) NOT NULL UNIQUE, 
@@ -112,7 +111,7 @@ CREATE TABLE employee (
 
 -- Suppliers
 CREATE TABLE supplier (
-    supplier_ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    supplier_ID INTEGER  PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     email VARCHAR(255),
    phone VARCHAR(13) NOT NULL,
@@ -121,32 +120,32 @@ CREATE TABLE supplier (
 
 -- Payment method
 CREATE TABLE payment_method (
-    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    ID INTEGER  PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Discounts and promotions
 CREATE TABLE discounts_and_promotions (
-    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    ID INTEGER  PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
     description VARCHAR(200),
     discount_percentage NUMERIC(5, 2) NOT NULL
 );
 
 -- Gift cards
 CREATE TABLE gift_cards (
-    card_number INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    card_number INTEGER  PRIMARY KEY,
     card_value NUMERIC(1000, 2),
     expired_date DATE,
-    barcode VARCHAR(255));
+    barcode VARCHAR(255) NOT NULL UNIQUE);
 
 -- Branch
 CREATE TABLE branch (
-    ID INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    city VARCHAR(255) NOT NULL,
+    ID INTEGER  PRIMARY KEY,
+    city VARCHAR(255) NOT NULL ,
     address VARCHAR(200) NOT NULL,
-    phone VARCHAR(13) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    phone VARCHAR(13) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
 --add constraints
