@@ -9,8 +9,8 @@ module.exports = {
     },
 
     addProductToCart(req, res, next) {
-    const { cart_id, product_id, quantity } = req.body;
-    Cart.addProductToCart(cart_id, product_id, quantity)
+    const {  product_id, quantity } = req.body;
+    Cart.addProductToCart( product_id, quantity)
         .then((data) => res.status(200).json(data.rows))
         .catch((err) => res.status(400).json({ error: err }));
     },
@@ -37,7 +37,15 @@ module.exports = {
         .then((data) => res.status(200).json(data.rows))
         .catch((err) => res.status(400).json({ error: err }));
     },
+
+
+    // paymentcompleted
+    paymentCompleted(req, res, next) {
+    const { id } = req.params;
+    Cart.paymentCompleted(id)
+        .then((data) => res.status(200).json(data.rows))
+        .catch((err) => res.status(400).json({ error: err }));
+    },
     
     
-  
 };

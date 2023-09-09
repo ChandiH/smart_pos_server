@@ -32,6 +32,12 @@ const getCurrentCart = (id) => {
   );
 };
 
+const paymentCompleted = (id) => {
+  return pool.query(
+    " update sales_history set status='paid' where transaction_number = (SELECT fn_get_last_transaction_number())"
+  );
+};
+
 
 
 module.exports = {
@@ -40,4 +46,5 @@ module.exports = {
   updateProductInCart,
   getProductInCart,
   getCurrentCart,
+  paymentCompleted,
 };
