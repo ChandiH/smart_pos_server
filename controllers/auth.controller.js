@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   async login(req, res, next) {
-    const { email, password } = req.body;
-    const data = await Auth.login(email, password)
+    const { username, password } = req.body;
+    const data = await Auth.login(username, password)
       .then((data) => data)
       .catch((err) => res.status(400).json({ error: err }));
     if (!data.rows[0]) {
