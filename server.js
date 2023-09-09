@@ -19,11 +19,15 @@ app.use(express.json());
 // app.use(express.urlencoded());
 
 app.use("/assets", express.static(path.join(__dirname, "public")));
+
 app.use("/auth", authRouter);
-// app.use("/customer", jwt.verifyToken, customerRouter);
+app.use("/customer", customerRouter);
 app.use("/employee", employeeRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
+
+// sample of jwt middleware
+// app.use("/customer", jwt.verifyToken, customerRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
