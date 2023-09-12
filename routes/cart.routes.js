@@ -1,16 +1,13 @@
 const express = require("express");
 const {
-
-createCart,
-addProductToCart,
-updateProductInCart,
-getProductInCart,
-getCurrentCart,
-paymentCompleted,
-
-} = require("../controllers/cart");
+  createCart,
+  addProductToCart,
+  updateProductInCart,
+  getProductInCart,
+  getCurrentCart,
+  paymentCompleted,
+} = require("../controllers/cart.controller");
 const router = express.Router();
-
 
 router.post("/", createCart);
 router.post("/add", addProductToCart);
@@ -20,4 +17,3 @@ router.get("/current/:id", getCurrentCart);
 router.put("/payment/:id", paymentCompleted);
 
 module.exports = router;
-

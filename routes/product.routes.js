@@ -5,7 +5,7 @@ const {
   addProduct,
   updateProduct,
   getProductsWithCategory,
-} = require("../controllers/product");
+} = require("../controllers/product.controller");
 const router = express.Router();
 
 router.get("/", getProducts);
