@@ -4,11 +4,13 @@ const {
   getProduct,
   addProduct,
   updateProduct,
+  getProductsWithCategory,
 } = require("../controllers/product");
 const router = express.Router();
 
-router.get("/",  getProducts);
-router.get("/:id",  getProduct);
+router.get("/", getProducts);
+router.get("/withcategory", getProductsWithCategory);
+router.get("/:id", getProduct);
 router.post("/", addProduct);
 router.put("/:id", updateProduct);
 

@@ -29,16 +29,16 @@ CREATE TABLE category (
 -- Products
 CREATE TABLE product (
     product_ID INTEGER  PRIMARY KEY,
-    product_name VARCHAR(100) NOT NULL UNIQUE,
-    products_desc VARCHAR(200),
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description VARCHAR(200),
     category_ID INTEGER ,
-    product_image VARCHAR(200),
-    measure_of_unit_id INTEGER NOT NULL,
+    image VARCHAR(200),
+    unit_id INTEGER NOT NULL,
     buying_ppu NUMERIC(1000, 2),
     retail_ppu NUMERIC(1000, 2),
     supplier_ID INTEGER ,
     barcode VARCHAR(255) NOT NULL UNIQUE,
-    quantity INTEGER NOT NULL,
+    -- quantity INTEGER NOT NULL,
     created_on DATE DEFAULT CURRENT_DATE,
     updated_on DATE DEFAULT '1000-01-01'
 );
@@ -48,7 +48,7 @@ CREATE TABLE inventory (
     product_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,
     quantity INTEGER,
-    updated_on DATE,
+    lastUpdate_at DATE,
     reorder_level INTEGER,
     PRIMARY KEY(product_id, branch_id)
 );
@@ -171,7 +171,7 @@ ALTER TABLE product
 	REFERENCES supplier (supplier_ID);
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_measure
-	FOREIGN KEY (measure_of_unit_id) 
+	FOREIGN KEY (unit_id) 
 	REFERENCES units_of_measure(uom_ID)  ;
 
 ALTER TABLE inventory 
