@@ -1,7 +1,7 @@
 const pool = require("../config/config");
 
 const getAllCategories = () => {
-  return pool.query("select * from customer");
+  return pool.query("select * from category");
 };
 
 const getCategory = (id) => {

@@ -36,6 +36,7 @@ CREATE TABLE product (
     unit_id INTEGER NOT NULL,
     buying_ppu NUMERIC(1000, 2),
     retail_ppu NUMERIC(1000, 2),
+    discount NUMERIC(1000, 2),
     supplier_ID INTEGER ,
     barcode VARCHAR(255) NOT NULL UNIQUE,
     -- quantity INTEGER NOT NULL,

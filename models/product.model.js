@@ -69,7 +69,7 @@ const updateProduct = (
 };
 const getProductWithCategory = () => {
   return pool.query(
-    `select product.* , category.name as "category_name" from product inner join category on product.category_id = category.category_id`
+    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id`
   );
 };
 

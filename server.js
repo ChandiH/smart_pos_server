@@ -3,12 +3,13 @@ const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
 // routes
+const authRouter = require("./routes/auth.routes");
+const branchRouter = require("./routes/branch.routes");
+const cartRouter = require("./routes/cart.routes");
 const customerRouter = require("./routes/customer.routes");
 const employeeRouter = require("./routes/employee.routes");
-const productRouter = require("./routes/product.routes");
-const cartRouter = require("./routes/cart.routes");
-const authRouter = require("./routes/auth.routes");
 const inventoryRouter = require("./routes/inventory.routes");
+const productRouter = require("./routes/product.routes");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 // middleware
@@ -29,9 +30,10 @@ app.use("/employee", employeeRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);
+app.use("/branch", branchRouter);
 
 // sample of jwt middleware
-// app.use("/customer", jwt.verifyToken, customerRouter);
+app.use("/customer", jwt.verifyToken, customerRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
