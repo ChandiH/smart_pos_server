@@ -10,7 +10,10 @@ const getEmployees = () => {
 };
 
 const getEmployee = (id) => {
-  return pool.query("select * from employee where employee_ID=$1", [id]);
+  return pool.query(
+    "select employee.*, branch.city as branch_name from employee inner join branch on employee.branch_id = branch.id where employee_ID=$1",
+    [id]
+  );
 };
 
 const addEmployee = (name, username, role_id, email, phone, branch_id) => {

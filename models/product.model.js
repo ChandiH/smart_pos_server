@@ -1,7 +1,9 @@
 const pool = require("../config/config");
 
 const getProducts = () => {
-  return pool.query("select * from product");
+  return pool.query(
+    "select product.*, category.name as category_name from product inner join category on product.category_id = category.category_id"
+  );
 };
 
 const getProduct = (id) => {

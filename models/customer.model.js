@@ -22,9 +22,19 @@ const updateCustomer = (id, name, email, phone, address) => {
   );
 };
 
+const findEmail = (email) => {
+  return pool.query("select count(*) from customer where email=$1", [email]);
+};
+
+const findPhone = (phone) => {
+  return pool.query("select count(*) from customer where phone=$1", [phone]);
+};
+
 module.exports = {
   getCustomers,
   getCustomer,
   addCustomer,
   updateCustomer,
+  findEmail,
+  findPhone,
 };
