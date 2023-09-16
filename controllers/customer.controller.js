@@ -14,17 +14,17 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
   addCustomer(req, res, next) {
-    const { name, email, phone, address } = req.body;
+    const { customer_name, customer_email, customer_phone, customer_address } = req.body;
     console.log(req.body);
-    Customer.addCustomer(name, email, phone, address)
+    Customer.addCustomer(customer_name, customer_email, customer_phone, customer_address )
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
 
   updateCustomer(req, res, next) {
     const { id } = req.params;
-    const { name, email, phone, address } = req.body;
-    Customer.updateCustomer(id, name, email, phone, address)
+    const { customer_name, customer_email, customer_phone, customer_address } = req.body;
+    Customer.updateCustomer(id, customer_name, customer_email, customer_phone, customer_address )
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },

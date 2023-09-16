@@ -8,27 +8,35 @@ const getCustomer = (id) => {
   return pool.query("select * from customer where customer_id=$1", [id]);
 };
 
-const addCustomer = (name, email, phone, address) => {
+const addCustomer = (customer_name, customer_email, customer_phone, customer_address) => {
   return pool.query(
-    "insert into  customer (name, email, phone, address, visit_count, rewards_points) values ($1, $2, $3, $4, $5 , $6) returning *",
-    [name, email, phone, address, 0, 0]
+    `INSERT INTO customer(customer_name, customer_email, customer_phone, customer_address)
+     VALUES 
+      ($1, $2, $3, $4) returning *`,
+    [customer_name, customer_email, customer_phone, customer_address]   
   );
 };
 
-const updateCustomer = (id, name, email, phone, address) => {
+const updateCustomer = (id, customer_name, customer_email, customer_phone, customer_address ) => {
   return pool.query(
-    "update customer set name=$1, email=$2, phone=$3, address=$4 where customer_id=$5 returning *",
-    [name, email, phone, address, id]
+    `UPDATE customer
+    SET customer_name=$1, customer_email= $2 , customer_phone= $3, customer_address= $4
+    WHERE customer_id= $5 returning *
+    `,
+    [customer_name, customer_email, customer_phone, customer_address , id]
   );
 };
 
 const findEmail = (email) => {
-  return pool.query("select count(*) from customer where email=$1", [email]);
+  return pool.query("select count(*) from customer where  customer_email=$1", [email]);
 };
 
 const findPhone = (phone) => {
-  return pool.query("select count(*) from customer where phone=$1", [phone]);
+  return pool.query("select count(*) from customer where customer_phone=$1", [phone]);
 };
+
+//view rewards points
+//view order history of customer
 
 module.exports = {
   getCustomers,
