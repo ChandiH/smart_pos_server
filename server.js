@@ -5,7 +5,7 @@ const cors = require("cors");
 
 // routes
 const authRouter = require("./routes/auth.routes");
-const branchRouter = require("./routes/branch.routes");
+//const branchRouter = require("./routes/branch.routes");
 //const cartRouter = require("./routes/cart.routes");
 const customerRouter = require("./routes/customer.routes");
 const employeeRouter = require("./routes/employee.routes");
@@ -36,7 +36,7 @@ app.use("/employee", employeeRouter);
 app.use("/product", productRouter);
 //app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);
-app.use("/branch", branchRouter);
+///app.use("/branch", branchRouter);
 //app.use("/category", categoryRouter);
 //app.use("/chart", chartRouter);
 
