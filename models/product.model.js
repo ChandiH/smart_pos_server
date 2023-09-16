@@ -2,83 +2,85 @@ const pool = require("../config/config");
 
 const getProducts = () => {
   return pool.query(
-    "select product.*, category.name as category_name from product inner join category on product.category_id = category.category_id"
+    "select product.*, category.category_name from product inner join category on product.category_id = category.category_id order by product_id asc"
   );
 };
 
 const getProduct = (id) => {
-  return pool.query("select * from product where product_id=$1", [id]);
+  return pool.query("select * from product where product_id = $1", [id]);
 };
 
 const addProduct = (
   product_name,
-  products_desc,
+  product_desc,
   category_id,
   product_image,
-  unit_id,
-  buying_ppu,
-  retail_ppu,
+  buying_price,
+  retail_price,
+  discount,
   supplier_id,
-  barcode,
-  quantity
+  product_barcode
 ) => {
   return pool.query(
-    "INSERT INTO product (product_name, products_desc, category_ID, product_image, unit_id, buying_ppu, retail_ppu, supplier_ID, barcode, quantity) VALUES  ($1, $2, $3, $4, $5 , $6,$7,$8,$9,$10) returning *",
+    `insert into product(
+     product_name, product_desc, category_id, product_image, buying_price, retail_price, discount, supplier_id, product_barcode)
+     values ($1 , $2, $3, $4, $5, $6, $7, $8, $9 ) returning *`,
     [
       product_name,
-      products_desc,
+      product_desc,
       category_id,
       product_image,
-      unit_id,
-      buying_ppu,
-      retail_ppu,
+      buying_price,
+      retail_price,
+      discount,
       supplier_id,
-      barcode,
-      quantity,
+      product_barcode,
     ]
   );
 };
 
 const updateProduct = (
-  id,
   product_name,
-  products_desc,
+  product_desc,
   category_id,
-  product_image,
-  unit_id,
-  buying_ppu,
-  retail_ppu,
+  buying_price,
+  retail_price,
+  discount,
   supplier_id,
-  barcode,
-  quantity
+  product_barcode,
+  product_image,
+  id
 ) => {
   return pool.query(
-    "UPDATE product SET product_name=$1, products_desc=$2, category_ID=$3, product_image=$4, unit_id=$5, buying_ppu=$6, retail_ppu=$7, supplier_ID=$8, barcode=$9, quantity=$10  WHERE product_id=$11 returning *",
+    `update product
+    set product_name= $1 ,product_desc= $2, category_id= $3, 
+     buying_price= $4, retail_price= $5, discount= $6, supplier_id= $7, product_barcode = $8,product_image = Array[$9]
+    where product_id= $10 returning *`,
     [
       product_name,
-      products_desc,
+      product_desc,
       category_id,
-      product_image,
-      unit_id,
-      buying_ppu,
-      retail_ppu,
+      buying_price,
+      retail_price,
+      discount,
       supplier_id,
-      barcode,
-      quantity,
+      product_barcode,
+      product_image,
       id,
     ]
   );
 };
-const getProductWithCategory = () => {
-  return pool.query(
-    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id`
-  );
-};
+
+// const getProductsWithCategory = () => {
+//   return pool.query(
+//     `select product.* , category.category_name from product left join category on product.category_id = category.category_id`
+//   );
+// };
 
 module.exports = {
   getProducts,
   getProduct,
   addProduct,
   updateProduct,
-  getProductWithCategory,
+  //getProductsWithCategory,
 };
