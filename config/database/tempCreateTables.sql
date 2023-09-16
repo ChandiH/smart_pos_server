@@ -15,7 +15,7 @@ CREATE TABLE access_type (
 
 -- User access
 CREATE TABLE user_access (
-    user_access_id INTEGER  PRIMARY KEY,
+    user_access__id INTEGER  PRIMARY KEY,
     role_id INTEGER NOT NULL,
     access_type_id INTEGER NOT NULL
 );
@@ -23,124 +23,138 @@ CREATE TABLE user_access (
 -- Category
 CREATE TABLE category (
     category_id INTEGER PRIMARY KEY,
-    category_name VARCHAR(50) NOT NULL UNIQUE
+    name VARCHAR(50) NOT NULL UNIQUE
 );
-
-
 
 -- Products
 CREATE TABLE product (
     product_id INTEGER  PRIMARY KEY,
-    product_name VARCHAR(100) NOT NULL UNIQUE,
-    product_desc VARCHAR(200),
-    category_id INTEGER NOT NULL,
-    product_image VARCHAR [], 
-    buying_price NUMERIC(1000, 2) NOT NULL,
-    retail_price NUMERIC(1000, 2),
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description VARCHAR(200),
+    category_id INTEGER ,
+    image VARCHAR(200), -- array
+    --unit_id INTEGER NOT NULL,
+    buying_ppu NUMERIC(1000, 2),
+    retail_ppu NUMERIC(1000, 2),
     discount NUMERIC(1000, 2),
-    supplier_id INTEGER NOT NULL,
-    product_barcode VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_on TIMESTAMP WITHOUT TIME ZONE
+    supplier_id INTEGER ,
+    barcode VARCHAR(255) NOT NULL UNIQUE,
+    -- quantity INTEGER NOT NULL,
+    created_on DATE DEFAULT CURRENT_DATE,
+    updated_on DATE DEFAULT '1000-01-01' -- trigger for updated date
 );
 
 -- Inventory
 CREATE TABLE inventory (
     product_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,
-    quantity INTEGER check (quantity >= 0),
-    reorder_level INTEGER ,
-    updated_on TIMESTAMP WITHOUT TIME ZONE,
+    quantity INTEGER,
+    lastUpdate_at DATE,
+    reorder_level INTEGER,
     PRIMARY KEY(product_id, branch_id)
 );
 
 -- Cart
 CREATE TABLE cart (
     cart_id INTEGER  PRIMARY KEY,
-    order_id INTEGER ,
+    transaction_number INTEGER ,
     product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL check (quantity > 0),
-    sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0),
-    created_at date DEFAULT CURRENT_DATE
+    quantity INTEGER NOT NULL,
+    --discount_percentage NUMERIC(5,2),
+    --discount NUMERIC(1000, 2),
+    total_amount NUMERIC(1000, 2),
+    date DATE DEFAULT current_date,
+    --status VARCHAR(10) DEFAULT 'pending'
 );
 
 -- Orders
 CREATE TABLE sales_history (
-    order_id INTEGER  PRIMARY KEY,
-    customer_id INTEGER NOT NULL,
+    transaction_number INTEGER  PRIMARY KEY,
+    customer_id INTEGER NOT NULL DEFAULT 1,
     cashier_id INTEGER NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    total_amount NUMERIC(1000,2) check (total_amount > 0),
-    payment_method_id INTEGER ,
-    reference_ID VARCHAR(255) UNIQUE
-    -- profit NUMERIC(1000,2) DEFAULT 0.00,
+    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_payment NUMERIC(1000,2) DEFAULT 0.00,
+    payment_method_id INTEGER NOT NULL DEFAULT 1,
+    --profit NUMERIC(1000,2) DEFAULT 0.00,
     -- do we need to add discount type in a field?
-    -- direct: add branch id (is it okay with db standards?) or indirect: get branch from cashier id(bt when cashier changes across branches it might be a problem)) 
+
+    --status VARCHAR(10) DEFAULT 'not p_id'
 );
 
---customer
+-- Units of measure
+/*
+CREATE TABLE units_of_measure (
+    uom_id INTEGER  PRIMARY KEY,
+    uom_name VARCHAR(60) NOT NULL UNIQUE,
+    abbreviations VARCHAR(30) NOT NULL
+);*/
+
+-- Customer
 CREATE TABLE customer (
     customer_id INTEGER  PRIMARY KEY,
-    customer_name VARCHAR(255) NOT NULL,
-    customer_email VARCHAR(255) UNIQUE,
-    customer_phone VARCHAR(13) NOT NULL UNIQUE,
-    customer_address VARCHAR(200),
-    visit_count INTEGER default 0,
-    rewards_points NUMERIC(1000, 2) default 0.00,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-
---user credentials
-CREATE TABLE user_credentials (
-    user_id INTEGER PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(200) NOT NULL UNIQUE,
-    updated_on TIMESTAMP WITHOUT TIME ZONE
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(13) NOT NULL UNIQUE,
+    address VARCHAR(200),
+    visit_count INTEGER,
+    rewards_points NUMERIC(1000, 2)
 );
 
 -- Employee
 CREATE TABLE employee (
     employee_id INTEGER  PRIMARY KEY,
-    employee_name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    username VARCHAR(30) NOT NULL UNIQUE, --add into different table
+    password VARCHAR(200) NOT NULL UNIQUE, --add into different table
     role_id INTEGER NOT NULL,
     hired_date DATE DEFAULT CURRENT_DATE,
-    employee_email VARCHAR(255) UNIQUE,
-    employee_phone VARCHAR(13) NOT NULL UNIQUE ,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(13) NOT NULL ,
     branch_id INTEGER NOT NULL,
-    updated_on DATE 
+    updated_on DATE DEFAULT '1000-01-01'
 );
 
 -- Suppliers
 CREATE TABLE supplier (
     supplier_id INTEGER  PRIMARY KEY,
-    supplier_name VARCHAR(200) NOT NULL,
-    supplier_email VARCHAR(255),
-    supplier_phone VARCHAR(13) NOT NULL,
-    supplier_address VARCHAR(200) NOT NULL
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(255),
+   phone VARCHAR(13) NOT NULL,
+    address VARCHAR(200) NOT NULL
 );
 
+-- Payment method
 CREATE TABLE payment_method (
-    payment_method_id INTEGER  PRIMARY KEY,
-    payment_method_name VARCHAR(255) NOT NULL UNIQUE
+_id INTEGER  PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Discounts and promotions
-CREATE TABLE discount (
-    discount_id INTEGER  PRIMARY KEY,
-    discount_name VARCHAR(255) NOT NULL UNIQUE,
-    discount_desc VARCHAR(200),
+CREATE TABLE discounts_and_promotions (
+_id INTEGER  PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description VARCHAR(200),
     discount_percentage NUMERIC(5, 2) NOT NULL
 );
 
+/*
+-- Gift cards
+CREATE TABLE gift_cards (
+    card_number INTEGER  PRIMARY KEY,
+    card_value NUMERIC(1000, 2),
+    expired_date DATE,
+    barcode VARCHAR(255) NOT NULL UNIQUE);*/
+
+-- Branch
 CREATE TABLE branch (
-    branch_id INTEGER  PRIMARY KEY,
-    branch_city VARCHAR(255) NOT NULL ,
-    branch_address VARCHAR(200) NOT NULL,
-    branch_phone VARCHAR(13) NOT NULL UNIQUE,
-    branch_email VARCHAR(255) NOT NULL UNIQUE
+_id INTEGER  PRIMARY KEY,
+    city VARCHAR(255) NOT NULL ,
+    address VARCHAR(200) NOT NULL,
+    phone VARCHAR(13) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
+--add constraints
 ALTER TABLE user_access
     ADD CONSTRAINT fk_role_id
 	FOREIGN KEY (role_id)
@@ -151,7 +165,7 @@ ALTER TABLE user_access
 	FOREIGN KEY (access_type_id) 
 	REFERENCES access_type (access_type_id)
 	ON DELETE CASCADE;
-
+	
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_category
 	FOREIGN KEY (category_id) 
@@ -161,7 +175,12 @@ ALTER TABLE product
 	ADD CONSTRAINT fk_supplier_id 
 	FOREIGN KEY (supplier_id)
 	REFERENCES supplier (supplier_id);
-
+    /*
+ALTER TABLE product
+	ADD CONSTRAINT fk_product_measure
+	FOREIGN KEY (unit_id) 
+	REFERENCES units_of_measure(uom_id)  ;
+*/
 ALTER TABLE inventory 
 	ADD CONSTRAINT fk_inventory_product
 	FOREIGN KEY (product_id)
@@ -170,7 +189,7 @@ ALTER TABLE inventory
 ALTER TABLE inventory
 	ADD CONSTRAINT fk_inventory_branch
 	FOREIGN KEY (branch_id) 
-	REFERENCES branch (branch_id)
+	REFERENCES (branch _id)
 	ON DELETE CASCADE;
 
 ALTER TABLE cart
@@ -179,9 +198,9 @@ ALTER TABLE cart
 	REFERENCES product (product_id) 
 	ON DELETE CASCADE;
 ALTER TABLE cart
-	ADD CONSTRAINT fk_cart_sales_history
-	FOREIGN KEY (order_id) 
-	REFERENCES sales_history (order_id)
+	ADD CONSTRAINT fk_transaction_number 
+	FOREIGN KEY (transaction_number) 
+	REFERENCES sales_history (transaction_number)
 	ON DELETE CASCADE;
 
 ALTER TABLE sales_history
@@ -197,14 +216,8 @@ ALTER TABLE sales_history
 ALTER TABLE sales_history 
 	ADD CONSTRAINT fk_sales_history_payment_method
 	FOREIGN KEY (payment_method_id)
-	REFERENCES payment_method (payment_method_id)
+	REFERENCES payment_method _id) 
 	ON DELETE CASCADE;
-
-ALTER TABLE user_credentials
-    ADD CONSTRAINT fk_user_credentials_employee
-    FOREIGN KEY (user_id)
-    REFERENCES employee (employee_id)
-    ON DELETE CASCADE;
 
 ALTER TABLE employee
 	ADD CONSTRAINT fk_employee_role
@@ -214,4 +227,10 @@ ALTER TABLE employee
 ALTER TABLE employee
 	ADD CONSTRAINT fk_employee_branch
 	FOREIGN KEY (branch_id)
-	REFERENCES branch(branch_id);
+	REFERENCES branch _id);
+
+
+
+
+
+

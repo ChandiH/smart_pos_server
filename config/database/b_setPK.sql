@@ -4,10 +4,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM user_role) THEN
-       NEW.role_ID = 1;
+       NEW.role_id = 1;
    ELSE
-       -- Find the maximum role_ID value and increment it by 1
-       SELECT MAX(role_ID) + 1 INTO NEW.role_ID FROM user_role;
+       -- Find the maximum role_id value and increment it by 1
+       SELECT MAX(role_id) + 1 INTO NEW.role_id FROM user_role;
    END IF;
    RETURN NEW;
 END;
@@ -26,10 +26,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM access_type) THEN
-       NEW.access_type_ID = 1;
+       NEW.access_type_id = 1;
    ELSE
-       -- Find the maximum access_type_ID value and increment it by 1
-       SELECT MAX(access_type_ID) + 1 INTO NEW.access_type_ID FROM access_type;
+       -- Find the maximum access_type_id value and increment it by 1
+       SELECT MAX(access_type_id) + 1 INTO NEW.access_type_id FROM access_type;
    END IF;
    RETURN NEW;
 END;
@@ -48,10 +48,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM user_access) THEN
-       NEW.user_access_ID = 1;
+       NEW.user_access_id = 1;
    ELSE
-       -- Find the maximum user_access_ID value and increment it by 1
-       SELECT MAX(user_access_ID) + 1 INTO NEW.user_access_ID FROM user_access;
+       -- Find the maximum user_access_id value and increment it by 1
+       SELECT MAX(user_access_id) + 1 INTO NEW.user_access_id FROM user_access;
    END IF;
    RETURN NEW;
 END;
@@ -72,10 +72,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM category) THEN
-       NEW.category_ID = 1;
+       NEW.category_id = 1;
    ELSE
-       -- Find the maximum category_ID value and increment it by 1
-       SELECT MAX(category_ID) + 1 INTO NEW.category_ID FROM category;
+       -- Find the maximum category_id value and increment it by 1
+       SELECT MAX(category_id) + 1 INTO NEW.category_id FROM category;
    END IF;
    RETURN NEW;
 END;
@@ -95,10 +95,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM product) THEN
-       NEW.product_ID = 1;
+       NEW.product_id = 1;
    ELSE
-       -- Find the maximum product_ID value and increment it by 1
-       SELECT MAX(product_ID) + 1 INTO NEW.product_ID FROM product;
+       -- Find the maximum product_id value and increment it by 1
+       SELECT MAX(product_id) + 1 INTO NEW.product_id FROM product;
    END IF;
    RETURN NEW;
 END;
@@ -118,10 +118,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM cart) THEN
-       NEW.cart_ID = 1;
+       NEW.cart_id = 1;
    ELSE
-       -- Find the maximum cart_ID value and increment it by 1
-       SELECT MAX(cart_ID) + 1 INTO NEW.cart_ID FROM cart;
+       -- Find the maximum cart_id value and increment it by 1
+       SELECT MAX(cart_id) + 1 INTO NEW.cart_id FROM cart;
    END IF;
    RETURN NEW;
 END;
@@ -141,10 +141,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM sales_history) THEN
-       NEW.transaction_number = 1;
+       NEW.order_id = 1;
    ELSE
-       -- Find the maximum transaction_number value and increment it by 1
-       SELECT MAX(transaction_number) + 1 INTO NEW.transaction_number FROM sales_history;
+       -- Find the maximum order_id value and increment it by 1
+       SELECT MAX(order_id) + 1 INTO NEW.order_id FROM sales_history;
    END IF;
    RETURN NEW;
 END;
@@ -158,39 +158,16 @@ EXECUTE FUNCTION BeforeInsertSalesHistory();
 
 
 
--- Trigger function for units_of_measure table
-CREATE OR REPLACE FUNCTION BeforeInsertUnitsOfMeasure()
-RETURNS TRIGGER AS $$
-BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM units_of_measure) THEN
-       NEW.uom_ID = 1;
-   ELSE
-       -- Find the maximum uom_ID value and increment it by 1
-       SELECT MAX(uom_ID) + 1 INTO NEW.uom_ID FROM units_of_measure;
-   END IF;
-   RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger for units_of_measure table
-CREATE TRIGGER a_units_of_measure
-BEFORE INSERT ON units_of_measure
-FOR EACH ROW
-EXECUTE FUNCTION BeforeInsertUnitsOfMeasure();
-
-
-
 -- Trigger function for customer table
 CREATE OR REPLACE FUNCTION BeforeInsertCustomer()
 RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM customer) THEN
-       NEW.customer_ID = 1;
+       NEW.customer_id = 1;
    ELSE
-       -- Find the maximum customer_ID value and increment it by 1
-       SELECT MAX(customer_ID) + 1 INTO NEW.customer_ID FROM customer;
+       -- Find the maximum customer_id value and increment it by 1
+       SELECT MAX(customer_id) + 1 INTO NEW.customer_id FROM customer;
    END IF;
    RETURN NEW;
 END;
@@ -209,10 +186,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM employee) THEN
-       NEW.employee_ID = 1;
+       NEW.employee_id = 1;
    ELSE
-       -- Find the maximum employee_ID value and increment it by 1
-       SELECT MAX(employee_ID) + 1 INTO NEW.employee_ID FROM employee;
+       -- Find the maximum employee_id value and increment it by 1
+       SELECT MAX(employee_id) + 1 INTO NEW.employee_id FROM employee;
    END IF;
    RETURN NEW;
 END;
@@ -231,10 +208,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM supplier) THEN
-       NEW.supplier_ID = 1;
+       NEW.supplier_id = 1;
    ELSE
-       -- Find the maximum supplier_ID value and increment it by 1
-       SELECT MAX(supplier_ID) + 1 INTO NEW.supplier_ID FROM supplier;
+       -- Find the maximum supplier_id value and increment it by 1
+       SELECT MAX(supplier_id) + 1 INTO NEW.supplier_id FROM supplier;
    END IF;
    RETURN NEW;
 END;
@@ -254,10 +231,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM payment_method) THEN
-       NEW.ID = 1;
+       NEW.payment_method_id  = 1;
    ELSE
-       -- Find the maximum ID value and increment it by 1
-       SELECT MAX(ID) + 1 INTO NEW.ID FROM payment_method;
+       -- Find the maximum id value and increment it by 1
+       SELECT MAX(payment_method_id) + 1 INTO NEW.payment_method_id FROM payment_method;
    END IF;
    RETURN NEW;
 END;
@@ -272,49 +249,26 @@ EXECUTE FUNCTION BeforeInsertPaymentMethod();
 
 
 
--- Trigger function for discounts_and_promotions table
-CREATE OR REPLACE FUNCTION BeforeInsertDiscountsAndPromotions()
+-- Trigger function for discount table
+CREATE OR REPLACE FUNCTION BeforeInsertDiscount()
 RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM discounts_and_promotions) THEN
-       NEW.ID = 1;
+   IF NOT EXISTS (SELECT 1 FROM discount) THEN
+       NEW.discount_id = 1;
    ELSE
-       -- Find the maximum ID value and increment it by 1
-       SELECT MAX(ID) + 1 INTO NEW.ID FROM discounts_and_promotions;
+       -- Find the maximum id value and increment it by 1
+       SELECT MAX(discount_id) + 1 INTO NEW.discount_id FROM discount;
    END IF;
    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger for discounts_and_promotions table
-CREATE TRIGGER a_discounts_and_promotions
-BEFORE INSERT ON discounts_and_promotions
+-- Trigger for discount table
+CREATE TRIGGER a_discount
+BEFORE INSERT ON discount
 FOR EACH ROW
-EXECUTE FUNCTION BeforeInsertDiscountsAndPromotions();
-
-
-
--- Trigger function for gift_cards table
-CREATE OR REPLACE FUNCTION BeforeInsertGiftCards()
-RETURNS TRIGGER AS $$
-BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM gift_cards) THEN
-       NEW.card_number = 1;
-   ELSE
-       -- Find the maximum card_number value and increment it by 1
-       SELECT MAX(card_number) + 1 INTO NEW.card_number FROM gift_cards;
-   END IF;
-   RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger for gift_cards table
-CREATE TRIGGER a_gift_cards
-BEFORE INSERT ON gift_cards
-FOR EACH ROW
-EXECUTE FUNCTION BeforeInsertGiftCards();
+EXECUTE FUNCTION BeforeInsertDiscount();
 
 
 
@@ -324,10 +278,10 @@ RETURNS TRIGGER AS $$
 BEGIN
    -- Check if the table is empty
    IF NOT EXISTS (SELECT 1 FROM branch) THEN
-       NEW.ID = 1;
+       NEW.branch_id = 1;
    ELSE
-       -- Find the maximum ID value and increment it by 1
-       SELECT MAX(ID) + 1 INTO NEW.ID FROM branch;
+       -- Find the maximum id value and increment it by 1
+       SELECT MAX(branch_id) + 1 INTO NEW.branch_id FROM branch;
    END IF;
    RETURN NEW;
 END;
@@ -340,4 +294,5 @@ FOR EACH ROW
 EXECUTE FUNCTION BeforeInsertBranch();
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 
