@@ -12,10 +12,10 @@ const verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "unauthorized",
+        message: "Unauthorized",
       });
     }
-    console.log("accessing the server", decoded);
+    console.log("Accessing the server", decoded);
     next();
   });
 };
