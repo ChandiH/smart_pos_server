@@ -35,7 +35,10 @@ app.use("/customer", customerRouter);
 app.use("/employee", employeeRouter);
 app.use("/product", productRouter);
 //app.use("/cart", cartRouter);
+
+
 app.use("/inventory", inventoryRouter);
+
 app.use("/branch", branchRouter);
 //app.use("/category", categoryRouter);
 //app.use("/chart", chartRouter);
