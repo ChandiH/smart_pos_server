@@ -1,26 +1,26 @@
 const pool = require("../config/config");
 
 const getInventory = () => {
-  return pool.query(`SELECT inventory.*, branch.city as "branch_name"
-  FROM inventory inner join branch on branch.id = inventory.branch_id`);
+  return pool.query(`select inventory.*, branch.branch_city as "branch_name"
+  from inventory inner join branch on branch.branch_id = inventory.branch_id`);
 };
 
-const getInventoryByBranchId = (branchId) => {
+const getInventoryByBranchId = (id) => {
   return pool.query(
-    `SELECT inventory.* FROM inventory WHERE inventory.branch_id = $1`,
-    [branchId]
+    `select inventory.* from inventory where inventory.branch_id = $1`,
+    [id]
   );
 };
 
-const getInventoryByProductId = (productId) => {
+const getInventoryByProductId = (id) => {
   return pool.query(
-    `SELECT inventory.*, product.*, branch.city as branch_name, category.name as category_name 
-    FROM inventory 
+    `select inventory.*, product.*, branch.branch_city as branch_name, category.category_name 
+    from inventory 
     inner join product on inventory.product_id=product.product_id 
-    inner join branch on branch.id=inventory.branch_id 
+    inner join branch on branch.branch_id =inventory.branch_id 
     inner join category on category.category_id=product.category_id 
-    WHERE inventory.product_id =$1;`,
-    [productId]
+    where inventory.product_id =$1;`,
+    [id]
   );
 };
 module.exports = {
