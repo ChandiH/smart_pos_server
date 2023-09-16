@@ -2,16 +2,22 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
+
 // routes
 const authRouter = require("./routes/auth.routes");
 const branchRouter = require("./routes/branch.routes");
-const cartRouter = require("./routes/cart.routes");
+//const cartRouter = require("./routes/cart.routes");
 const customerRouter = require("./routes/customer.routes");
 const employeeRouter = require("./routes/employee.routes");
-const inventoryRouter = require("./routes/inventory.routes");
+//const inventoryRouter = require("./routes/inventory.routes");
 const productRouter = require("./routes/product.routes");
+//const categoryRouter = require("./routes/category.routes");
+//const chartRouter = require("./routes/chart.routes");
+
+// config
 dotenv.config();
 const PORT = process.env.PORT || 4000;
+
 // middleware
 const jwt = require("./middleware/authJWT");
 
@@ -28,9 +34,11 @@ app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", employeeRouter);
 app.use("/product", productRouter);
-app.use("/cart", cartRouter);
-app.use("/inventory", inventoryRouter);
+//app.use("/cart", cartRouter);
+//app.use("/inventory", inventoryRouter);
 app.use("/branch", branchRouter);
+//app.use("/category", categoryRouter);
+//app.use("/chart", chartRouter);
 
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);

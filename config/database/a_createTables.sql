@@ -72,10 +72,11 @@ CREATE TABLE sales_history (
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(1000,2) check (total_amount > 0),
     payment_method_id INTEGER ,
-    reference_ID VARCHAR(255) UNIQUE
+    reference_ID VARCHAR(255) UNIQUE 
+    -- product count
     -- profit NUMERIC(1000,2) DEFAULT 0.00,
     -- do we need to add discount type in a field?
-    -- direct: add branch id (is it okay with db standards?) or indirect: get branch from cashier id(bt when cashier changes across branches it might be a problem)) 
+    -- direct: add branch id (is it okay with db standards?) 
 );
 
 --customer
@@ -114,9 +115,9 @@ CREATE TABLE employee (
 -- Suppliers
 CREATE TABLE supplier (
     supplier_id INTEGER  PRIMARY KEY,
-    supplier_name VARCHAR(200) NOT NULL,
-    supplier_email VARCHAR(255),
-    supplier_phone VARCHAR(13) NOT NULL,
+    supplier_name VARCHAR(200) NOT NULL ,
+    supplier_email VARCHAR(255) UNIQUE,
+    supplier_phone VARCHAR(13) NOT NULL UNIQUE,
     supplier_address VARCHAR(200) NOT NULL
 );
 
@@ -135,7 +136,7 @@ CREATE TABLE discount (
 
 CREATE TABLE branch (
     branch_id INTEGER  PRIMARY KEY,
-    branch_city VARCHAR(255) NOT NULL ,
+    branch_city VARCHAR(255) NOT NULL UNIQUE ,
     branch_address VARCHAR(200) NOT NULL,
     branch_phone VARCHAR(13) NOT NULL UNIQUE,
     branch_email VARCHAR(255) NOT NULL UNIQUE
