@@ -10,10 +10,12 @@ const customerRouter = require("./routes/customer.routes");
 const employeeRouter = require("./routes/employee.routes");
 const inventoryRouter = require("./routes/inventory.routes");
 const productRouter = require("./routes/product.routes");
+const supplierRouter = require("./routes/supplier.routes");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 // middleware
 const jwt = require("./middleware/authJWT");
+const upload = require("./middleware/upload");
 
 const app = express();
 
@@ -23,6 +25,10 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/assets", express.static(path.join(__dirname, "public")));
+app.post("/upload", upload.single("file"), (req, res) => {
+  // Handle the uploaded file
+  res.json({ message: "File uploaded successfully!" });
+});
 
 app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
@@ -31,6 +37,7 @@ app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);
 app.use("/branch", branchRouter);
+app.use("/supplier", supplierRouter);
 
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);

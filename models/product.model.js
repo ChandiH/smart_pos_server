@@ -11,38 +11,36 @@ const getProduct = (id) => {
 };
 
 const addProduct = (
-  product_name,
-  products_desc,
+  name,
+  description,
   category_id,
   product_image,
-  unit_id,
   buying_ppu,
   retail_ppu,
+  discount,
   supplier_id,
-  barcode,
-  quantity
+  barcode
 ) => {
   return pool.query(
-    "INSERT INTO product (product_name, products_desc, category_ID, product_image, unit_id, buying_ppu, retail_ppu, supplier_ID, barcode, quantity) VALUES  ($1, $2, $3, $4, $5 , $6,$7,$8,$9,$10) returning *",
+    "INSERT INTO product (name, description, category_ID, product_image, buying_ppu, retail_ppu, supplier_ID, barcode, discount) VALUES  ($1, $2, $3, $4, $5 , $6,$7,$8,$9) returning *",
     [
-      product_name,
-      products_desc,
+      name,
+      description,
       category_id,
-      product_image,
-      unit_id,
+      null,
       buying_ppu,
       retail_ppu,
       supplier_id,
       barcode,
-      quantity,
+      discount,
     ]
   );
 };
 
 const updateProduct = (
   id,
-  product_name,
-  products_desc,
+  name,
+  description,
   category_id,
   product_image,
   unit_id,
@@ -53,10 +51,10 @@ const updateProduct = (
   quantity
 ) => {
   return pool.query(
-    "UPDATE product SET product_name=$1, products_desc=$2, category_ID=$3, product_image=$4, unit_id=$5, buying_ppu=$6, retail_ppu=$7, supplier_ID=$8, barcode=$9, quantity=$10  WHERE product_id=$11 returning *",
+    "UPDATE product SET name=$1, description=$2, category_ID=$3, product_image=$4, unit_id=$5, buying_ppu=$6, retail_ppu=$7, supplier_ID=$8, barcode=$9, quantity=$10  WHERE product_id=$11 returning *",
     [
-      product_name,
-      products_desc,
+      name,
+      description,
       category_id,
       product_image,
       unit_id,
@@ -75,10 +73,18 @@ const getProductWithCategory = () => {
   );
 };
 
+const getProductsBySupplierId = (id) => {
+  return pool.query(
+    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id where supplier_id = $1`,
+    [id]
+  );
+};
+
 module.exports = {
   getProducts,
   getProduct,
   addProduct,
   updateProduct,
   getProductWithCategory,
+  getProductsBySupplierId,
 };
