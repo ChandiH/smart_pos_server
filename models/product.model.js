@@ -70,17 +70,24 @@ const updateProduct = (
     ]
   );
 };
+const getProductWithCategory = () => {
+  return pool.query(
+    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id`
+  );
+};
 
-// const getProductsWithCategory = () => {
-//   return pool.query(
-//     `select product.* , category.category_name from product left join category on product.category_id = category.category_id`
-//   );
-// };
+const getProductsBySupplierId = (id) => {
+  return pool.query(
+    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id where supplier_id = $1`,
+    [id]
+  );
+};
 
 module.exports = {
   getProducts,
   getProduct,
   addProduct,
   updateProduct,
-  //getProductsWithCategory,
+  getProductWithCategory,
+  getProductsBySupplierId,
 };
