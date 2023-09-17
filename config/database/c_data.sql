@@ -118,7 +118,7 @@ VALUES
 INSERT INTO employee (employee_name, role_id, hired_date, employee_email, employee_phone, branch_id)
 VALUES
     ('Somesh Chandimal', 1, '2022-01-15', 'somesh@example.com', '112233445', 1),
-    ('John Doe',  2, '2022-05-15', 'johndoe@example.com', '112233445', 1),
+    ('John Doe',  2, '2022-05-15', 'johndoe@example.com', '112243445', 1),
     ('Jane Smith',  2, '2021-12-10', 'janesmith@example.com', '998877665', 2),
     ('Robert Johnson',  2, '2023-02-28', 'robertjohnson@example.com', '777766655', 3),
     ('Mary Wilson', 2, '2022-09-30', 'marywilson@example.com', '333444555', 4),
