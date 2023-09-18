@@ -1,6 +1,6 @@
 const Auth = require("../models/auth.model");
 
-const { isUsernameTaken, isUserIdTaken,  register } = require("../models/auth.model");
+const { isUsernameTaken,  register } = require("../models/auth.model");
 
 const Employee = require("../models/employee.model");
 const jwt = require("jsonwebtoken");
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   
-
+/*
   async register(req, res, next) {
     const { user_id, username, password } = req.body;
 
@@ -80,7 +80,46 @@ module.exports = {
 
 
  //password reset
+ */
+
+ async register(req, res, next) {
+  const { employee_name, role_id, employee_email, employee_phone, branch_id } = req.body;
+
+  // Validate that all required fields are provided
+  if ( !employee_name || !role_id || !employee_email || !employee_phone || !branch_id) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Check if the username is already taken
+  const isUsernameInUse = await isUsernameTaken(employee_name);
+  if (isUsernameInUse) {
+    return res.status(400).json({ error: {employee_name: "User name is already taken."  }  }); 
+  }
+
+  try {
+    
+
+    // Call the register function to insert data into both tables
+    const result = await register(employee_name, role_id, employee_email, employee_phone, branch_id);
+
+    if (result) {
+      // Registration successful
+      return res.status(201).json({ message: "Registration successful" });
+    } else {
+      // Registration failed
+      return res.status(400).json({ error: "Registration failed" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+},
+
+
+
+
  
+
   
     
 };
