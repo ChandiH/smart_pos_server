@@ -12,10 +12,24 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
-  addSupplier(req, res, next) {
-    const { name, email, phone, address } = req.body;
+  async addSupplier(req, res, next) {
+    const { supplier_name, supplier_email, supplier_phone, supplier_address } =
+      req.body;
     console.log(req.body);
-    Supplier.addSupplier(name, email, phone, address)
+
+    // check whether email already exists
+    const email = await Supplier.isEmailTaken(supplier_email);
+    if (email > 0)
+      return res
+        .status(400)
+        .json({ error: { supplier_email: "Email already exists" } });
+
+    Supplier.addSupplier(
+      supplier_name,
+      supplier_email,
+      supplier_phone,
+      supplier_address
+    )
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
