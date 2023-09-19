@@ -70,17 +70,26 @@ const updateProduct = (
     ]
   );
 };
+
 const getProductWithCategory = () => {
   return pool.query(
-    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id`
+    `select product.* , category.category_name from product left join category on product.category_id = category.category_id`
   );
 };
 
 const getProductsBySupplierId = (id) => {
   return pool.query(
-    `select product.* , category.name as "category_name" from product left join category on product.category_id = category.category_id where supplier_id = $1`,
+    `select product.* , category.category_name from product left join category on product.category_id = category.category_id where supplier_id = $1`,
     [id]
   );
+};
+
+const isBarcodeTaken = async (barcode) => {
+  const result = await pool.query(
+    `SELECT 1 FROM product where product_barcode = $1 LIMIT 1`,
+    [barcode]
+  );
+  return result.rowCount > 0;
 };
 
 module.exports = {
@@ -90,4 +99,5 @@ module.exports = {
   updateProduct,
   getProductWithCategory,
   getProductsBySupplierId,
+  isBarcodeTaken,
 };
