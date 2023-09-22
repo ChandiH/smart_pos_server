@@ -1,5 +1,7 @@
 const pool = require("../config/config");
 
+//employee image
+
 const getEmployees = () => {
   return pool.query(
     `select employee.*, branch.branch_city as branch_name , user_role.role_name 
@@ -23,14 +25,7 @@ const getEmployee = (id) => {
 };
 
 
-const addEmployee = (employee_name, role_id, employee_email, employee_phone, branch_id) => {
-  return pool.query(
-    `insert into employee(
-      employee_name, role_id, employee_email, employee_phone, branch_id)
-      values ($1, $2, $3, $4, $5) returning *`,
-    [employee_name, role_id, employee_email, employee_phone, branch_id]
-  );
-};
+
 
 const updateEmployee = ( employee_name, branch_id, employee_email, employee_phone, role_id,id) => {
   return pool.query(
@@ -42,15 +37,10 @@ const updateEmployee = ( employee_name, branch_id, employee_email, employee_phon
   );
 };
 
-  //insert employee password and username
 
-  //update employee password and username
-
-  //delete employee password and username
 
 module.exports = {
   getEmployees,
   getEmployee,
-  addEmployee,
   updateEmployee,
 };

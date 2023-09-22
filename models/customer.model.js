@@ -62,6 +62,4 @@ module.exports = {
   getCustomer,
   addCustomer,
   updateCustomer,
-  findEmail,
-  findPhone,
 };

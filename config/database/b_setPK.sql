@@ -42,30 +42,6 @@ FOR EACH ROW
 EXECUTE FUNCTION BeforeInsertAccessType();
 
 
--- Trigger function for user_access table
-CREATE OR REPLACE FUNCTION BeforeInsertUserAccess()
-RETURNS TRIGGER AS $$
-BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM user_access) THEN
-       NEW.user_access_id = 1;
-   ELSE
-       -- Find the maximum user_access_id value and increment it by 1
-       SELECT MAX(user_access_id) + 1 INTO NEW.user_access_id FROM user_access;
-   END IF;
-   RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger for user_access table
-CREATE TRIGGER a_user_access
-BEFORE INSERT ON user_access
-FOR EACH ROW
-EXECUTE FUNCTION BeforeInsertUserAccess();
-
-
-
-
 -- Trigger function for category table
 CREATE OR REPLACE FUNCTION BeforeInsertCategory()
 RETURNS TRIGGER AS $$

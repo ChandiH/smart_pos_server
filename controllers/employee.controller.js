@@ -12,13 +12,7 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
-  addEmployee(req, res, next) {
-    const { employee_name, role_id, employee_email, employee_phone, branch_id } = req.body;
-    console.log(req.body);
-    Employee.addEmployee(employee_name, role_id, employee_email, employee_phone, branch_id)
-      .then((data) => res.status(200).json(data.rows))
-      .catch((err) => res.status(400).json({ error: err }));
-  },
+
   updateEmployee(req, res, next) {
     const { id } = req.params;
     const { employee_name, role_id, employee_email, employee_phone, branch_id} = req.body;
@@ -26,9 +20,5 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
-  //insert employee password and username
 
-  //update employee password and username
-
-  //delete employee password and username
 };

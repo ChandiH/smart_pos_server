@@ -13,7 +13,13 @@ const customerRouter = require("./routes/customer.routes");
 const employeeRouter = require("./routes/employee.routes");
 const inventoryRouter = require("./routes/inventory.routes");
 const productRouter = require("./routes/product.routes");
+const categoryRouter = require("./routes/category.routes");
+const chartRouter = require("./routes/chart.routes");
 const supplierRouter = require("./routes/supplier.routes");
+
+// config
+dotenv.config();
+const PORT = process.env.PORT || 4000;
 
 // middleware
 const jwt = require("./middleware/authJWT");
