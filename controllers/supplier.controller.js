@@ -23,6 +23,12 @@ module.exports = {
       return res
         .status(400)
         .json({ error: { supplier_email: "Email already exists" } });
+    // check whether phone already exists
+    const phone = await Supplier.isPhoneNumberExist(supplier_phone);
+    if (phone > 0)
+      return res
+        .status(400)
+        .json({ error: { supplier_phone: "PhoneNumber already exists" } });
 
     Supplier.addSupplier(
       supplier_name,

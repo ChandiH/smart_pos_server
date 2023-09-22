@@ -23,9 +23,18 @@ const isEmailTaken = async (email) => {
   return result.rowCount > 0;
 };
 
+const isPhoneNumberExist = async (phone) => {
+  const result = await pool.query(
+    "SELECT 1 FROM supplier where supplier_phone=$1 LIMIT 1",
+    [phone]
+  );
+  return result.rowCount > 0;
+};
+
 module.exports = {
   getSuppliers,
   getSupplier,
   addSupplier,
   isEmailTaken,
+  isPhoneNumberExist,
 };
