@@ -8,16 +8,16 @@ const getCategory = (id) => {
   return pool.query("select * from category where category_id=$1", [id]);
 };
 
-const addCategory = (name) => {
-  return pool.query("insert into  category (name) values ($1) returning *", [
-    name,
+const addCategory = (category_name) => {
+  return pool.query("insert into  category (category_name) values ($1) returning *", [
+    category_name,
   ]);
 };
 
-const updateCategory = (id, name) => {
+const updateCategory = (id,category_name) => {
   return pool.query(
-    "update category set name=$1 where category_id=$2 returning *",
-    [name, id]
+    "update category set category_name=$1 where category_id= $2 returning *",
+    [category_name, id]
   );
 };
 
