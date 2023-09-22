@@ -11,15 +11,15 @@ const login = (username, password) => {
 
 
 
-const register = async ( employee_name, role_id, employee_email, employee_phone, branch_id) => {
+const register = async ( employee_name, role_id, employee_email, employee_phone, branch_id,employee_image) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
 
     // Insert data into the employee table
     const employeeResult = await client.query(
-      'INSERT INTO employee (employee_name, role_id, employee_email, employee_phone, branch_id) VALUES ($1, $2, $3, $4, $5) RETURNING employee_id',
-      [employee_name, role_id, employee_email, employee_phone, branch_id]
+      'INSERT INTO employee (employee_name, role_id, employee_email, employee_phone, branch_id,employee_image) VALUES ($1, $2, $3, $4, $5,$6) RETURNING employee_id',
+      [employee_name, role_id, employee_email, employee_phone, branch_id,employee_image]
     );
 
     const employee_id = employeeResult.rows[0].employee_id;
@@ -50,11 +50,10 @@ const isUsernameTaken = async (username) => {
   return result.rowCount > 0;
 };
 
-// Check if the user_id is already in use
-// const isUserIdTaken = async (user_id) => {
-//   const result = await pool.query("SELECT 1 FROM user_credentials WHERE user_id = $1 LIMIT 1", [user_id]);
-//   return result.rowCount > 0;
-// };
+
+
+
+
 
 
 
@@ -64,5 +63,5 @@ module.exports = {
   login,
   register,
   isUsernameTaken,
-  //isUserIdTaken,
+
 };

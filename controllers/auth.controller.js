@@ -32,61 +32,13 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
 
-  
-/*
-  async register(req, res, next) {
-    const { user_id, username, password } = req.body;
-
-    // Validate that all required fields are provided
-    if (!user_id || !username || !password) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
-
-    try {
-      
-      //Check  if user_id is in the employee table
-
-     
-      // Check if the user_id is already taken
-      const isUserIdInUse = await isUserIdTaken(user_id);
-      if (isUserIdInUse) {
-        return res.status(400).json({ error: {user_id: "User ID is already in use."}});
-      }
-
-      // Check if the username is already taken
-      const isUsernameInUse = await isUsernameTaken(username);
-      if (isUsernameInUse) {
-        return res.status(400).json({ error: {username: "User name is already taken."  }  }); 
-      }
-
-      
-
-      // If both username and user_id are unique, proceed with registration
-      const result = await register(user_id, username, password);
-
-      if (result.rowCount === 1) {
-        // Registration successful
-        return res.status(201).json({ message: "Registration successful" });
-      } else {
-        // Registration failed
-        return res.status(400).json({ error: "Registration failed" });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-  },
-
-
-
- //password reset
- */
+ 
 
  async register(req, res, next) {
-  const { employee_name, role_id, employee_email, employee_phone, branch_id } = req.body;
+  const { employee_name, role_id, employee_email, employee_phone, branch_id,employee_image } = req.body;
 
   // Validate that all required fields are provided
-  if ( !employee_name || !role_id || !employee_email || !employee_phone || !branch_id) {
+  if ( !employee_name || !role_id || !employee_email || !employee_phone || !branch_id || !employee_image) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -100,7 +52,7 @@ module.exports = {
     
 
     // Call the register function to insert data into both tables
-    const result = await register(employee_name, role_id, employee_email, employee_phone, branch_id);
+    const result = await register(employee_name, role_id, employee_email, employee_phone, branch_id,employee_image);
 
     if (result) {
       // Registration successful
@@ -115,11 +67,7 @@ module.exports = {
   }
 },
 
+//reset password only
 
 
-
- 
-
-  
-    
 };
