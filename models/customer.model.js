@@ -27,13 +27,7 @@ const updateCustomer = (id, customer_name, customer_email, customer_phone, custo
   );
 };
 
-const findEmail = (email) => {
-  return pool.query("select count(*) from customer where  customer_email=$1", [email]);
-};
 
-const findPhone = (phone) => {
-  return pool.query("select count(*) from customer where customer_phone=$1", [phone]);
-};
 
 //view rewards points
 //view order history of customer
@@ -43,6 +37,4 @@ module.exports = {
   getCustomer,
   addCustomer,
   updateCustomer,
-  findEmail,
-  findPhone,
 };

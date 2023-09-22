@@ -29,17 +29,5 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
 
-  findEmail(req, res, next) {
-    const { email } = req.params;
-    Customer.findEmail(email)
-      .then((data) => res.status(200).json(data.rows))
-      .catch((err) => res.status(400).json({ error: err }));
-  },
 
-  findPhone(req, res, next) {
-    const { phone } = req.params;
-    Customer.findPhone(phone)
-      .then((data) => res.status(200).json(data.rows))
-      .catch((err) => res.status(400).json({ error: err }));
-  },
 };
