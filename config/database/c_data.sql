@@ -1,10 +1,3 @@
-INSERT INTO user_role (role_name, role_desc)
-VALUES
-    ( 'Owner', 'Responsible for overall management and ownership of the supermarket.'),
-    ('Finance Manager', 'Responsible for financial reporting and analysis.'),
-    ('Branch Manager', 'Manages the day-to-day operations of a specific branch.'),
-    ('Cashier', 'Handles customer transactions at the checkout counter.');
-
 INSERT INTO access_type (access_name)
 VALUES
     ('Sales Access'),
@@ -28,50 +21,13 @@ VALUES
     ('Delete Employee Access'),
     ('View Employee Access');
 
-INSERT INTO user_access (role_id, access_type_id) --change access type id into array
+INSERT INTO user_role (role_name, role_desc,user_access)
 VALUES
-    (1, 1),   -- Role 1 has Access Type 1
-    (1, 2),   -- Role 1 has Access Type 2
-    (1, 3),   -- Role 1 has Access Type 3
-    (1, 4),   -- Role 1 has Access Type 4
-    (1, 5),   -- Role 1 has Access Type 5
-    (1, 6),   -- Role 1 has Access Type 6
-    (1, 7),   -- Role 1 has Access Type 7
-    (1, 8),   -- Role 1 has Access Type 8
-    (1, 9),   -- Role 1 has Access Type 9
-    (1, 10),  -- Role 1 has Access Type 10
-    (1, 11),  -- Role 1 has Access Type 11
-    (1, 12),  -- Role 1 has Access Type 12
-    (1, 13),  -- Role 1 has Access Type 13
-    (1, 14),  -- Role 1 has Access Type 14
-    (1, 15),  -- Role 1 has Access Type 15
-    (1, 16),  -- Role 1 has Access Type 16
-    (1, 17),  -- Role 1 has Access Type 17
-    (1, 18),  -- Role 1 has Access Type 18
-    (2, 1),   -- Role 2 has Access Type 1
-    (2, 3),   -- Role 2 has Access Type 3
-    (2, 5),   -- Role 2 has Access Type 5
-    (2, 7),   -- Role 2 has Access Type 7
-    (2, 9),   -- Role 2 has Access Type 9
-    (2, 11),  -- Role 2 has Access Type 11
-    (2, 13),  -- Role 2 has Access Type 13
-    (2, 15),  -- Role 2 has Access Type 15
-    (2, 17),  -- Role 2 has Access Type 17
-    (3, 2),   -- Role 3 has Access Type 2
-    (3, 4),   -- Role 3 has Access Type 4
-    (3, 6),   -- Role 3 has Access Type 6
-    (3, 8),   -- Role 3 has Access Type 8
-    (3, 10),  -- Role 3 has Access Type 10
-    (3, 12),  -- Role 3 has Access Type 12
-    (3, 14),  -- Role 3 has Access Type 14
-    (3, 16),  -- Role 3 has Access Type 16
-    (3, 18),  -- Role 3 has Access Type 18
-    (4, 1),   -- Role 4 has Access Type 1
-    (4, 4),   -- Role 4 has Access Type 4
-    (4, 7),   -- Role 4 has Access Type 7
-    (4, 10),  -- Role 4 has Access Type 10
-    (4, 13),  -- Role 4 has Access Type 13
-    (4, 16);  -- Role 4 has Access Type 16
+    ( 'Owner', 'Responsible for overall management and ownership of the supermarket.','{1,2,3,4}'),
+    ('Finance Manager', 'Responsible for financial reporting and analysis.', '{1,2,3,4}'),
+    ('Branch Manager', 'Manages the day-to-day operations of a specific branch.','{1,2,3,4}'),
+    ('Cashier', 'Handles customer transactions at the checkout counter.','{1,2,3,4}');
+
 
 
 
@@ -115,28 +71,28 @@ VALUES
 
 
 
-INSERT INTO employee (employee_name, role_id, hired_date, employee_email, employee_phone, branch_id)
+INSERT INTO employee (employee_name, role_id, hired_date, employee_email, employee_phone, branch_id, employee_image)
 VALUES
-    ('Somesh Chandimal', 1, '2022-01-15', 'somesh@example.com', '112233445', 1),
-    ('John Doe',  2, '2022-05-15', 'johndoe@example.com', '112243445', 1),
-    ('Jane Smith',  2, '2021-12-10', 'janesmith@example.com', '998877665', 2),
-    ('Robert Johnson',  2, '2023-02-28', 'robertjohnson@example.com', '777766655', 3),
-    ('Mary Wilson', 2, '2022-09-30', 'marywilson@example.com', '333444555', 4),
-    ('Michael Lee',  3, '2020-07-05', 'michaellee@example.com', '222555444', 1),
-    ('Lisa Garcia', 3, '2021-10-20', 'lisagarcia@example.com', '666555444', 2),
-    ('David Martinez',  3, '2022-04-15', 'davidmartinez@example.com', '777444555', 3),
-    ('Sarah Brown', 3, '2021-03-25', 'sarahbrown@example.com', '555444333', 4),
-    ('William Smith',  4, '2022-01-05', 'williamsmith@example.com', '777888999', 1),
-    ('Karen Davis',  4, '2023-06-30', 'karendavis@example.com', '444555666', 1),
-    ('James Taylor',  4, '2022-08-15', 'jamestaylor@example.com', '555747888', 1),
-    ('Jennifer Clark',  4, '2021-11-10', 'jenniferclark@example.com', '999888777', 2),
-    ('Joseph Johnson', 4, '2023-01-15', 'josephjohnson@example.com', '555666777', 2),
-    ('Nancy Moore',  4, '2021-04-20', 'nancymoore@example.com', '444666555', 2),
-    ('Robert White',  4, '2020-11-05', 'robertwhite@example.com', '333777666', 3),
-    ('Linda Harris', 4, '2022-02-28', 'lindaharris@example.com', '222777888', 3),
-    ('John Miller',  4, '2023-03-10', 'johnmiller@example.com', '444555444', 3),
-    ('Patricia Garcia',  4, '2022-07-01', 'patriciagarcia@example.com', '777555444', 4),
-    ('Robert Brown',  4, '2020-12-25', 'robertbrown@example.com', '666444555', 4);
+    ('Somesh Chandimal', 1, '2022-01-15', 'somesh@example.com', '112233445', 1,'https://placehold.co/600x400.png'),
+    ('John Doe',  2, '2022-05-15', 'johndoe@example.com', '112243445', 1,'https://placehold.co/600x400.png'),
+    ('Jane Smith',  2, '2021-12-10', 'janesmith@example.com', '998877665', 2,'https://placehold.co/600x400.png'),
+    ('Robert Johnson',  2, '2023-02-28', 'robertjohnson@example.com', '777766655', 3,'https://placehold.co/600x400.png'),
+    ('Mary Wilson', 2, '2022-09-30', 'marywilson@example.com', '333444555', 4, 'https://placehold.co/600x400.png'),
+    ('Michael Lee',  3, '2020-07-05', 'michaellee@example.com', '222555444', 1 , 'https://placehold.co/600x400.png'),
+    ('Lisa Garcia', 3, '2021-10-20', 'lisagarcia@example.com', '666555444', 2 , 'https://placehold.co/600x400.png'),
+    ('David Martinez',  3, '2022-04-15', 'davidmartinez@example.com', '777444555', 3 , 'https://placehold.co/600x400.png'),
+    ('Sarah Brown', 3, '2021-03-25', 'sarahbrown@example.com', '555444333', 4, 'https://placehold.co/600x400.png'),
+    ('William Smith',  4, '2022-01-05', 'williamsmith@example.com', '777888999', 1, 'https://placehold.co/600x400.png'),
+    ('Karen Davis',  4, '2023-06-30', 'karendavis@example.com', '444555666', 1, 'https://placehold.co/600x400.png'),
+    ('James Taylor',  4, '2022-08-15', 'jamestaylor@example.com', '555747888', 1, 'https://placehold.co/600x400.png'),
+    ('Jennifer Clark',  4, '2021-11-10', 'jenniferclark@example.com', '999888777', 2, 'https://placehold.co/600x400.png'),
+    ('Joseph Johnson', 4, '2023-01-15', 'josephjohnson@example.com', '555666777', 2, 'https://placehold.co/600x400.png'),
+    ('Nancy Moore',  4, '2021-04-20', 'nancymoore@example.com', '444666555', 2, 'https://placehold.co/600x400.png'),
+    ('Robert White',  4, '2020-11-05', 'robertwhite@example.com', '333777666', 3, 'https://placehold.co/600x400.png'),
+    ('Linda Harris', 4, '2022-02-28', 'lindaharris@example.com', '222777888', 3, 'https://placehold.co/600x400.png'),
+    ('John Miller',  4, '2023-03-10', 'johnmiller@example.com', '444555444', 3, 'https://placehold.co/600x400.png'),
+    ('Patricia Garcia',  4, '2022-07-01', 'patriciagarcia@example.com', '777555444', 4, 'https://placehold.co/600x400.png'),
+    ('Robert Brown',  4, '2020-12-25', 'robertbrown@example.com', '666444555', 4, 'https://placehold.co/600x400.png');
 
 
 
