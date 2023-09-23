@@ -1,7 +1,5 @@
 localhost:4000/auth/register
-
-{
-    
+{ 
         "employee_name": "hirushi anjalee",
         "role_id": 4,
       "employee_email": "hirushi@example.com",
@@ -11,31 +9,26 @@ localhost:4000/auth/register
 }
 
 localhost:4000/auth/login
-
 {
        "username": "hirushi anjalee",
         "password": "hirushi anjalee"
 }
 
 localhost:4000/branch/
-
 {
-    
- 
         "branch_city": "Jaffna",
         "branch_address": "123 Main St, Jaffna",
         "branch_phone": "9988776655",
         "branch_email": "jaffna@example.com"
-        }
+}
 
 localhost:4000/branch/1
-{
-        
+{        
         "branch_city": "Colombo",
         "branch_address": "123 Black St, Colombo 01",
         "branch_phone": "112233445",
         "branch_email": "colombobranch@example.com"
-    }
+}
 
 localhost:4000/cart/insert
 
@@ -55,18 +48,15 @@ localhost:4000/cart/insert
         ]
     }
 }
-localhost:4000/category/2
-
- {
-    
+localhost:4000/inventory/category/2
+ { 
         "category_name": "Snack"
-    }
+}
 
-localhost:4000/category/
- {
-    
+localhost:4000/inventory/category/
+ {    
         "category_name": "new category_name"
-    }
+}
 
 localhost:4000/chart/2023-08/2
 

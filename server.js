@@ -2,8 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
-dotenv.config();
-const PORT = process.env.PORT || 4000;
 
 // routes
 const authRouter = require("./routes/auth.routes");
@@ -51,7 +49,7 @@ app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);
 app.use("/branch", branchRouter);
 app.use("/supplier", supplierRouter);
-
+app.use("/chart", chartRouter);
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 

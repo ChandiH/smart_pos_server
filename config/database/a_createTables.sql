@@ -68,7 +68,7 @@ CREATE TABLE cart (
 -- Orders
 CREATE TABLE sales_history (
     order_id INTEGER  PRIMARY KEY,
-    customer_id INTEGER NOT NULL,
+    customer_id INTEGER,
     cashier_id INTEGER NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(1000,2) check (total_amount > 0),
