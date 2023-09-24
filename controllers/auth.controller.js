@@ -20,13 +20,35 @@ module.exports = {
             .json({ error: { username: "Invalid username/password." } });
         }
         // then get employee details
-        Employee.getEmployee(employee_id)
+        Employee.getUserEmployee(employee_id)
           .then((data) => {
-            delete data.rows[0]["password"];
+            const {
+              employee_id,
+              employee_name,
+              branch_id,
+              branch_name,
+              role_id,
+              employee_image,
+              role_name,
+              user_access,
+            } = data.rows[0];
             // then generate token
-            const token = jwt.sign(data.rows[0], process.env.SECRET_KEY, {
-              algorithm: "HS256",
-            });
+            const token = jwt.sign(
+              {
+                employee_id,
+                employee_name,
+                branch_id,
+                branch_name,
+                role_id,
+                employee_image,
+                role_name,
+                user_access,
+              },
+              process.env.SECRET_KEY,
+              {
+                algorithm: "HS256",
+              }
+            );
             return res.status(200).json({ token: token });
           })
           .catch((err) => res.status(400).json({ error: err }));

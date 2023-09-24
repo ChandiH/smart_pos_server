@@ -1,25 +1,20 @@
 INSERT INTO access_type (access_name)
 VALUES
-    ('Sales Access'),
-    ('Inventory Access'),
-    ('Employee Access'),
-    ('Customer Access'),
-    ('Reports Access'),
-    ('Product Pricing Access'),
-    ('Customer Database Access'),
-    ('Promotions and Discounts Access'),
-    ('Add Product Access'),
-    ('Edit Product Access'),
-    ('Delete Product Access'),
-    ('View Product Access'),
-    ('Add Customer Access'),
-    ('Edit Customer Access'),
-    ('Delete Customer Access'),
-    ('View Customer Access'),
-    ('Add Employee Access'),
-    ('Edit Employee Access'),
-    ('Delete Employee Access'),
-    ('View Employee Access');
+  ('configuration'),
+  ('report'),
+  ('employee'),
+  ('employeeDetails'),
+  ('addEmployee'),
+  ('inventory'),
+  ('productForm'),
+  ('stockUpdateForm'),
+  ('productCatalog'),
+  ('customerForm'),
+  ('customers'),
+  ('supplierForm'),
+  ('supplier'),
+  ('supplierDetails'),
+  ('addBranch');
 
 INSERT INTO user_role (role_name, role_desc,user_access)
 VALUES
