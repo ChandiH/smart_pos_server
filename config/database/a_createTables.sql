@@ -14,12 +14,6 @@ CREATE TABLE access_type (
     access_name VARCHAR(100) NOT NULL UNIQUE
 );
 
--- User access
--- CREATE TABLE user_access (
---     user_access_id INTEGER  PRIMARY KEY,
---     role_id INTEGER NOT NULL,
---     access_type_id INTEGER NOT NULL
--- );
 
 -- Category
 CREATE TABLE category (
@@ -41,8 +35,8 @@ CREATE TABLE product (
     discount NUMERIC(1000, 2),
     supplier_id INTEGER NOT NULL,
     product_barcode VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_on TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Inventory
@@ -51,7 +45,7 @@ CREATE TABLE inventory (
     branch_id INTEGER NOT NULL,
     quantity INTEGER check (quantity >= 0),
     reorder_level INTEGER ,
-    updated_on TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(product_id, branch_id)
 );
 
@@ -70,7 +64,7 @@ CREATE TABLE sales_history (
     order_id INTEGER  PRIMARY KEY,
     customer_id INTEGER,
     cashier_id INTEGER NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(1000,2) check (total_amount > 0),
     profit NUMERIC(1000,2) DEFAULT 0.00,
     payment_method_id INTEGER ,
@@ -88,7 +82,7 @@ CREATE TABLE customer (
     customer_address VARCHAR(200),
     visit_count INTEGER default 0,
     rewards_points NUMERIC(1000, 2) default 0.00,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -97,7 +91,7 @@ CREATE TABLE user_credentials (
     user_id INTEGER PRIMARY KEY,
     username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(200) NOT NULL UNIQUE,
-    updated_on TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Employee
@@ -105,12 +99,13 @@ CREATE TABLE employee (
     employee_id INTEGER  PRIMARY KEY,
     employee_name VARCHAR(255) NOT NULL,
     role_id INTEGER NOT NULL,
-    hired_date DATE DEFAULT CURRENT_DATE,
+    hired_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     employee_email VARCHAR(255) UNIQUE,
     employee_phone VARCHAR(13) NOT NULL UNIQUE ,
     branch_id INTEGER NOT NULL,
     employee_image VARCHAR(255), --image data type 
-    updated_on DATE DEFAULT CURRENT_DATE
+    branch_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	role_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Suppliers
@@ -140,19 +135,10 @@ CREATE TABLE branch (
     branch_city VARCHAR(255) NOT NULL UNIQUE ,
     branch_address VARCHAR(200) NOT NULL ,
     branch_phone VARCHAR(13) NOT NULL UNIQUE,
-    branch_email VARCHAR(255) NOT NULL UNIQUE
+    branch_email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- ALTER TABLE user_access
---     ADD CONSTRAINT fk_role_id
--- 	FOREIGN KEY (role_id)
--- 	REFERENCES user_role (role_id) 
--- 	ON DELETE CASCADE;
--- ALTER TABLE user_access
---     ADD CONSTRAINT fk_access_type_id
--- 	FOREIGN KEY (access_type_id) 
--- 	REFERENCES access_type (access_type_id)
--- 	ON DELETE CASCADE;
 
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_category

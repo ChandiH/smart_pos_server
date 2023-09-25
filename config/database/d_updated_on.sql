@@ -37,14 +37,24 @@ FOR EACH ROW
 EXECUTE FUNCTION update_user_credentials_updated_on();
 
 
-CREATE OR REPLACE FUNCTION update_employee_updated_on()
+-- Create a trigger function
+CREATE OR REPLACE FUNCTION update_role_branch_updated_on()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.updated_on = CURRENT_TIMESTAMP;
+    IF NEW.role_id <> OLD.role_id THEN
+        NEW.role_updated_on = CURRENT_timestamp;
+    END IF;
+
+    IF NEW.branch_id <> OLD.branch_id THEN
+        NEW.branch_updated_on = CURRENT_timestamp;
+    END IF;
+
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-CREATE TRIGGER z_employee_update_trigger
-BEFORE UPDATE  ON employee
+
+-- Create a trigger on the employee table
+CREATE TRIGGER Z_employee_update_trigger
+BEFORE UPDATE ON employee
 FOR EACH ROW
-EXECUTE FUNCTION update_employee_updated_on();
+EXECUTE FUNCTION update_role_branch_updated_on();
