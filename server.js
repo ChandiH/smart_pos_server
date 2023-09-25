@@ -21,27 +21,35 @@ const PORT = process.env.PORT || 4000;
 
 // middleware
 const jwt = require("./middleware/authJWT");
+const upload = require("./middleware/upload");
 
 const app = express();
 
 app.use(express.json());
 // app.use(express.urlencoded());
-
 app.use(cors());
 
-app.use("/assets", express.static(path.join(__dirname, "public")));
+app.use("/static/image", express.static(path.join(__dirname, "public/image")));
+app.post("/upload", upload.single("file"), (req, res) => {
+  return res
+    .status(200)
+    .json({ message: "File uploaded successfully!", file: req.file });
+});
+app.post("/upload-multiple", upload.array("files"), (req, res) => {
+  return res
+    .status(200)
+    .json({ message: "Files uploaded successfully!", files: req.files });
+});
 
 app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", employeeRouter);
-app.use("/product", productRouter);
+app.use("/product", upload.array("files"), productRouter);
 app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);
 app.use("/branch", branchRouter);
-app.use("/category", categoryRouter);
-app.use("/chart", chartRouter);
 app.use("/supplier", supplierRouter);
-
+app.use("/chart", chartRouter);
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 
@@ -50,15 +58,3 @@ process.env.TZ = 'Asia/Colombo';
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-/* sample of combination of route,model and contoller
- *app.get("/", async (req, res) => {
- *  try {
- *     const customers = await pool.query("select * from customer");
- *     res.status(200);
- *     res.json(customers);
- *   } catch (e) {
- *     console.log(e);
- *   }
- *});
- */

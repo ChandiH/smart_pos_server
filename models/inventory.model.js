@@ -23,8 +23,38 @@ const getInventoryByProductId = (id) => {
     [id]
   );
 };
+
+const addNewEntry = (product_id, branch_id, quantity, reorder_level) => {
+  return pool.query(
+    `INSERT INTO inventory (product_id, branch_id, quantity, reorder_level)
+    VALUES ($1, $2, $3, $4) returning *`,
+    [product_id, branch_id, quantity, reorder_level]
+  );
+};
+
+const checkInventory = async (branch_id, product_id) => {
+  const result = await pool.query(
+    `select 1
+    from inventory
+    where product_id=$1 and branch_id=$2`,
+    [product_id, branch_id]
+  );
+  return result.rowCount > 0;
+};
+
+const updateInventory = (product_id, branch_id, quantity, reorder_level) => {
+  return pool.query(
+    `UPDATE inventory SET quantity=$1, reorder_level= $2
+    WHERE product_id= $3 and branch_id=$4 returning *`,
+    [quantity, reorder_level, product_id, branch_id]
+  );
+};
+
 module.exports = {
   getInventory,
   getInventoryByBranchId,
   getInventoryByProductId,
+  addNewEntry,
+  checkInventory,
+  updateInventory,
 };

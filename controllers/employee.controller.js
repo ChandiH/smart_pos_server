@@ -15,10 +15,22 @@ module.exports = {
 
   updateEmployee(req, res, next) {
     const { id } = req.params;
-    const { employee_name, role_id, employee_email, employee_phone, branch_id} = req.body;
-    Employee.updateEmployee(employee_name, role_id, employee_email, employee_phone, branch_id, id)
+    const {
+      employee_name,
+      role_id,
+      employee_email,
+      employee_phone,
+      branch_id,
+    } = req.body;
+    Employee.updateEmployee(
+      employee_name,
+      role_id,
+      employee_email,
+      employee_phone,
+      branch_id,
+      id
+    )
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
-
 };

@@ -1,6 +1,6 @@
 const Auth = require("../models/auth.model");
 
-const { isUsernameTaken,  register } = require("../models/auth.model");
+const { isUsernameTaken, register } = require("../models/auth.model");
 
 const Employee = require("../models/employee.model");
 const jwt = require("jsonwebtoken");
@@ -15,16 +15,40 @@ module.exports = {
         // then get employee_id
         const employee_id = data.rows[0]?.employee_id;
         if (!employee_id) {
-          return res.status(400).json({ error: "Invalid username/password." });
+          return res
+            .status(400)
+            .json({ error: { username: "Invalid username/password." } });
         }
-        // then get employee details 
-        Employee.getEmployee(employee_id)
+        // then get employee details
+        Employee.getUserEmployee(employee_id)
           .then((data) => {
-            delete data.rows[0]["password"];
+            const {
+              employee_id,
+              employee_name,
+              branch_id,
+              branch_name,
+              role_id,
+              employee_image,
+              role_name,
+              user_access,
+            } = data.rows[0];
             // then generate token
-            const token = jwt.sign(data.rows[0], process.env.SECRET_KEY, {
-              algorithm: "HS256",
-            });
+            const token = jwt.sign(
+              {
+                employee_id,
+                employee_name,
+                branch_id,
+                branch_name,
+                role_id,
+                employee_image,
+                role_name,
+                user_access,
+              },
+              process.env.SECRET_KEY,
+              {
+                algorithm: "HS256",
+              }
+            );
             return res.status(200).json({ token: token });
           })
           .catch((err) => res.status(400).json({ error: err }));
@@ -32,42 +56,63 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
 
- 
+  async register(req, res, next) {
+    const {
+      employee_name,
+      employee_userName,
+      role_id,
+      employee_email,
+      employee_phone,
+      branch_id,
+      employee_image,
+    } = req.body;
 
- async register(req, res, next) {
-  const { employee_name, role_id, employee_email, employee_phone, branch_id,employee_image } = req.body;
-
-  // Validate that all required fields are provided
-  if ( !employee_name || !role_id || !employee_email || !employee_phone || !branch_id || !employee_image) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  // Check if the username is already taken
-  const isUsernameInUse = await isUsernameTaken(employee_name);
-  if (isUsernameInUse) {
-    return res.status(400).json({ error: {employee_name: "User name is already taken."  }  }); 
-  }
-
-  try {
-    
-
-    // Call the register function to insert data into both tables
-    const result = await register(employee_name, role_id, employee_email, employee_phone, branch_id,employee_image);
-
-    if (result) {
-      // Registration successful
-      return res.status(201).json({ message: "Registration successful" });
-    } else {
-      // Registration failed
-      return res.status(400).json({ error: "Registration failed" });
+    // Validate that all required fields are provided
+    if (
+      !employee_name ||
+      !role_id ||
+      !employee_email ||
+      !employee_phone ||
+      !branch_id ||
+      !employee_userName
+    ) {
+      return res
+        .status(400)
+        .json({ error: { role_id: "All fields are required" } });
     }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-},
 
-//reset password only
+    // Check if the username is already taken
+    const isUsernameInUse = await isUsernameTaken(employee_userName);
+    if (isUsernameInUse) {
+      return res
+        .status(400)
+        .json({ error: { employee_userName: "User name is already taken." } });
+    }
 
+    try {
+      // Call the register function to insert data into both tables
+      const result = await register({
+        employee_name,
+        employee_userName,
+        role_id,
+        employee_email,
+        employee_phone,
+        branch_id,
+        employee_image,
+      });
 
+      if (result) {
+        // Registration successful
+        return res.status(201).json({ message: "Registration successful" });
+      } else {
+        // Registration failed
+        return res.status(400).json({ error: "Registration failed" });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  //reset password only
 };
