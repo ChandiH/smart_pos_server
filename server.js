@@ -14,7 +14,7 @@ const productRouter = require("./routes/product.routes");
 const categoryRouter = require("./routes/category.routes");
 const chartRouter = require("./routes/chart.routes");
 const supplierRouter = require("./routes/supplier.routes");
-
+const userRoleRouter = require("./routes/userRole.routes");
 // config
 dotenv.config();
 const PORT = process.env.PORT || 4000;
@@ -50,6 +50,7 @@ app.use("/inventory", inventoryRouter);
 app.use("/branch", branchRouter);
 app.use("/supplier", supplierRouter);
 app.use("/chart", chartRouter);
+app.use("/user-role", userRoleRouter);
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 

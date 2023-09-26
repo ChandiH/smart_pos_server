@@ -24,6 +24,20 @@ const getEmployee = (id) => {
   );
 };
 
+const getEmployeesByBranch = (id) => {
+  return pool.query(
+    `select employee.*, user_role.role_name
+    from employee
+    inner join user_role on employee.role_id = user_role.role_id
+    where employee.branch_id=$1`,
+    [id]
+  );
+};
+
+const getEmployeesByRole = (id) => {
+  return pool.query(`select * from employee where role_id=$1`, [id]);
+};
+
 const getUserEmployee = (id) => {
   return pool.query(
     `select employee.*, branch.branch_city as branch_name, user_role.role_name, user_role.user_access
@@ -56,6 +70,8 @@ const updateEmployee = (
 module.exports = {
   getEmployees,
   getEmployee,
+  getEmployeesByBranch,
+  getEmployeesByRole,
   updateEmployee,
   getUserEmployee,
 };

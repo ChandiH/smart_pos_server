@@ -6,6 +6,18 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
+  getEmployeesByBranch(req, res, next) {
+    const { id } = req.params;
+    Employee.getEmployeesByBranch(id)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
+  getEmployeesByRole(req, res, next) {
+    const { id } = req.params;
+    Employee.getEmployeesByRole(id)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
   getEmployee(req, res, next) {
     const { id } = req.params;
     Employee.getEmployee(id)
