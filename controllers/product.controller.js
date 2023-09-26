@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Inventory = require("../models/inventory.model");
 const { deleteImage } = require("../utils/fileHandler");
 
 module.exports = {
@@ -61,6 +62,33 @@ module.exports = {
       .catch((err) => res.status(400).json({ error: err }));
   },
 
+  async deleteProduct(req, res, next) {
+    const { id: product_id } = req.params;
+
+    const stock = await Inventory.getInventoryByProductId(product_id);
+    let totalQuantity = 0;
+    stock.rows.forEach((item) => (totalQuantity += item.quantity));
+    console.log(totalQuantity);
+    if (totalQuantity > 0) {
+      return res.status(400).json({
+        error: `Cannot delete product. There are ${totalQuantity} items in stock in all the branches.`,
+      });
+    }
+
+    Product.deleteProduct(product_id)
+      .then(() => res.status(200).json({ result: "successfully Deleted" }))
+      .catch((err) => res.status(400).json({ error: err }));
+
+    // const employees = response.rowCount;
+    // if (employees)
+    //   return res.status(400).json({
+    //     error: `Please assign the ${employees} employees in this user role to different roles first before deleting the role.`,
+    //   });
+
+    // UserRole.deleteUserRole(id)
+    //   .then(() => res.status(200).json({ result: "successfully Deleted" }))
+    //   .catch((err) => res.status(400).json({ error: err }));
+  },
   updateProduct(req, res, next) {
     const { id } = req.params;
     const {

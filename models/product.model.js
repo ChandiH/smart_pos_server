@@ -39,6 +39,12 @@ const addProduct = (
   );
 };
 
+const deleteProduct = (id) => {
+  return pool.query("update product set removed=true where product_id=$1", [
+    id,
+  ]);
+};
+
 const updateProduct = (
   product_name,
   product_desc,
@@ -96,6 +102,7 @@ module.exports = {
   getProducts,
   getProduct,
   addProduct,
+  deleteProduct,
   updateProduct,
   getProductWithCategory,
   getProductsBySupplierId,
