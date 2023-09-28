@@ -5,11 +5,6 @@ const {
   updateEmployee,
   getEmployeesByBranch,
   getEmployeesByRole,
-  //insert employee password and username
-
-  //update employee password and username
-
-  //delete employee password and username
 } = require("../controllers/employee.controller");
 const {
   getUserRoles,

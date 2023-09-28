@@ -54,6 +54,8 @@ app.use("/user-role", userRoleRouter);
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 
+process.env.TZ = 'Asia/Colombo';
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
