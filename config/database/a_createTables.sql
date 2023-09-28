@@ -55,7 +55,7 @@ CREATE TABLE cart (
     order_id INTEGER ,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL check (quantity > 0),
-    sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0),
+    sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0), --with discount
     created_at date DEFAULT CURRENT_DATE
 );
 
@@ -64,13 +64,13 @@ CREATE TABLE sales_history (
     order_id INTEGER  PRIMARY KEY,
     customer_id INTEGER,
     cashier_id INTEGER NOT NULL,
+    branch_id INTEGER NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    total_amount NUMERIC(1000,2) check (total_amount > 0),
+    total_amount NUMERIC(1000,2) check (total_amount > 0), --without discount?? 
     profit NUMERIC(1000,2) DEFAULT 0.00,
     payment_method_id INTEGER ,
-    reference_ID VARCHAR(255) UNIQUE
-    -- product count
-    -- direct: add branch id (is it okay with db standards?) 
+    reference_ID VARCHAR(255) , --unique
+    product_count INTEGER
 );
 
 --customer
