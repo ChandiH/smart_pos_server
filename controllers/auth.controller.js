@@ -31,10 +31,13 @@ module.exports = {
               employee_image,
               role_name,
               user_access,
+              employee_email,
+              employee_phone,
             } = data.rows[0];
             // then generate token
             const token = jwt.sign(
               {
+                employee_username: username,
                 employee_id,
                 employee_name,
                 branch_id,
@@ -43,6 +46,8 @@ module.exports = {
                 employee_image,
                 role_name,
                 user_access,
+                employee_email,
+                employee_phone,
               },
               process.env.SECRET_KEY,
               {

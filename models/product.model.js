@@ -77,6 +77,14 @@ const updateProduct = (
   );
 };
 
+const updateProductDiscount = (product_id, discount) => {
+  return pool.query(
+    `update product
+  set discount= $1 where product_id= $2`,
+    [discount, product_id]
+  );
+};
+
 const getProductWithCategory = () => {
   return pool.query(
     `select product.* , category.category_name from product left join category on product.category_id = category.category_id`
@@ -104,6 +112,7 @@ module.exports = {
   addProduct,
   deleteProduct,
   updateProduct,
+  updateProductDiscount,
   getProductWithCategory,
   getProductsBySupplierId,
   isBarcodeTaken,

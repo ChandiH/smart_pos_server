@@ -126,6 +126,15 @@ module.exports = {
       });
   },
 
+  updateProductDiscount(req, res, next) {
+    const { id: product_id } = req.params;
+    const { discount } = req.body;
+    Product.updateProductDiscount(product_id, discount)
+      .then((data) =>
+        res.status(200).json({ message: "Product updated successfull" })
+      )
+      .catch((err) => res.status(400).json({ error: err }));
+  },
   getProductsWithCategory(req, res, next) {
     Product.getProductWithCategory()
       .then((data) => res.status(200).json(data.rows))
