@@ -58,3 +58,16 @@ CREATE TRIGGER Z_employee_update_trigger
 BEFORE UPDATE ON employee
 FOR EACH ROW
 EXECUTE FUNCTION update_role_branch_updated_on();
+
+
+CREATE OR REPLACE FUNCTION update_variable_options_updated_on()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_on = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER z_variable_options_update_trigger
+BEFORE UPDATE  ON variable_options
+FOR EACH ROW
+EXECUTE FUNCTION update_variable_options_updated_on();

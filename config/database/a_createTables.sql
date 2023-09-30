@@ -69,9 +69,11 @@ CREATE TABLE sales_history (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(1000,2) check (total_amount > 0), --without discount?? 
     profit NUMERIC(1000,2) DEFAULT 0.00,
+    rewards_points NUMERIC(1000,2) DEFAULT 0.00, --reward points default will change later (no need to include default)
     payment_method_id INTEGER ,
     reference_ID VARCHAR(255) , --unique
     product_count INTEGER
+    
 );
 
 --customer
@@ -140,6 +142,13 @@ CREATE TABLE branch (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE variable_options (
+    variable_id integer PRIMARY KEY,
+    variable_name VARCHAR(100) unique NOT NULL,
+    created_at timestamp(0) with time zone DEFAULT CURRENT_TIMESTAMP,
+    variable_value numeric(1000,2),
+    updated_on timestamp(0) with time zone DEFAULT CURRENT_TIMESTAMP
+);
 
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_category
@@ -188,6 +197,11 @@ ALTER TABLE sales_history
 	FOREIGN KEY (payment_method_id)
 	REFERENCES payment_method (payment_method_id)
 	ON DELETE CASCADE;
+ALTER TABLE sales_history
+    ADD CONSTRAINT fk_sales_history_branch
+    FOREIGN KEY (branch_id) 
+    REFERENCES branch (branch_id)
+    ON DELETE CASCADE;
 
 ALTER TABLE user_credentials
     ADD CONSTRAINT fk_user_credentials_employee

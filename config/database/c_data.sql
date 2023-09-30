@@ -48,7 +48,7 @@ VALUES
     ('Colombo', '123 Main St, Colombo 01', '112233445', 'colombobranch@example.com'),
     ('Kandy', '456 Elm St, Kandy 20000', '814325678', 'kandybranch@example.com'),
     ('Galle', '789 Oak St, Galle 80000', '912345678',  'gallebranch@example.com'),
-    ( 'Anuradhapura', '789 Pine St, Anuradhapura 50000', '762345678', 'anuradhapurabranch@example.com');
+    ('Anuradhapura', '789 Pine St, Anuradhapura 50000', '762345678', 'anuradhapurabranch@example.com');
 
 
 INSERT INTO supplier ( supplier_name ,supplier_email ,supplier_phone ,supplier_address )
@@ -121,7 +121,7 @@ VALUES
    ('Snacks'),
    ('Beverages'),
    ('Rice and Grains'),
-   ('Cooking Ingrediants'),
+   ('Cooking Ingredients'),
    ('Dental Care'),
    ('Stationary/Books');
 
@@ -217,7 +217,7 @@ VALUES
     (18, 3, 200, '2023-09-10 10:00:00', 40),
     (19, 4, 30, '2023-07-15 10:00:00', 6),
     (20, 3, 10, '2023-07-30 10:00:00', 2)
-   ;
+    ;
 
 insert into customer (customer_name ,customer_email ,customer_phone ,customer_address ,
 visit_count ,rewards_points ) values 
@@ -311,3 +311,7 @@ VALUES
     (12, 19, 5,  237.50, '2023-09-10 10:50:00'),
     (13, 20, 1,  100.00, '2023-09-12 14:30:00'),
     (14, 11, 2,  200.50, '2023-09-15 16:55:00');
+
+INSERT INTO variable_options(
+	 variable_name, variable_value)
+	VALUES ('rewards_points_percentage', '0.05');

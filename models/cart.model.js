@@ -7,7 +7,12 @@ const insertSalesData = (salesData) => {
     [salesData]
   );
 };
-
+const getRewardsPointsPercentage = () => {
+  return pool.query(
+`SELECT variable_value FROM variable_options WHERE variable_name = 'rewards_points_percentage'
+`    );
+}
 module.exports = {
   insertSalesData,
+  getRewardsPointsPercentage,
 };
