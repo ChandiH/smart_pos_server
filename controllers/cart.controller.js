@@ -1,6 +1,6 @@
 const Cart = require("../models/cart.model");
 
-const  insertSalesData = async (req, res, next) => {
+const insertSalesData = async (req, res, next) => {
   try {
     const { salesData } = req.body;
     await Cart.insertSalesData(salesData);
@@ -19,10 +19,23 @@ const getRewardsPointsPercentage = async (req, res, next) => {
     console.error(error);
     res.status(400).json({ error: error.message });
   }
-}
+};
 
+const updateRewardsPointsPercentage = async (req, res, next) => {
+  try {
+    const { rewardsPointsPercentage } = req.body;
+    await Cart.updateRewardsPointsPercentage(rewardsPointsPercentage);
+    res
+      .status(200)
+      .json({ message: "Rewards points percentage updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   insertSalesData,
-  getRewardsPointsPercentage
+  getRewardsPointsPercentage,
+  updateRewardsPointsPercentage,
 };
