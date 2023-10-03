@@ -4,7 +4,8 @@
   "description": "backend server application for smart pos(point of sale) system",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "online": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Somesh Chandimal",
