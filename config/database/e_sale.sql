@@ -62,7 +62,8 @@ BEGIN
     SELECT (MAX(order_id) + 1) INTO order_number FROM sales_history;
 
     -- Cast customer_id and payment_method_id to integer
-    INSERT INTO sales_history (order_id, customer_id, cashier_id, total_amount, profit, payment_method_id, reference_id,branch_id)
+    INSERT INTO sales_history (order_id, customer_id, cashier_id, total_amount, profit, payment_method_id, reference_id,
+    branch_id,rewards_points,product_count)
     VALUES (
         order_number,
         (order_data->>'customer_id')::integer,
@@ -71,7 +72,9 @@ BEGIN
         (order_data->>'profit')::numeric,
         (order_data->>'payment_method_id')::integer,
         (order_data->>'reference_id'),
-        (order_data->>'branch_id')::integer
+        (order_data->>'branch_id')::integer,
+        (order_data->>'rewards_points')::numeric,
+		(order_data->>'product_count')::integer
     );
 
     -- Extract the array of items from the input JSON
@@ -156,22 +159,30 @@ END;
 $$ LANGUAGE plpgsql;
 
 ------------------------------------------------------------------------------------------------------------------------
---update sales_history table after inserting into cart table
-CREATE OR REPLACE FUNCTION update_sales_history()
+-- update rewards points and visit count
+-- Create the trigger function
+CREATE OR REPLACE FUNCTION update_customer_data()
 RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE sales_history
-    SET product_count = (
-        SELECT SUM(quantity)
-        FROM cart
-        WHERE order_id = NEW.order_id
-    )
-    WHERE order_id = NEW.order_id;
+    -- Check if customer_id is not null
+    IF NEW.customer_id IS NOT NULL THEN
+        -- Increment visit_count by 1
+        UPDATE customer
+        SET visit_count = visit_count + 1
+        WHERE customer_id = NEW.customer_id;
+
+        -- Add rewards_points from sales_history to customer's rewards_points
+        UPDATE customer
+        SET rewards_points = rewards_points + NEW.rewards_points
+        WHERE customer_id = NEW.customer_id;
+    END IF;
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-CREATE TRIGGER update_sales_history_trigger
-AFTER INSERT ON cart
-FOR EACH ROW
-EXECUTE FUNCTION update_sales_history();
+
+-- Create the trigger
+CREATE TRIGGER sales_history_customer_trigger
+AFTER INSERT ON sales_history
+FOR EACH ROW WHEN (NEW.customer_id IS NOT NULL)
+EXECUTE FUNCTION update_customer_data();

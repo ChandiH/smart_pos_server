@@ -269,6 +269,27 @@ BEFORE INSERT ON branch
 FOR EACH ROW
 EXECUTE FUNCTION BeforeInsertBranch();
 
+-- Trigger function for variable_options table
+CREATE OR REPLACE FUNCTION BeforeInsertVariable_options()
+RETURNS TRIGGER AS $$
+BEGIN
+   -- Check if the table is empty
+   IF NOT EXISTS (SELECT 1 FROM variable_options) THEN
+       NEW.variable_id = 1;
+   ELSE
+       -- Find the maximum id value and increment it by 1
+        SELECT MAX(variable_id) + 1 INTO NEW.variable_id FROM variable_options;
+   END IF;
+   RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger for branch table
+CREATE TRIGGER a_variable_options
+BEFORE INSERT ON variable_options
+FOR EACH ROW
+EXECUTE FUNCTION BeforeInsertVariable_options();
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 

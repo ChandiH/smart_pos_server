@@ -8,6 +8,21 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
-}
+
+  getSalesHistoryView(req, res, next) {
+    Chart.getSalesHistoryView()
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
+
+  getMonthlySummary(req, res, next) {
+    Chart.getMonthlySummary()
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
+
+};
+
+
 
   

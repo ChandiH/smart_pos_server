@@ -142,3 +142,9 @@ localhost:4000/supplier/
         "supplier_address": "345 Cinnamon Colombo 02"
     }
 
+
+    {
+ 
+        "rewardsPointsPercentage": 4
+    
+    }
