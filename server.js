@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
+// config
+dotenv.config();
+const PORT = process.env.PORT || 4000;
 
 // routes
 const authRouter = require("./routes/auth.routes");
@@ -15,9 +18,6 @@ const categoryRouter = require("./routes/category.routes");
 const chartRouter = require("./routes/chart.routes");
 const supplierRouter = require("./routes/supplier.routes");
 const userRoleRouter = require("./routes/userRole.routes");
-// config
-dotenv.config();
-const PORT = process.env.PORT || 4000;
 
 // middleware
 const jwt = require("./middleware/authJWT");
@@ -54,7 +54,7 @@ app.use("/user-role", userRoleRouter);
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 
-process.env.TZ = 'Asia/Colombo';
+//process.env.TZ = 'Asia/Colombo';
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
