@@ -186,3 +186,50 @@ CREATE TRIGGER sales_history_customer_trigger
 AFTER INSERT ON sales_history
 FOR EACH ROW WHEN (NEW.customer_id IS NOT NULL)
 EXECUTE FUNCTION update_customer_data();
+-------------------------------------------------------------
+--Sales History Today for current user
+CREATE OR REPLACE FUNCTION get_sales_data_by_branch(id integer)
+RETURNS TABLE (
+    order_id integer,
+    customer varchar(255),
+    cashier_name  varchar(255),
+    branch_name  varchar(255),
+    created_time time(0),
+    total numeric(1000, 2),
+    payment_method  varchar(255),
+    total_quantity integer
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+
+   s.order_id as order_id , 
+   COALESCE(c.customer_name, 'Guest Customer') as customer,
+   e.employee_name as cashier_name,
+   b.branch_city as branch_name, 
+   s.created_at::time(0) as time,
+   s.total_amount::numeric(1000,2) as total,
+   p.payment_method_name as payment_method,
+   s.product_count::integer as total_quantity
+   from sales_history s 
+   left join
+   customer c
+   on 
+   c.customer_id = s.customer_id	
+   left join 
+   branch b
+   on
+	   b.branch_id = s.branch_id
+	   left join 
+	   payment_method p
+	   on  p.payment_method_id = s.payment_method_id
+	   left join
+	   employee e
+	   on s.cashier_id = e.employee_id
+	   
+     where to_char(s.created_at, 'YYYY-MM-DD') = to_char(now()::date, 'YYYY-MM-DD')  
+     and b.branch_id = id
+   order by 
+   s.order_id desc;
+END;
+$$ LANGUAGE plpgsql;
