@@ -99,23 +99,19 @@ CREATE OR REPLACE FUNCTION branch_monthly_sales(
     target_month text,
     target_branch_id integer
 )
-RETURNS TABLE (day timestamp with time zone, total_sales numeric) AS $$
+RETURNS TABLE (day text, total_sales numeric) AS $$
 BEGIN
     RETURN QUERY (
         SELECT
-            sh.created_at AS day,
-            SUM(sh.total_amount) AS total_sales
+            To_char( created_at::date,'YYYY-MM-DD') AS day,
+            SUM(total_amount) AS total_sales
         FROM
-            sales_history sh
-        JOIN
-            employee e ON sh.cashier_id = e.employee_id
+            sales_history 
         WHERE
-            e.branch_id = target_branch_id
-            AND TO_CHAR(sh.created_at, 'YYYY-MM') = target_month
+            branch_id = target_branch_id
+            AND TO_CHAR(created_at, 'YYYY-MM') = target_month  
         GROUP BY
-            sh.created_at
-        ORDER BY
-            sh.created_at
+           To_char( created_at::date,'YYYY-MM-DD')
     );
 END;
 $$ LANGUAGE plpgsql;
