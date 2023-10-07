@@ -9,7 +9,6 @@ module.exports = {
   },
 
   getSalesView(req, res, next) {
-    console.log("Received id:", req.params);
     const { id } = req.params;
     Chart.getSalesView(id)
       .then((data) => res.status(200).json(data.rows))
