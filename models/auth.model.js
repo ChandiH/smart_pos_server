@@ -60,8 +60,27 @@ const isUsernameTaken = async (username) => {
   return result.rowCount > 0;
 };
 
+const resetPassword = async (username, password) => {
+  const result = await pool.query(
+    "UPDATE user_credentials SET password = crypt($1, gen_salt('bf')) WHERE username = $2 returning *",
+    [password, username]
+  );
+  return result.rowCount > 0;
+};
+
+//check password same as previous
+const checkPassword = async (username, password) => {
+  const result = await pool.query(
+    "SELECT 1 FROM user_credentials WHERE username = $1 AND password = crypt($2, password) LIMIT 1",
+    [username, password]
+  );
+  return result.rowCount > 0;
+};
+
 module.exports = {
   login,
   register,
   isUsernameTaken,
+  resetPassword,
+  checkPassword,
 };
