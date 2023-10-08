@@ -20,4 +20,11 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
+
+  getTopSellingBranch(req, res, next) {
+    const { target_month } = req.params;
+    Chart.getTopSellingBranch(target_month)
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
 };

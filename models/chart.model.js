@@ -21,9 +21,13 @@ const getMonthlySummary = () => {
 `
   );
 };
+const getTopSellingBranch = (target_month) => {
+  return pool.query("SELECT * FROM get_top_branch_sales($1)", [target_month]);
+};
 
 module.exports = {
   getDailySalesForbranch,
   getMonthlySummary,
   getSalesView,
+  getTopSellingBranch,
 };
