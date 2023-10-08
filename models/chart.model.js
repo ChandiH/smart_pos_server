@@ -25,9 +25,21 @@ const getTopSellingBranch = (target_month) => {
   return pool.query("SELECT * FROM get_top_branch_sales($1)", [target_month]);
 };
 
+const getMonths = () => {
+  return pool.query(`
+  SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '2 months', 'YYYY-MM') AS month_name
+UNION
+SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '1 month', 'YYYY-MM')
+UNION
+SELECT TO_CHAR(date_trunc('month', current_date), 'YYYY-MM')
+order by month_name desc;
+`);
+};
+
 module.exports = {
   getDailySalesForbranch,
   getMonthlySummary,
   getSalesView,
   getTopSellingBranch,
+  getMonths,
 };

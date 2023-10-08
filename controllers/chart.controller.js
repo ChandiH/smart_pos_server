@@ -27,4 +27,10 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
+
+  getMonths(req, res, next) {
+    Chart.getMonths()
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
 };
