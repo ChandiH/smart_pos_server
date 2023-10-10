@@ -33,4 +33,10 @@ module.exports = {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json({ error: err }));
   },
+
+  getTopSellingProduct(req, res, next) {
+    Chart.getTopSellingProduct()
+      .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  }
 };

@@ -36,10 +36,53 @@ order by month_name desc;
 `);
 };
 
+const getTopSellingProduct = () => {
+  return pool.query(
+    `WITH current_month_sales AS (
+      SELECT
+        p.product_name,
+        SUM(CASE WHEN DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE) THEN c.quantity ELSE 0 END) AS current_month_count
+      FROM
+        cart c
+        LEFT JOIN product p ON p.product_id = c.product_id
+      WHERE
+        DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE) 
+      GROUP BY
+        p.product_name
+      ORDER BY
+        current_month_count DESC
+      LIMIT 5
+      
+    ),
+    last_month_sales AS (
+      SELECT
+        p.product_name,
+        SUM(CASE WHEN DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') THEN c.quantity ELSE 0 END) AS last_month_count
+      FROM
+        cart c
+        LEFT JOIN product p ON p.product_id = c.product_id
+      WHERE
+        DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') -- Filter by last month
+      GROUP BY
+        p.product_name
+    )
+    SELECT
+      cm.product_name,
+      cm.current_month_count,
+      COALESCE(lm.last_month_count, 0) AS last_month_count
+    FROM
+      current_month_sales cm
+      LEFT JOIN last_month_sales lm ON cm.product_name = lm.product_name
+    ORDER BY
+      cm.current_month_count DESC;
+    `);
+};
+
 module.exports = {
   getDailySalesForbranch,
   getMonthlySummary,
   getSalesView,
   getTopSellingBranch,
   getMonths,
+  getTopSellingProduct,
 };
