@@ -99,23 +99,19 @@ CREATE OR REPLACE FUNCTION branch_monthly_sales(
     target_month text,
     target_branch_id integer
 )
-RETURNS TABLE (day timestamp with time zone, total_sales numeric) AS $$
+RETURNS TABLE (day text, total_sales numeric) AS $$
 BEGIN
     RETURN QUERY (
         SELECT
-            sh.created_at AS day,
-            SUM(sh.total_amount) AS total_sales
+            To_char( created_at::date,'YYYY-MM-DD') AS day,
+            SUM(total_amount) AS total_sales
         FROM
-            sales_history sh
-        JOIN
-            employee e ON sh.cashier_id = e.employee_id
+            sales_history 
         WHERE
-            e.branch_id = target_branch_id
-            AND TO_CHAR(sh.created_at, 'YYYY-MM') = target_month
+            branch_id = target_branch_id
+            AND TO_CHAR(created_at, 'YYYY-MM') = target_month  
         GROUP BY
-            sh.created_at
-        ORDER BY
-            sh.created_at
+           To_char( created_at::date,'YYYY-MM-DD')
     );
 END;
 $$ LANGUAGE plpgsql;
@@ -186,3 +182,96 @@ CREATE TRIGGER sales_history_customer_trigger
 AFTER INSERT ON sales_history
 FOR EACH ROW WHEN (NEW.customer_id IS NOT NULL)
 EXECUTE FUNCTION update_customer_data();
+-------------------------------------------------------------
+--Sales History Today for current user
+CREATE OR REPLACE FUNCTION get_sales_data_by_branch(id integer)
+RETURNS TABLE (
+    order_id integer,
+    customer varchar(255),
+    cashier_name  varchar(255),
+    branch_name  varchar(255),
+    created_time time(0),
+    total numeric(1000, 2),
+    payment_method  varchar(255),
+    total_quantity integer
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+
+   s.order_id as order_id , 
+   COALESCE(c.customer_name, 'Guest Customer') as customer,
+   e.employee_name as cashier_name,
+   b.branch_city as branch_name, 
+   s.created_at::time(0) as time,
+   s.total_amount::numeric(1000,2) as total,
+   p.payment_method_name as payment_method,
+   s.product_count::integer as total_quantity
+   from sales_history s 
+   left join
+   customer c
+   on 
+   c.customer_id = s.customer_id	
+   left join 
+   branch b
+   on
+	   b.branch_id = s.branch_id
+	   left join 
+	   payment_method p
+	   on  p.payment_method_id = s.payment_method_id
+	   left join
+	   employee e
+	   on s.cashier_id = e.employee_id
+	   
+     where to_char(s.created_at, 'YYYY-MM-DD') = to_char(now()::date, 'YYYY-MM-DD')  
+     and b.branch_id = id
+   order by 
+   s.order_id desc;
+END;
+$$ LANGUAGE plpgsql;
+
+----
+CREATE OR REPLACE FUNCTION get_top_branch_sales(target_month text)
+RETURNS TABLE (
+	branch_name varchar(255),	
+    current_month_sales NUMERIC,
+    previous_month_sales NUMERIC 
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    WITH CurrentMonthData AS (
+        SELECT
+            branch_id,
+            TO_CHAR(created_at, 'yyyy-mm') AS year_month,
+            SUM(total_amount) AS current_month_sales        FROM
+            sales_history sh
+        WHERE
+            TO_CHAR(created_at, 'YYYY-MM') = target_month
+        GROUP BY
+            branch_id, TO_CHAR(created_at, 'yyyy-mm')
+        ORDER BY
+            current_month_sales desc
+        LIMIT 3
+    )
+   SELECT
+	b.branch_city as branch_name,
+  cmd.current_month_sales,
+    COALESCE(SUM(CASE WHEN TO_CHAR(sh.created_at, 'YYYY-MM') = TO_CHAR(TO_DATE(target_month, 'yyyy-mm') - INTERVAL '1 MONTH', 'YYYY-MM') THEN sh.total_amount ELSE 0 END), 0) AS previous_month_sales
+	FROM
+    CurrentMonthData cmd
+LEFT JOIN
+    sales_history sh ON cmd.branch_id = sh.branch_id
+    AND TO_CHAR(sh.created_at, 'YYYY-MM') = TO_CHAR(TO_DATE(target_month,'yyyy-mm') - INTERVAL '1 MONTH', 'YYYY-MM')
+left join
+branch b
+on b.branch_id = cmd.branch_id
+GROUP BY
+    cmd.branch_id, cmd.current_month_sales,TO_CHAR(sh.created_at, 'yyyy-mm'),b.branch_city
+ORDER BY
+    cmd.current_month_sales DESC
+LIMIT 5;
+
+END;
+$$
+LANGUAGE PLPGSQL;

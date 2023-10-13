@@ -25,11 +25,8 @@ const updateRewardsPointsPercentage = async (req, res, next) => {
   try {
     const { rewardsPointsPercentage } = req.body;
     await Cart.updateRewardsPointsPercentage(rewardsPointsPercentage);
-    res
-      .status(200)
-      .json({ message: "Rewards points percentage updated successfully" });
+    res.status(200).json({ message: "Rewards points percentage updated successfully" });
   } catch (error) {
-    console.error(error);
     res.status(400).json({ error: error.message });
   }
 };
