@@ -290,6 +290,27 @@ BEFORE INSERT ON variable_options
 FOR EACH ROW
 EXECUTE FUNCTION BeforeInsertVariable_options();
 
+-- Trigger function for working hour table
+CREATE OR REPLACE FUNCTION BeforeInsertWorking_hour()
+RETURNS TRIGGER AS $$
+BEGIN
+   -- Check if the table is empty
+   IF NOT EXISTS (SELECT 1 FROM working_hour) THEN
+       NEW.record_id = 1;
+   ELSE
+       -- Find the maximum id value and increment it by 1
+        SELECT MAX(record_id) + 1 INTO NEW.record_id FROM working_hour;
+   END IF;
+   RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger for branch table
+CREATE TRIGGER a_working_hour
+BEFORE INSERT ON working_hour
+FOR EACH ROW
+EXECUTE FUNCTION BeforeInsertWorking_hour();
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 

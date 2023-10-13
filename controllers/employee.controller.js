@@ -1,4 +1,5 @@
 const Employee = require("../models/employee.model");
+const { deleteImage } = require("../utils/fileHandler");
 
 module.exports = {
   getEmployees(req, res, next) {
@@ -43,6 +44,21 @@ module.exports = {
       id
     )
       .then((data) => res.status(200).json(data.rows))
+      .catch((err) => res.status(400).json({ error: err }));
+  },
+  async updateEmployeeImage(req, res, next) {
+    const { id } = req.params;
+    const result = await Employee.getEmployee(id);
+    const employee = result.rows[0];
+    //remove previous photo
+    deleteImage("public\\image\\" + employee.employee_image);
+
+    await Employee.updateImage(id, req.file.filename)
+      .then(() =>
+        res
+          .status(200)
+          .json({ message: "File uploaded successfully!", file: req.file })
+      )
       .catch((err) => res.status(400).json({ error: err }));
   },
 };

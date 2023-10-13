@@ -1,6 +1,10 @@
 const Auth = require("../models/auth.model");
-
-const { isUsernameTaken, register } = require("../models/auth.model");
+const {
+  register,
+  isUsernameTaken,
+  checkPassword,
+  resetPassword,
+} = require("../models/auth.model");
 
 const Employee = require("../models/employee.model");
 const jwt = require("jsonwebtoken");
@@ -69,7 +73,6 @@ module.exports = {
       employee_email,
       employee_phone,
       branch_id,
-      employee_image,
     } = req.body;
 
     // Validate that all required fields are provided
@@ -103,7 +106,7 @@ module.exports = {
         employee_email,
         employee_phone,
         branch_id,
-        employee_image,
+        employee_image: "employee-image-placeholder.jpg", // default image
       });
 
       if (result) {
@@ -120,4 +123,53 @@ module.exports = {
   },
 
   //reset password only
+  async resetPassword(req, res, next) {
+    const { username, password, newPassword } = req.body;
+
+    // Check if the username is in the list
+    const isUsernameInUse = await isUsernameTaken(username);
+    if (!isUsernameInUse) {
+      return res
+        .status(400)
+        .json({ error: { username: "User name is not exist." } });
+    }
+
+    //check previuos password match
+    const data = await Auth.login(username, password).then((data) => data);
+    const employee_id = data.rows[0]?.employee_id;
+    if (!employee_id) {
+      return res
+        .status(400)
+        .json({ error: { username: "Invalid username/password." } });
+    }
+
+    // Validate that password has numbers and characters with length at least  6
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      return res.status(400).json({
+        error: {
+          newPassword:
+            "Password must be at least 6 characters long and contain at least one letter and one number",
+        },
+      });
+    }
+    //check password same as previous
+    const isPasswordSame = await checkPassword(username, newPassword);
+    if (isPasswordSame) {
+      return res
+        .status(400)
+        .json({ error: { newPassword: "Password same as previous." } });
+    }
+    try {
+      const result = await resetPassword(username, newPassword);
+      if (result) {
+        return res.status(200).json({ message: "Reset password successful" });
+      } else {
+        return res.status(400).json({ error: "Reset password failed" });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
