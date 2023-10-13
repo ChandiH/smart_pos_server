@@ -1,7 +1,10 @@
 const Auth = require("../models/auth.model");
-const { register, isUsernameTaken, checkPassword, resetPassword } = require("../models/auth.model");
-
-
+const {
+  register,
+  isUsernameTaken,
+  checkPassword,
+  resetPassword,
+} = require("../models/auth.model");
 
 const Employee = require("../models/employee.model");
 const jwt = require("jsonwebtoken");
@@ -70,7 +73,6 @@ module.exports = {
       employee_email,
       employee_phone,
       branch_id,
-      employee_image,
     } = req.body;
 
     // Validate that all required fields are provided
@@ -104,7 +106,7 @@ module.exports = {
         employee_email,
         employee_phone,
         branch_id,
-        employee_image,
+        employee_image: "employee-image-placeholder.jpg", // default image
       });
 
       if (result) {
@@ -124,11 +126,12 @@ module.exports = {
   async resetPassword(req, res, next) {
     const { username, password } = req.body;
     // Validate that password has numbers and characters with length at least  6
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; 
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         error: {
-          password:"Password must be at least 6 characters long and contain at least one letter and one number",
+          password:
+            "Password must be at least 6 characters long and contain at least one letter and one number",
         },
       });
     }
@@ -157,5 +160,5 @@ module.exports = {
       console.error(error);
       return res.status(500).json({ error: "Internal server error" });
     }
-  }
+  },
 };

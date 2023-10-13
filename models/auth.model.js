@@ -38,7 +38,7 @@ const register = async ({
     // Insert data into the user_credentials table
     const userCredentialsResult = await client.query(
       "INSERT INTO user_credentials (user_id, username, password) VALUES ($1, $2, crypt($3, gen_salt('bf')))",
-      [employee_id, employee_userName, employee_name]
+      [employee_id, employee_userName, employee_userName]
     );
 
     await client.query("COMMIT");

@@ -46,11 +46,16 @@ module.exports = {
       imagePath.push(req.files[i].filename);
     }
 
+    const imagePlaceholder = [
+      "product-image-placeholder.jpg",
+      "placeholder-300x400.png",
+      "placeholder-200x200.png",
+    ];
     Product.addProduct(
       product_name,
       product_desc,
       category_id,
-      imagePath,
+      imagePath.length > 0 ? imagePath : imagePlaceholder,
       buying_price,
       retail_price,
       discount,
