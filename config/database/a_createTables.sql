@@ -150,6 +150,17 @@ CREATE TABLE variable_options (
     updated_on timestamp(0) with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE working_hour (
+    record_id INTEGER PRIMARY KEY,
+    employee_id INTEGER NOT NULL,
+    date VARCHAR(12) NOT NULL,
+    shift_on VARCHAR(5) NOT NULL,
+    shift_off VARCHAR(5) NOT NULL,
+    updated_by INTEGER NOT NULL,
+    present BOOLEAN NOT NULL,
+    total_hours numeric(100,2)
+);
+
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_category
 	FOREIGN KEY (category_id) 
@@ -218,3 +229,13 @@ ALTER TABLE employee
 	ADD CONSTRAINT fk_employee_branch
 	FOREIGN KEY (branch_id)
 	REFERENCES branch(branch_id);
+
+ALTER TABLE working_hour
+    ADD CONSTRAINT fk_employee_id
+    FOREIGN KEY (employee_id)
+    REFERENCES employee(employee_id);
+
+ALTER TABLE working_hour
+    ADD CONSTRAINT fk_updated_by
+    FOREIGN KEY (updated_by)
+    REFERENCES employee(employee_id);

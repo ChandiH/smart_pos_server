@@ -29,6 +29,7 @@ app.use(express.json());
 // app.use(express.urlencoded());
 app.use(cors());
 
+app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/static/image", express.static(path.join(__dirname, "public/image")));
 app.post("/upload", upload.single("file"), (req, res) => {
   return res
@@ -43,7 +44,7 @@ app.post("/upload-multiple", upload.array("files"), (req, res) => {
 
 app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
-app.use("/employee", employeeRouter);
+app.use("/employee", upload.single("file"), employeeRouter);
 app.use("/product", upload.array("files"), productRouter);
 app.use("/cart", cartRouter);
 app.use("/inventory", inventoryRouter);

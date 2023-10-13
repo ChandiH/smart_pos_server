@@ -67,6 +67,15 @@ const updateEmployee = (
   );
 };
 
+const updateImage = (employee_id, imageURL) => {
+  return pool.query(
+    `update employee 
+  set employee_image= $2
+  where employee_id= $1`,
+    [employee_id, imageURL]
+  );
+};
+
 module.exports = {
   getEmployees,
   getEmployee,
@@ -74,4 +83,5 @@ module.exports = {
   getEmployeesByRole,
   updateEmployee,
   getUserEmployee,
+  updateImage,
 };
