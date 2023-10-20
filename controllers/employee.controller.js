@@ -51,13 +51,14 @@ module.exports = {
     const result = await Employee.getEmployee(id);
     const employee = result.rows[0];
     //remove previous photo
-    deleteImage("public\\image\\" + employee.employee_image);
+    if (employee.employee_image != "employee-image-placeholder.jpg")
+      deleteImage("public\\image\\" + employee.employee_image);
 
     await Employee.updateImage(id, req.file.filename)
       .then(() =>
         res
           .status(200)
-          .json({ message: "File uploaded successfully!", file: req.file })
+          .json({ success: "File uploaded successfully!", file: req.file })
       )
       .catch((err) => res.status(400).json({ error: err }));
   },
