@@ -14,14 +14,11 @@ CREATE TABLE access_type (
     access_name VARCHAR(100) NOT NULL UNIQUE
 );
 
-
 -- Category
 CREATE TABLE category (
     category_id INTEGER PRIMARY KEY,
     category_name VARCHAR(50) NOT NULL UNIQUE
 );
-
-
 
 -- Products
 CREATE TABLE product (
@@ -56,7 +53,7 @@ CREATE TABLE cart (
     order_id INTEGER ,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL check (quantity > 0),
-    sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0), --with discount
+    sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0),
     created_at date DEFAULT CURRENT_DATE
 );
 
@@ -67,16 +64,16 @@ CREATE TABLE sales_history (
     cashier_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    total_amount NUMERIC(1000,2) check (total_amount > 0), --without discount?? 
+    total_amount NUMERIC(1000,2) check (total_amount > 0),
     profit NUMERIC(1000,2) DEFAULT 0.00,
-    rewards_points NUMERIC(1000,2) DEFAULT 0.00, --reward points default will change later (no need to include default)
+    rewards_points NUMERIC(1000,2) DEFAULT 0.00,
     payment_method_id INTEGER ,
-    reference_ID VARCHAR(255) , --unique
+    reference_ID VARCHAR(255) ,
     product_count INTEGER
     
 );
 
---customer
+--Customer
 CREATE TABLE customer (
     customer_id INTEGER  PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
@@ -87,7 +84,6 @@ CREATE TABLE customer (
     rewards_points NUMERIC(1000, 2) default 0.00,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
 
 --user credentials
 CREATE TABLE user_credentials (
@@ -106,12 +102,12 @@ CREATE TABLE employee (
     employee_email VARCHAR(255) UNIQUE,
     employee_phone VARCHAR(13) NOT NULL UNIQUE ,
     branch_id INTEGER NOT NULL,
-    employee_image VARCHAR(255), --image data type 
+    employee_image VARCHAR(255),
     branch_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 	role_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Suppliers
+-- Supplier
 CREATE TABLE supplier (
     supplier_id INTEGER  PRIMARY KEY,
     supplier_name VARCHAR(200) NOT NULL ,
@@ -120,12 +116,13 @@ CREATE TABLE supplier (
     supplier_address VARCHAR(200) NOT NULL
 );
 
+-- Payment method
 CREATE TABLE payment_method (
     payment_method_id INTEGER  PRIMARY KEY,
     payment_method_name VARCHAR(255) NOT NULL UNIQUE
 );
 
--- Discounts and promotions
+-- Discount
 CREATE TABLE discount (
     discount_id INTEGER  PRIMARY KEY,
     discount_name VARCHAR(255) NOT NULL UNIQUE,
@@ -133,6 +130,7 @@ CREATE TABLE discount (
     discount_percentage NUMERIC(5, 2) NOT NULL
 );
 
+-- Branch
 CREATE TABLE branch (
     branch_id INTEGER  PRIMARY KEY,
     branch_city VARCHAR(255) NOT NULL UNIQUE ,
@@ -142,6 +140,7 @@ CREATE TABLE branch (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Variable options
 CREATE TABLE variable_options (
     variable_id integer PRIMARY KEY,
     variable_name VARCHAR(100) unique NOT NULL,
@@ -150,6 +149,7 @@ CREATE TABLE variable_options (
     updated_on timestamp(0) with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Working hour
 CREATE TABLE working_hour (
     record_id INTEGER PRIMARY KEY,
     employee_id INTEGER NOT NULL,
@@ -161,6 +161,7 @@ CREATE TABLE working_hour (
     total_hours numeric(100,2)
 );
 
+-- Constraints
 ALTER TABLE product
 	ADD CONSTRAINT fk_product_category
 	FOREIGN KEY (category_id) 
@@ -224,7 +225,6 @@ ALTER TABLE employee
 	ADD CONSTRAINT fk_employee_role
 	FOREIGN KEY (role_id)
 	REFERENCES user_role (role_id);
-
 ALTER TABLE employee
 	ADD CONSTRAINT fk_employee_branch
 	FOREIGN KEY (branch_id)
@@ -234,7 +234,6 @@ ALTER TABLE working_hour
     ADD CONSTRAINT fk_employee_id
     FOREIGN KEY (employee_id)
     REFERENCES employee(employee_id);
-
 ALTER TABLE working_hour
     ADD CONSTRAINT fk_updated_by
     FOREIGN KEY (updated_by)
