@@ -1,10 +1,10 @@
-import express from "express";
+import express, { type Router } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 // config
 dotenv.config();
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
 // routes
 import authRouter from "./routes/auth.routes";
@@ -18,6 +18,15 @@ import categoryRouter from "./routes/category.routes";
 import chartRouter from "./routes/chart.routes";
 import supplierRouter from "./routes/supplier.routes";
 import userRoleRouter from "./routes/userRole.routes";
+
+const simpleRoutes: Array<[string, Router]> = [
+  ["/cart", cartRouter],
+  ["/inventory", inventoryRouter],
+  ["/branch", branchRouter],
+  ["/supplier", supplierRouter],
+  ["/chart", chartRouter],
+  ["/user-role", userRoleRouter],
+];
 
 // middleware
 import log from "./middleware/log";
@@ -58,12 +67,10 @@ app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", upload.single("file"), employeeRouter);
 app.use("/product", upload.array("files"), productRouter);
-app.use("/cart", cartRouter);
-app.use("/inventory", inventoryRouter);
-app.use("/branch", branchRouter);
-app.use("/supplier", supplierRouter);
-app.use("/chart", chartRouter);
-app.use("/user-role", userRoleRouter);
+
+simpleRoutes.forEach(([path, router]) => {
+  app.use(path, router);
+});
 // sample of jwt middleware
 app.use("/customer", jwt.verifyToken, customerRouter);
 
