@@ -20,14 +20,26 @@ const supplierRouter = require("./routes/supplier.routes");
 const userRoleRouter = require("./routes/userRole.routes");
 
 // middleware
+const log = require("./middleware/log");
 const jwt = require("./middleware/authJWT");
 const upload = require("./middleware/upload");
+const pool = require("./config/config");
 
 const app = express();
 
 app.use(express.json());
 // app.use(express.urlencoded());
 app.use(cors());
+
+pool.connect((err) => {
+  if (err) {
+    console.error("Error connecting to the database:", err);
+  } else {
+    console.log("Connected to the database");
+  }
+});
+
+app.use(log.logRequest);
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/static/image", express.static(path.join(__dirname, "public/image")));
