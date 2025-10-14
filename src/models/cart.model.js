@@ -1,9 +1,9 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 const insertSalesData = (salesData) => {
-  return pool.query("CALL insert_sales_data_and_update($1::jsonb)", 
-  [salesData]
-  );
+  return pool.query("CALL insert_sales_data_and_update($1::jsonb)", [
+    salesData,
+  ]);
 };
 const getRewardsPointsPercentage = () => {
   return pool.query(

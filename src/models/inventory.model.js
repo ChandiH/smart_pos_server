@@ -1,4 +1,4 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 const getInventory = () => {
   return pool.query(`select inventory.*, branch.branch_city as "branch_name"

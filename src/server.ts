@@ -1,29 +1,29 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const path = require("path");
-const cors = require("cors");
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import cors from "cors";
 // config
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
 // routes
-const authRouter = require("./routes/auth.routes");
-const branchRouter = require("./routes/branch.routes");
-const cartRouter = require("./routes/cart.routes");
-const customerRouter = require("./routes/customer.routes");
-const employeeRouter = require("./routes/employee.routes");
-const inventoryRouter = require("./routes/inventory.routes");
-const productRouter = require("./routes/product.routes");
-const categoryRouter = require("./routes/category.routes");
-const chartRouter = require("./routes/chart.routes");
-const supplierRouter = require("./routes/supplier.routes");
-const userRoleRouter = require("./routes/userRole.routes");
+import authRouter from "./routes/auth.routes";
+import branchRouter from "./routes/branch.routes";
+import cartRouter from "./routes/cart.routes";
+import customerRouter from "./routes/customer.routes";
+import employeeRouter from "./routes/employee.routes";
+import inventoryRouter from "./routes/inventory.routes";
+import productRouter from "./routes/product.routes";
+import categoryRouter from "./routes/category.routes";
+import chartRouter from "./routes/chart.routes";
+import supplierRouter from "./routes/supplier.routes";
+import userRoleRouter from "./routes/userRole.routes";
 
 // middleware
-const log = require("./middleware/log");
-const jwt = require("./middleware/authJWT");
-const upload = require("./middleware/upload");
-const pool = require("./config/config");
+import log from "./middleware/log";
+import jwt from "./middleware/authJWT";
+import upload from "./middleware/upload";
+import { pool } from "./config/config";
 
 const app = express();
 

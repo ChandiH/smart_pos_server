@@ -1,4 +1,4 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 //employee image
 

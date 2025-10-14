@@ -1,4 +1,4 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 const getUserRoles = () => {
   return pool.query("select * from user_role");

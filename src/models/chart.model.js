@@ -1,4 +1,4 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 const getDailySalesForbranch = (year_month, branch_id) => {
   //SELECT * FROM branch_monthly_sales('2023-09', 1);
@@ -75,7 +75,8 @@ const getTopSellingProduct = () => {
       LEFT JOIN last_month_sales lm ON cm.product_name = lm.product_name
     ORDER BY
       cm.current_month_count DESC;
-    `);
+    `
+  );
 };
 
 module.exports = {

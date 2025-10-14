@@ -1,4 +1,4 @@
-const pool = require("../config/config");
+import { pool } from "../config/config";
 
 const getSuppliers = () => {
   return pool.query(`SELECT * FROM supplier;`);
