@@ -29,8 +29,8 @@ const simpleRoutes: Array<[string, Router]> = [
 ];
 
 // middleware
-import log from "./middleware/log";
-import jwt from "./middleware/authJWT";
+import { logRequest } from "./middleware/log";
+import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
 import { pool } from "./config/config";
 
@@ -48,7 +48,7 @@ pool.connect((err) => {
   }
 });
 
-app.use(log.logRequest);
+app.use(logRequest);
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/static/image", express.static(path.join(__dirname, "public/image")));
@@ -72,7 +72,7 @@ simpleRoutes.forEach(([path, router]) => {
   app.use(path, router);
 });
 // sample of jwt middleware
-app.use("/customer", jwt.verifyToken, customerRouter);
+app.use("/customer", verifyToken, customerRouter);
 
 //process.env.TZ = 'Asia/Colombo';
 
