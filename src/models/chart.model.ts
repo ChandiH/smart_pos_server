@@ -1,19 +1,26 @@
+import type { QueryResult } from "pg";
 import { pool } from "../config/config";
 
-const getDailySalesForbranch = (year_month, branch_id) => {
-  //SELECT * FROM branch_monthly_sales('2023-09', 1);
-  return pool.query(
+type ChartRow = Record<string, unknown>;
+
+const getDailySalesForbranch = (
+  year_month: string,
+  branch_id: string
+): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>(
     "SELECT day,total_sales FROM branch_monthly_sales($1,$2) order by day ",
     [year_month, branch_id]
   );
 };
 
-const getSalesView = (id) => {
-  return pool.query("SELECT * FROM get_sales_data_by_branch($1)", [id]);
+const getSalesView = (id: string): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>("SELECT * FROM get_sales_data_by_branch($1)", [
+    id,
+  ]);
 };
 
-const getMonthlySummary = () => {
-  return pool.query(
+const getMonthlySummary = (): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>(
     `select sum(profit) as gross_profit ,sum(total_amount) as net_sale, count(order_id)::Integer as total_orders
     from sales_history
     where to_char(created_at, 'YYYY-MM') = to_char(now()::date, 'YYYY-MM')
@@ -21,12 +28,17 @@ const getMonthlySummary = () => {
 `
   );
 };
-const getTopSellingBranch = (target_month) => {
-  return pool.query("SELECT * FROM get_top_branch_sales($1)", [target_month]);
+
+const getTopSellingBranch = (
+  target_month: string
+): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>("SELECT * FROM get_top_branch_sales($1)", [
+    target_month,
+  ]);
 };
 
-const getMonths = () => {
-  return pool.query(`
+const getMonths = (): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>(`
   SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '2 months', 'YYYY-MM') AS month_name
 UNION
 SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '1 month', 'YYYY-MM')
@@ -36,8 +48,8 @@ order by month_name desc;
 `);
 };
 
-const getTopSellingProduct = () => {
-  return pool.query(
+const getTopSellingProduct = (): Promise<QueryResult<ChartRow>> => {
+  return pool.query<ChartRow>(
     `WITH current_month_sales AS (
       SELECT
         p.product_name,
@@ -79,7 +91,7 @@ const getTopSellingProduct = () => {
   );
 };
 
-module.exports = {
+const chartModel = {
   getDailySalesForbranch,
   getMonthlySummary,
   getSalesView,
@@ -87,3 +99,13 @@ module.exports = {
   getMonths,
   getTopSellingProduct,
 };
+
+export {
+  getDailySalesForbranch,
+  getMonthlySummary,
+  getSalesView,
+  getTopSellingBranch,
+  getMonths,
+  getTopSellingProduct,
+};
+export default chartModel;

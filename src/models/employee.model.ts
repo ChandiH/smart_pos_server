@@ -1,9 +1,10 @@
+import type { QueryResult } from "pg";
 import { pool } from "../config/config";
 
-//employee image
+type EmployeeRow = Record<string, unknown>;
 
-const getEmployees = () => {
-  return pool.query(
+const getEmployees = (): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `select employee.*, branch.branch_city as branch_name , user_role.role_name 
     from employee inner join branch 
             on employee.branch_id = branch.branch_id 
@@ -13,8 +14,8 @@ const getEmployees = () => {
   );
 };
 
-const getEmployee = (id) => {
-  return pool.query(
+const getEmployee = (id: string): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `select employee.*, branch.branch_city as branch_name
     from employee
     inner join branch on employee.branch_id = branch.branch_id
@@ -24,8 +25,8 @@ const getEmployee = (id) => {
   );
 };
 
-const getEmployeesByBranch = (id) => {
-  return pool.query(
+const getEmployeesByBranch = (id: string): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `select employee.*, user_role.role_name
     from employee
     inner join user_role on employee.role_id = user_role.role_id
@@ -34,12 +35,14 @@ const getEmployeesByBranch = (id) => {
   );
 };
 
-const getEmployeesByRole = (id) => {
-  return pool.query(`select * from employee where role_id=$1`, [id]);
+const getEmployeesByRole = (id: string): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(`select * from employee where role_id=$1`, [
+    id,
+  ]);
 };
 
-const getUserEmployee = (id) => {
-  return pool.query(
+const getUserEmployee = (id: number): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `select employee.*, branch.branch_city as branch_name, user_role.role_name, user_role.user_access
     from employee
     inner join branch on employee.branch_id = branch.branch_id
@@ -51,24 +54,27 @@ const getUserEmployee = (id) => {
 };
 
 const updateEmployee = (
-  employee_name,
-  branch_id,
-  employee_email,
-  employee_phone,
-  role_id,
-  id
-) => {
-  return pool.query(
+  employee_name: string,
+  role_id: number,
+  employee_email: string,
+  employee_phone: string,
+  branch_id: number,
+  id: string
+): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `update employee 
     set employee_name= $1, role_id= $2, employee_email= $3, employee_phone= $4,
      branch_id= $5
     where employee_id= $6 returning *`,
-    [employee_name, branch_id, employee_email, employee_phone, role_id, id]
+    [employee_name, role_id, employee_email, employee_phone, branch_id, id]
   );
 };
 
-const updateImage = (employee_id, imageURL) => {
-  return pool.query(
+const updateImage = (
+  employee_id: string,
+  imageURL: string
+): Promise<QueryResult<EmployeeRow>> => {
+  return pool.query<EmployeeRow>(
     `update employee 
   set employee_image= $2
   where employee_id= $1`,
@@ -76,7 +82,7 @@ const updateImage = (employee_id, imageURL) => {
   );
 };
 
-module.exports = {
+const employeeModel = {
   getEmployees,
   getEmployee,
   getEmployeesByBranch,
@@ -85,3 +91,14 @@ module.exports = {
   getUserEmployee,
   updateImage,
 };
+
+export {
+  getEmployees,
+  getEmployee,
+  getEmployeesByBranch,
+  getEmployeesByRole,
+  updateEmployee,
+  getUserEmployee,
+  updateImage,
+};
+export default employeeModel;
