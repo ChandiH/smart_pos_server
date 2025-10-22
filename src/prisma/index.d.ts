@@ -2337,14 +2337,14 @@ export namespace Prisma {
 
   export type EmployeeCountOutputType = {
     sales_history: number
-    working_hour_working_hour_employee_idToemployee: number
-    working_hour_working_hour_updated_byToemployee: number
+    working_hour: number
+    working_hour_marked_by: number
   }
 
   export type EmployeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sales_history?: boolean | EmployeeCountOutputTypeCountSales_historyArgs
-    working_hour_working_hour_employee_idToemployee?: boolean | EmployeeCountOutputTypeCountWorking_hour_working_hour_employee_idToemployeeArgs
-    working_hour_working_hour_updated_byToemployee?: boolean | EmployeeCountOutputTypeCountWorking_hour_working_hour_updated_byToemployeeArgs
+    working_hour?: boolean | EmployeeCountOutputTypeCountWorking_hourArgs
+    working_hour_marked_by?: boolean | EmployeeCountOutputTypeCountWorking_hour_marked_byArgs
   }
 
   // Custom InputTypes
@@ -2368,14 +2368,14 @@ export namespace Prisma {
   /**
    * EmployeeCountOutputType without action
    */
-  export type EmployeeCountOutputTypeCountWorking_hour_working_hour_employee_idToemployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EmployeeCountOutputTypeCountWorking_hourArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: working_hourWhereInput
   }
 
   /**
    * EmployeeCountOutputType without action
    */
-  export type EmployeeCountOutputTypeCountWorking_hour_working_hour_updated_byToemployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EmployeeCountOutputTypeCountWorking_hour_marked_byArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: working_hourWhereInput
   }
 
@@ -9303,8 +9303,8 @@ export namespace Prisma {
     user_role?: boolean | user_roleDefaultArgs<ExtArgs>
     sales_history?: boolean | employee$sales_historyArgs<ExtArgs>
     user_credentials?: boolean | employee$user_credentialsArgs<ExtArgs>
-    working_hour_working_hour_employee_idToemployee?: boolean | employee$working_hour_working_hour_employee_idToemployeeArgs<ExtArgs>
-    working_hour_working_hour_updated_byToemployee?: boolean | employee$working_hour_working_hour_updated_byToemployeeArgs<ExtArgs>
+    working_hour?: boolean | employee$working_hourArgs<ExtArgs>
+    working_hour_marked_by?: boolean | employee$working_hour_marked_byArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employee"]>
 
@@ -9357,8 +9357,8 @@ export namespace Prisma {
     user_role?: boolean | user_roleDefaultArgs<ExtArgs>
     sales_history?: boolean | employee$sales_historyArgs<ExtArgs>
     user_credentials?: boolean | employee$user_credentialsArgs<ExtArgs>
-    working_hour_working_hour_employee_idToemployee?: boolean | employee$working_hour_working_hour_employee_idToemployeeArgs<ExtArgs>
-    working_hour_working_hour_updated_byToemployee?: boolean | employee$working_hour_working_hour_updated_byToemployeeArgs<ExtArgs>
+    working_hour?: boolean | employee$working_hourArgs<ExtArgs>
+    working_hour_marked_by?: boolean | employee$working_hour_marked_byArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type employeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9377,8 +9377,8 @@ export namespace Prisma {
       user_role: Prisma.$user_rolePayload<ExtArgs>
       sales_history: Prisma.$sales_historyPayload<ExtArgs>[]
       user_credentials: Prisma.$user_credentialsPayload<ExtArgs> | null
-      working_hour_working_hour_employee_idToemployee: Prisma.$working_hourPayload<ExtArgs>[]
-      working_hour_working_hour_updated_byToemployee: Prisma.$working_hourPayload<ExtArgs>[]
+      working_hour: Prisma.$working_hourPayload<ExtArgs>[]
+      working_hour_marked_by: Prisma.$working_hourPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       employee_id: number
@@ -9789,8 +9789,8 @@ export namespace Prisma {
     user_role<T extends user_roleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, user_roleDefaultArgs<ExtArgs>>): Prisma__user_roleClient<$Result.GetResult<Prisma.$user_rolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sales_history<T extends employee$sales_historyArgs<ExtArgs> = {}>(args?: Subset<T, employee$sales_historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sales_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user_credentials<T extends employee$user_credentialsArgs<ExtArgs> = {}>(args?: Subset<T, employee$user_credentialsArgs<ExtArgs>>): Prisma__user_credentialsClient<$Result.GetResult<Prisma.$user_credentialsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    working_hour_working_hour_employee_idToemployee<T extends employee$working_hour_working_hour_employee_idToemployeeArgs<ExtArgs> = {}>(args?: Subset<T, employee$working_hour_working_hour_employee_idToemployeeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$working_hourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    working_hour_working_hour_updated_byToemployee<T extends employee$working_hour_working_hour_updated_byToemployeeArgs<ExtArgs> = {}>(args?: Subset<T, employee$working_hour_working_hour_updated_byToemployeeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$working_hourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    working_hour<T extends employee$working_hourArgs<ExtArgs> = {}>(args?: Subset<T, employee$working_hourArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$working_hourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    working_hour_marked_by<T extends employee$working_hour_marked_byArgs<ExtArgs> = {}>(args?: Subset<T, employee$working_hour_marked_byArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$working_hourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10269,9 +10269,9 @@ export namespace Prisma {
   }
 
   /**
-   * employee.working_hour_working_hour_employee_idToemployee
+   * employee.working_hour
    */
-  export type employee$working_hour_working_hour_employee_idToemployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type employee$working_hourArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the working_hour
      */
@@ -10293,9 +10293,9 @@ export namespace Prisma {
   }
 
   /**
-   * employee.working_hour_working_hour_updated_byToemployee
+   * employee.working_hour_marked_by
    */
-  export type employee$working_hour_working_hour_updated_byToemployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type employee$working_hour_marked_byArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the working_hour
      */
@@ -19388,22 +19388,20 @@ export namespace Prisma {
   }
 
   export type Working_hourAvgAggregateOutputType = {
-    record_id: number | null
     employee_id: number | null
     updated_by: number | null
     total_hours: Decimal | null
   }
 
   export type Working_hourSumAggregateOutputType = {
-    record_id: number | null
     employee_id: number | null
     updated_by: number | null
     total_hours: Decimal | null
   }
 
   export type Working_hourMinAggregateOutputType = {
-    record_id: number | null
     employee_id: number | null
+    branch_id: string | null
     date: string | null
     shift_on: string | null
     shift_off: string | null
@@ -19413,8 +19411,8 @@ export namespace Prisma {
   }
 
   export type Working_hourMaxAggregateOutputType = {
-    record_id: number | null
     employee_id: number | null
+    branch_id: string | null
     date: string | null
     shift_on: string | null
     shift_off: string | null
@@ -19424,8 +19422,8 @@ export namespace Prisma {
   }
 
   export type Working_hourCountAggregateOutputType = {
-    record_id: number
     employee_id: number
+    branch_id: number
     date: number
     shift_on: number
     shift_off: number
@@ -19437,22 +19435,20 @@ export namespace Prisma {
 
 
   export type Working_hourAvgAggregateInputType = {
-    record_id?: true
     employee_id?: true
     updated_by?: true
     total_hours?: true
   }
 
   export type Working_hourSumAggregateInputType = {
-    record_id?: true
     employee_id?: true
     updated_by?: true
     total_hours?: true
   }
 
   export type Working_hourMinAggregateInputType = {
-    record_id?: true
     employee_id?: true
+    branch_id?: true
     date?: true
     shift_on?: true
     shift_off?: true
@@ -19462,8 +19458,8 @@ export namespace Prisma {
   }
 
   export type Working_hourMaxAggregateInputType = {
-    record_id?: true
     employee_id?: true
+    branch_id?: true
     date?: true
     shift_on?: true
     shift_off?: true
@@ -19473,8 +19469,8 @@ export namespace Prisma {
   }
 
   export type Working_hourCountAggregateInputType = {
-    record_id?: true
     employee_id?: true
+    branch_id?: true
     date?: true
     shift_on?: true
     shift_off?: true
@@ -19571,8 +19567,8 @@ export namespace Prisma {
   }
 
   export type Working_hourGroupByOutputType = {
-    record_id: number
     employee_id: number
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -19601,47 +19597,47 @@ export namespace Prisma {
 
 
   export type working_hourSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    record_id?: boolean
     employee_id?: boolean
+    branch_id?: boolean
     date?: boolean
     shift_on?: boolean
     shift_off?: boolean
     updated_by?: boolean
     present?: boolean
     total_hours?: boolean
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["working_hour"]>
 
   export type working_hourSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    record_id?: boolean
     employee_id?: boolean
+    branch_id?: boolean
     date?: boolean
     shift_on?: boolean
     shift_off?: boolean
     updated_by?: boolean
     present?: boolean
     total_hours?: boolean
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["working_hour"]>
 
   export type working_hourSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    record_id?: boolean
     employee_id?: boolean
+    branch_id?: boolean
     date?: boolean
     shift_on?: boolean
     shift_off?: boolean
     updated_by?: boolean
     present?: boolean
     total_hours?: boolean
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["working_hour"]>
 
   export type working_hourSelectScalar = {
-    record_id?: boolean
     employee_id?: boolean
+    branch_id?: boolean
     date?: boolean
     shift_on?: boolean
     shift_off?: boolean
@@ -19650,29 +19646,29 @@ export namespace Prisma {
     total_hours?: boolean
   }
 
-  export type working_hourOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"record_id" | "employee_id" | "date" | "shift_on" | "shift_off" | "updated_by" | "present" | "total_hours", ExtArgs["result"]["working_hour"]>
+  export type working_hourOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"employee_id" | "branch_id" | "date" | "shift_on" | "shift_off" | "updated_by" | "present" | "total_hours", ExtArgs["result"]["working_hour"]>
   export type working_hourInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }
   export type working_hourIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }
   export type working_hourIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee_working_hour_employee_idToemployee?: boolean | employeeDefaultArgs<ExtArgs>
-    employee_working_hour_updated_byToemployee?: boolean | employeeDefaultArgs<ExtArgs>
+    employee?: boolean | employeeDefaultArgs<ExtArgs>
+    marked_by?: boolean | employeeDefaultArgs<ExtArgs>
   }
 
   export type $working_hourPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "working_hour"
     objects: {
-      employee_working_hour_employee_idToemployee: Prisma.$employeePayload<ExtArgs>
-      employee_working_hour_updated_byToemployee: Prisma.$employeePayload<ExtArgs>
+      employee: Prisma.$employeePayload<ExtArgs>
+      marked_by: Prisma.$employeePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      record_id: number
       employee_id: number
+      branch_id: string
       date: string
       shift_on: string
       shift_off: string
@@ -19762,8 +19758,8 @@ export namespace Prisma {
      * // Get first 10 Working_hours
      * const working_hours = await prisma.working_hour.findMany({ take: 10 })
      * 
-     * // Only select the `record_id`
-     * const working_hourWithRecord_idOnly = await prisma.working_hour.findMany({ select: { record_id: true } })
+     * // Only select the `employee_id`
+     * const working_hourWithEmployee_idOnly = await prisma.working_hour.findMany({ select: { employee_id: true } })
      * 
      */
     findMany<T extends working_hourFindManyArgs>(args?: SelectSubset<T, working_hourFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$working_hourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -19807,9 +19803,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Working_hours and only return the `record_id`
-     * const working_hourWithRecord_idOnly = await prisma.working_hour.createManyAndReturn({
-     *   select: { record_id: true },
+     * // Create many Working_hours and only return the `employee_id`
+     * const working_hourWithEmployee_idOnly = await prisma.working_hour.createManyAndReturn({
+     *   select: { employee_id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -19898,9 +19894,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Working_hours and only return the `record_id`
-     * const working_hourWithRecord_idOnly = await prisma.working_hour.updateManyAndReturn({
-     *   select: { record_id: true },
+     * // Update zero or more Working_hours and only return the `employee_id`
+     * const working_hourWithEmployee_idOnly = await prisma.working_hour.updateManyAndReturn({
+     *   select: { employee_id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -20073,8 +20069,8 @@ export namespace Prisma {
    */
   export interface Prisma__working_hourClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    employee_working_hour_employee_idToemployee<T extends employeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeeDefaultArgs<ExtArgs>>): Prisma__employeeClient<$Result.GetResult<Prisma.$employeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    employee_working_hour_updated_byToemployee<T extends employeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeeDefaultArgs<ExtArgs>>): Prisma__employeeClient<$Result.GetResult<Prisma.$employeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    employee<T extends employeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeeDefaultArgs<ExtArgs>>): Prisma__employeeClient<$Result.GetResult<Prisma.$employeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    marked_by<T extends employeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeeDefaultArgs<ExtArgs>>): Prisma__employeeClient<$Result.GetResult<Prisma.$employeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20104,8 +20100,8 @@ export namespace Prisma {
    * Fields of the working_hour model
    */
   interface working_hourFieldRefs {
-    readonly record_id: FieldRef<"working_hour", 'Int'>
     readonly employee_id: FieldRef<"working_hour", 'Int'>
+    readonly branch_id: FieldRef<"working_hour", 'String'>
     readonly date: FieldRef<"working_hour", 'String'>
     readonly shift_on: FieldRef<"working_hour", 'String'>
     readonly shift_off: FieldRef<"working_hour", 'String'>
@@ -20718,8 +20714,8 @@ export namespace Prisma {
 
 
   export const Working_hourScalarFieldEnum: {
-    record_id: 'record_id',
     employee_id: 'employee_id',
+    branch_id: 'branch_id',
     date: 'date',
     shift_on: 'shift_on',
     shift_off: 'shift_off',
@@ -20883,7 +20879,7 @@ export namespace Prisma {
     AND?: branchWhereInput | branchWhereInput[]
     OR?: branchWhereInput[]
     NOT?: branchWhereInput | branchWhereInput[]
-    branch_id?: StringFilter<"branch"> | string
+    branch_id?: UuidFilter<"branch"> | string
     branch_city?: StringFilter<"branch"> | string
     branch_address?: StringFilter<"branch"> | string
     branch_phone?: StringFilter<"branch"> | string
@@ -20937,7 +20933,7 @@ export namespace Prisma {
     AND?: branchScalarWhereWithAggregatesInput | branchScalarWhereWithAggregatesInput[]
     OR?: branchScalarWhereWithAggregatesInput[]
     NOT?: branchScalarWhereWithAggregatesInput | branchScalarWhereWithAggregatesInput[]
-    branch_id?: StringWithAggregatesFilter<"branch"> | string
+    branch_id?: UuidWithAggregatesFilter<"branch"> | string
     branch_city?: StringWithAggregatesFilter<"branch"> | string
     branch_address?: StringWithAggregatesFilter<"branch"> | string
     branch_phone?: StringWithAggregatesFilter<"branch"> | string
@@ -21183,7 +21179,7 @@ export namespace Prisma {
     hired_date?: DateTimeNullableFilter<"employee"> | Date | string | null
     employee_email?: StringNullableFilter<"employee"> | string | null
     employee_phone?: StringFilter<"employee"> | string
-    branch_id?: StringFilter<"employee"> | string
+    branch_id?: UuidFilter<"employee"> | string
     employee_image?: StringNullableFilter<"employee"> | string | null
     branch_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
     role_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
@@ -21191,8 +21187,8 @@ export namespace Prisma {
     user_role?: XOR<User_roleScalarRelationFilter, user_roleWhereInput>
     sales_history?: Sales_historyListRelationFilter
     user_credentials?: XOR<User_credentialsNullableScalarRelationFilter, user_credentialsWhereInput> | null
-    working_hour_working_hour_employee_idToemployee?: Working_hourListRelationFilter
-    working_hour_working_hour_updated_byToemployee?: Working_hourListRelationFilter
+    working_hour?: Working_hourListRelationFilter
+    working_hour_marked_by?: Working_hourListRelationFilter
   }
 
   export type employeeOrderByWithRelationInput = {
@@ -21210,8 +21206,8 @@ export namespace Prisma {
     user_role?: user_roleOrderByWithRelationInput
     sales_history?: sales_historyOrderByRelationAggregateInput
     user_credentials?: user_credentialsOrderByWithRelationInput
-    working_hour_working_hour_employee_idToemployee?: working_hourOrderByRelationAggregateInput
-    working_hour_working_hour_updated_byToemployee?: working_hourOrderByRelationAggregateInput
+    working_hour?: working_hourOrderByRelationAggregateInput
+    working_hour_marked_by?: working_hourOrderByRelationAggregateInput
   }
 
   export type employeeWhereUniqueInput = Prisma.AtLeast<{
@@ -21224,7 +21220,7 @@ export namespace Prisma {
     employee_name?: StringFilter<"employee"> | string
     role_id?: IntFilter<"employee"> | number
     hired_date?: DateTimeNullableFilter<"employee"> | Date | string | null
-    branch_id?: StringFilter<"employee"> | string
+    branch_id?: UuidFilter<"employee"> | string
     employee_image?: StringNullableFilter<"employee"> | string | null
     branch_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
     role_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
@@ -21232,8 +21228,8 @@ export namespace Prisma {
     user_role?: XOR<User_roleScalarRelationFilter, user_roleWhereInput>
     sales_history?: Sales_historyListRelationFilter
     user_credentials?: XOR<User_credentialsNullableScalarRelationFilter, user_credentialsWhereInput> | null
-    working_hour_working_hour_employee_idToemployee?: Working_hourListRelationFilter
-    working_hour_working_hour_updated_byToemployee?: Working_hourListRelationFilter
+    working_hour?: Working_hourListRelationFilter
+    working_hour_marked_by?: Working_hourListRelationFilter
   }, "employee_id" | "employee_email" | "employee_phone">
 
   export type employeeOrderByWithAggregationInput = {
@@ -21264,7 +21260,7 @@ export namespace Prisma {
     hired_date?: DateTimeNullableWithAggregatesFilter<"employee"> | Date | string | null
     employee_email?: StringNullableWithAggregatesFilter<"employee"> | string | null
     employee_phone?: StringWithAggregatesFilter<"employee"> | string
-    branch_id?: StringWithAggregatesFilter<"employee"> | string
+    branch_id?: UuidWithAggregatesFilter<"employee"> | string
     employee_image?: StringNullableWithAggregatesFilter<"employee"> | string | null
     branch_updated_on?: DateTimeNullableWithAggregatesFilter<"employee"> | Date | string | null
     role_updated_on?: DateTimeNullableWithAggregatesFilter<"employee"> | Date | string | null
@@ -21275,7 +21271,7 @@ export namespace Prisma {
     OR?: inventoryWhereInput[]
     NOT?: inventoryWhereInput | inventoryWhereInput[]
     product_id?: UuidFilter<"inventory"> | string
-    branch_id?: StringFilter<"inventory"> | string
+    branch_id?: UuidFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
     updated_on?: DateTimeNullableFilter<"inventory"> | Date | string | null
@@ -21299,7 +21295,7 @@ export namespace Prisma {
     OR?: inventoryWhereInput[]
     NOT?: inventoryWhereInput | inventoryWhereInput[]
     product_id?: UuidFilter<"inventory"> | string
-    branch_id?: StringFilter<"inventory"> | string
+    branch_id?: UuidFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
     updated_on?: DateTimeNullableFilter<"inventory"> | Date | string | null
@@ -21325,7 +21321,7 @@ export namespace Prisma {
     OR?: inventoryScalarWhereWithAggregatesInput[]
     NOT?: inventoryScalarWhereWithAggregatesInput | inventoryScalarWhereWithAggregatesInput[]
     product_id?: UuidWithAggregatesFilter<"inventory"> | string
-    branch_id?: StringWithAggregatesFilter<"inventory"> | string
+    branch_id?: UuidWithAggregatesFilter<"inventory"> | string
     quantity?: IntNullableWithAggregatesFilter<"inventory"> | number | null
     reorder_level?: IntNullableWithAggregatesFilter<"inventory"> | number | null
     updated_on?: DateTimeNullableWithAggregatesFilter<"inventory"> | Date | string | null
@@ -21486,7 +21482,7 @@ export namespace Prisma {
     order_id?: IntFilter<"sales_history"> | number
     customer_id?: IntNullableFilter<"sales_history"> | number | null
     cashier_id?: IntFilter<"sales_history"> | number
-    branch_id?: StringFilter<"sales_history"> | string
+    branch_id?: UuidFilter<"sales_history"> | string
     created_at?: DateTimeNullableFilter<"sales_history"> | Date | string | null
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
@@ -21527,7 +21523,7 @@ export namespace Prisma {
     NOT?: sales_historyWhereInput | sales_historyWhereInput[]
     customer_id?: IntNullableFilter<"sales_history"> | number | null
     cashier_id?: IntFilter<"sales_history"> | number
-    branch_id?: StringFilter<"sales_history"> | string
+    branch_id?: UuidFilter<"sales_history"> | string
     created_at?: DateTimeNullableFilter<"sales_history"> | Date | string | null
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
@@ -21568,7 +21564,7 @@ export namespace Prisma {
     order_id?: IntWithAggregatesFilter<"sales_history"> | number
     customer_id?: IntNullableWithAggregatesFilter<"sales_history"> | number | null
     cashier_id?: IntWithAggregatesFilter<"sales_history"> | number
-    branch_id?: StringWithAggregatesFilter<"sales_history"> | string
+    branch_id?: UuidWithAggregatesFilter<"sales_history"> | string
     created_at?: DateTimeNullableWithAggregatesFilter<"sales_history"> | Date | string | null
     total_amount?: DecimalNullableWithAggregatesFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableWithAggregatesFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
@@ -21797,50 +21793,51 @@ export namespace Prisma {
     AND?: working_hourWhereInput | working_hourWhereInput[]
     OR?: working_hourWhereInput[]
     NOT?: working_hourWhereInput | working_hourWhereInput[]
-    record_id?: IntFilter<"working_hour"> | number
     employee_id?: IntFilter<"working_hour"> | number
+    branch_id?: UuidFilter<"working_hour"> | string
     date?: StringFilter<"working_hour"> | string
     shift_on?: StringFilter<"working_hour"> | string
     shift_off?: StringFilter<"working_hour"> | string
     updated_by?: IntFilter<"working_hour"> | number
     present?: BoolFilter<"working_hour"> | boolean
     total_hours?: DecimalNullableFilter<"working_hour"> | Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
-    employee_working_hour_updated_byToemployee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
+    employee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
+    marked_by?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
   }
 
   export type working_hourOrderByWithRelationInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
+    branch_id?: SortOrder
     date?: SortOrder
     shift_on?: SortOrder
     shift_off?: SortOrder
     updated_by?: SortOrder
     present?: SortOrder
     total_hours?: SortOrderInput | SortOrder
-    employee_working_hour_employee_idToemployee?: employeeOrderByWithRelationInput
-    employee_working_hour_updated_byToemployee?: employeeOrderByWithRelationInput
+    employee?: employeeOrderByWithRelationInput
+    marked_by?: employeeOrderByWithRelationInput
   }
 
   export type working_hourWhereUniqueInput = Prisma.AtLeast<{
-    record_id?: number
+    employee_id_branch_id_date?: working_hourEmployee_idBranch_idDateCompoundUniqueInput
     AND?: working_hourWhereInput | working_hourWhereInput[]
     OR?: working_hourWhereInput[]
     NOT?: working_hourWhereInput | working_hourWhereInput[]
     employee_id?: IntFilter<"working_hour"> | number
+    branch_id?: UuidFilter<"working_hour"> | string
     date?: StringFilter<"working_hour"> | string
     shift_on?: StringFilter<"working_hour"> | string
     shift_off?: StringFilter<"working_hour"> | string
     updated_by?: IntFilter<"working_hour"> | number
     present?: BoolFilter<"working_hour"> | boolean
     total_hours?: DecimalNullableFilter<"working_hour"> | Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
-    employee_working_hour_updated_byToemployee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
-  }, "record_id">
+    employee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
+    marked_by?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
+  }, "employee_id_branch_id_date">
 
   export type working_hourOrderByWithAggregationInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
+    branch_id?: SortOrder
     date?: SortOrder
     shift_on?: SortOrder
     shift_off?: SortOrder
@@ -21858,8 +21855,8 @@ export namespace Prisma {
     AND?: working_hourScalarWhereWithAggregatesInput | working_hourScalarWhereWithAggregatesInput[]
     OR?: working_hourScalarWhereWithAggregatesInput[]
     NOT?: working_hourScalarWhereWithAggregatesInput | working_hourScalarWhereWithAggregatesInput[]
-    record_id?: IntWithAggregatesFilter<"working_hour"> | number
     employee_id?: IntWithAggregatesFilter<"working_hour"> | number
+    branch_id?: UuidWithAggregatesFilter<"working_hour"> | string
     date?: StringWithAggregatesFilter<"working_hour"> | string
     shift_on?: StringWithAggregatesFilter<"working_hour"> | string
     shift_off?: StringWithAggregatesFilter<"working_hour"> | string
@@ -22205,8 +22202,8 @@ export namespace Prisma {
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUncheckedCreateInput = {
@@ -22222,8 +22219,8 @@ export namespace Prisma {
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUpdateInput = {
@@ -22238,8 +22235,8 @@ export namespace Prisma {
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateInput = {
@@ -22255,8 +22252,8 @@ export namespace Prisma {
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeCreateManyInput = {
@@ -22807,18 +22804,19 @@ export namespace Prisma {
   }
 
   export type working_hourCreateInput = {
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
     present: boolean
     total_hours?: Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee: employeeCreateNestedOneWithoutWorking_hour_working_hour_employee_idToemployeeInput
-    employee_working_hour_updated_byToemployee: employeeCreateNestedOneWithoutWorking_hour_working_hour_updated_byToemployeeInput
+    employee: employeeCreateNestedOneWithoutWorking_hourInput
+    marked_by: employeeCreateNestedOneWithoutWorking_hour_marked_byInput
   }
 
   export type working_hourUncheckedCreateInput = {
-    record_id?: number
     employee_id: number
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -22828,18 +22826,19 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
     present?: BoolFieldUpdateOperationsInput | boolean
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee?: employeeUpdateOneRequiredWithoutWorking_hour_working_hour_employee_idToemployeeNestedInput
-    employee_working_hour_updated_byToemployee?: employeeUpdateOneRequiredWithoutWorking_hour_working_hour_updated_byToemployeeNestedInput
+    employee?: employeeUpdateOneRequiredWithoutWorking_hourNestedInput
+    marked_by?: employeeUpdateOneRequiredWithoutWorking_hour_marked_byNestedInput
   }
 
   export type working_hourUncheckedUpdateInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     employee_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -22849,8 +22848,8 @@ export namespace Prisma {
   }
 
   export type working_hourCreateManyInput = {
-    record_id?: number
     employee_id: number
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -22860,6 +22859,7 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateManyMutationInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -22868,8 +22868,8 @@ export namespace Prisma {
   }
 
   export type working_hourUncheckedUpdateManyInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     employee_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -22961,6 +22961,18 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -23034,6 +23046,21 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -23057,18 +23084,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type DecimalNullableFilter<$PrismaModel = never> = {
@@ -23147,21 +23162,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23804,9 +23804,15 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type working_hourEmployee_idBranch_idDateCompoundUniqueInput = {
+    employee_id: number
+    branch_id: string
+    date: string
+  }
+
   export type working_hourCountOrderByAggregateInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
+    branch_id?: SortOrder
     date?: SortOrder
     shift_on?: SortOrder
     shift_off?: SortOrder
@@ -23816,15 +23822,14 @@ export namespace Prisma {
   }
 
   export type working_hourAvgOrderByAggregateInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
     updated_by?: SortOrder
     total_hours?: SortOrder
   }
 
   export type working_hourMaxOrderByAggregateInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
+    branch_id?: SortOrder
     date?: SortOrder
     shift_on?: SortOrder
     shift_off?: SortOrder
@@ -23834,8 +23839,8 @@ export namespace Prisma {
   }
 
   export type working_hourMinOrderByAggregateInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
+    branch_id?: SortOrder
     date?: SortOrder
     shift_on?: SortOrder
     shift_off?: SortOrder
@@ -23845,7 +23850,6 @@ export namespace Prisma {
   }
 
   export type working_hourSumOrderByAggregateInput = {
-    record_id?: SortOrder
     employee_id?: SortOrder
     updated_by?: SortOrder
     total_hours?: SortOrder
@@ -24168,17 +24172,17 @@ export namespace Prisma {
     connect?: user_credentialsWhereUniqueInput
   }
 
-  export type working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_employee_idToemployeeInputEnvelope
+  export type working_hourCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput> | working_hourCreateWithoutEmployeeInput[] | working_hourUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutEmployeeInput | working_hourCreateOrConnectWithoutEmployeeInput[]
+    createMany?: working_hourCreateManyEmployeeInputEnvelope
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
   }
 
-  export type working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_updated_byToemployeeInputEnvelope
+  export type working_hourCreateNestedManyWithoutMarked_byInput = {
+    create?: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput> | working_hourCreateWithoutMarked_byInput[] | working_hourUncheckedCreateWithoutMarked_byInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutMarked_byInput | working_hourCreateOrConnectWithoutMarked_byInput[]
+    createMany?: working_hourCreateManyMarked_byInputEnvelope
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
   }
 
@@ -24195,17 +24199,17 @@ export namespace Prisma {
     connect?: user_credentialsWhereUniqueInput
   }
 
-  export type working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_employee_idToemployeeInputEnvelope
+  export type working_hourUncheckedCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput> | working_hourCreateWithoutEmployeeInput[] | working_hourUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutEmployeeInput | working_hourCreateOrConnectWithoutEmployeeInput[]
+    createMany?: working_hourCreateManyEmployeeInputEnvelope
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
   }
 
-  export type working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_updated_byToemployeeInputEnvelope
+  export type working_hourUncheckedCreateNestedManyWithoutMarked_byInput = {
+    create?: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput> | working_hourCreateWithoutMarked_byInput[] | working_hourUncheckedCreateWithoutMarked_byInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutMarked_byInput | working_hourCreateOrConnectWithoutMarked_byInput[]
+    createMany?: working_hourCreateManyMarked_byInputEnvelope
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
   }
 
@@ -24249,31 +24253,31 @@ export namespace Prisma {
     update?: XOR<XOR<user_credentialsUpdateToOneWithWhereWithoutEmployeeInput, user_credentialsUpdateWithoutEmployeeInput>, user_credentialsUncheckedUpdateWithoutEmployeeInput>
   }
 
-  export type working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_employee_idToemployeeInputEnvelope
+  export type working_hourUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput> | working_hourCreateWithoutEmployeeInput[] | working_hourUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutEmployeeInput | working_hourCreateOrConnectWithoutEmployeeInput[]
+    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: working_hourCreateManyEmployeeInputEnvelope
     set?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     disconnect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     delete?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
-    update?: working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    updateMany?: working_hourUpdateManyWithWhereWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpdateManyWithWhereWithoutEmployee_working_hour_employee_idToemployeeInput[]
+    update?: working_hourUpdateWithWhereUniqueWithoutEmployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: working_hourUpdateManyWithWhereWithoutEmployeeInput | working_hourUpdateManyWithWhereWithoutEmployeeInput[]
     deleteMany?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
   }
 
-  export type working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_updated_byToemployeeInputEnvelope
+  export type working_hourUpdateManyWithoutMarked_byNestedInput = {
+    create?: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput> | working_hourCreateWithoutMarked_byInput[] | working_hourUncheckedCreateWithoutMarked_byInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutMarked_byInput | working_hourCreateOrConnectWithoutMarked_byInput[]
+    upsert?: working_hourUpsertWithWhereUniqueWithoutMarked_byInput | working_hourUpsertWithWhereUniqueWithoutMarked_byInput[]
+    createMany?: working_hourCreateManyMarked_byInputEnvelope
     set?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     disconnect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     delete?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
-    update?: working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    updateMany?: working_hourUpdateManyWithWhereWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpdateManyWithWhereWithoutEmployee_working_hour_updated_byToemployeeInput[]
+    update?: working_hourUpdateWithWhereUniqueWithoutMarked_byInput | working_hourUpdateWithWhereUniqueWithoutMarked_byInput[]
+    updateMany?: working_hourUpdateManyWithWhereWithoutMarked_byInput | working_hourUpdateManyWithWhereWithoutMarked_byInput[]
     deleteMany?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
   }
 
@@ -24301,31 +24305,31 @@ export namespace Prisma {
     update?: XOR<XOR<user_credentialsUpdateToOneWithWhereWithoutEmployeeInput, user_credentialsUpdateWithoutEmployeeInput>, user_credentialsUncheckedUpdateWithoutEmployeeInput>
   }
 
-  export type working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_employee_idToemployeeInputEnvelope
+  export type working_hourUncheckedUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput> | working_hourCreateWithoutEmployeeInput[] | working_hourUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutEmployeeInput | working_hourCreateOrConnectWithoutEmployeeInput[]
+    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: working_hourCreateManyEmployeeInputEnvelope
     set?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     disconnect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     delete?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
-    update?: working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput[]
-    updateMany?: working_hourUpdateManyWithWhereWithoutEmployee_working_hour_employee_idToemployeeInput | working_hourUpdateManyWithWhereWithoutEmployee_working_hour_employee_idToemployeeInput[]
+    update?: working_hourUpdateWithWhereUniqueWithoutEmployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: working_hourUpdateManyWithWhereWithoutEmployeeInput | working_hourUpdateManyWithWhereWithoutEmployeeInput[]
     deleteMany?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
   }
 
-  export type working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput = {
-    create?: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput> | working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput[] | working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    connectOrCreate?: working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    upsert?: working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    createMany?: working_hourCreateManyEmployee_working_hour_updated_byToemployeeInputEnvelope
+  export type working_hourUncheckedUpdateManyWithoutMarked_byNestedInput = {
+    create?: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput> | working_hourCreateWithoutMarked_byInput[] | working_hourUncheckedCreateWithoutMarked_byInput[]
+    connectOrCreate?: working_hourCreateOrConnectWithoutMarked_byInput | working_hourCreateOrConnectWithoutMarked_byInput[]
+    upsert?: working_hourUpsertWithWhereUniqueWithoutMarked_byInput | working_hourUpsertWithWhereUniqueWithoutMarked_byInput[]
+    createMany?: working_hourCreateManyMarked_byInputEnvelope
     set?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     disconnect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     delete?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
     connect?: working_hourWhereUniqueInput | working_hourWhereUniqueInput[]
-    update?: working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput[]
-    updateMany?: working_hourUpdateManyWithWhereWithoutEmployee_working_hour_updated_byToemployeeInput | working_hourUpdateManyWithWhereWithoutEmployee_working_hour_updated_byToemployeeInput[]
+    update?: working_hourUpdateWithWhereUniqueWithoutMarked_byInput | working_hourUpdateWithWhereUniqueWithoutMarked_byInput[]
+    updateMany?: working_hourUpdateManyWithWhereWithoutMarked_byInput | working_hourUpdateManyWithWhereWithoutMarked_byInput[]
     deleteMany?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
   }
 
@@ -24733,15 +24737,15 @@ export namespace Prisma {
     deleteMany?: employeeScalarWhereInput | employeeScalarWhereInput[]
   }
 
-  export type employeeCreateNestedOneWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
-    create?: XOR<employeeCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
-    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_working_hour_employee_idToemployeeInput
+  export type employeeCreateNestedOneWithoutWorking_hourInput = {
+    create?: XOR<employeeCreateWithoutWorking_hourInput, employeeUncheckedCreateWithoutWorking_hourInput>
+    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hourInput
     connect?: employeeWhereUniqueInput
   }
 
-  export type employeeCreateNestedOneWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
-    create?: XOR<employeeCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
-    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_working_hour_updated_byToemployeeInput
+  export type employeeCreateNestedOneWithoutWorking_hour_marked_byInput = {
+    create?: XOR<employeeCreateWithoutWorking_hour_marked_byInput, employeeUncheckedCreateWithoutWorking_hour_marked_byInput>
+    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_marked_byInput
     connect?: employeeWhereUniqueInput
   }
 
@@ -24749,20 +24753,20 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type employeeUpdateOneRequiredWithoutWorking_hour_working_hour_employee_idToemployeeNestedInput = {
-    create?: XOR<employeeCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
-    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_working_hour_employee_idToemployeeInput
-    upsert?: employeeUpsertWithoutWorking_hour_working_hour_employee_idToemployeeInput
+  export type employeeUpdateOneRequiredWithoutWorking_hourNestedInput = {
+    create?: XOR<employeeCreateWithoutWorking_hourInput, employeeUncheckedCreateWithoutWorking_hourInput>
+    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hourInput
+    upsert?: employeeUpsertWithoutWorking_hourInput
     connect?: employeeWhereUniqueInput
-    update?: XOR<XOR<employeeUpdateToOneWithWhereWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput>, employeeUncheckedUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
+    update?: XOR<XOR<employeeUpdateToOneWithWhereWithoutWorking_hourInput, employeeUpdateWithoutWorking_hourInput>, employeeUncheckedUpdateWithoutWorking_hourInput>
   }
 
-  export type employeeUpdateOneRequiredWithoutWorking_hour_working_hour_updated_byToemployeeNestedInput = {
-    create?: XOR<employeeCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
-    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_working_hour_updated_byToemployeeInput
-    upsert?: employeeUpsertWithoutWorking_hour_working_hour_updated_byToemployeeInput
+  export type employeeUpdateOneRequiredWithoutWorking_hour_marked_byNestedInput = {
+    create?: XOR<employeeCreateWithoutWorking_hour_marked_byInput, employeeUncheckedCreateWithoutWorking_hour_marked_byInput>
+    connectOrCreate?: employeeCreateOrConnectWithoutWorking_hour_marked_byInput
+    upsert?: employeeUpsertWithoutWorking_hour_marked_byInput
     connect?: employeeWhereUniqueInput
-    update?: XOR<XOR<employeeUpdateToOneWithWhereWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput>, employeeUncheckedUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
+    update?: XOR<XOR<employeeUpdateToOneWithWhereWithoutWorking_hour_marked_byInput, employeeUpdateWithoutWorking_hour_marked_byInput>, employeeUncheckedUpdateWithoutWorking_hour_marked_byInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -24834,6 +24838,17 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -24843,6 +24858,20 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -24868,17 +24897,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedUuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type NestedDecimalNullableFilter<$PrismaModel = never> = {
@@ -24917,20 +24935,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -25044,8 +25048,8 @@ export namespace Prisma {
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUncheckedCreateWithoutBranchInput = {
@@ -25060,8 +25064,8 @@ export namespace Prisma {
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeCreateOrConnectWithoutBranchInput = {
@@ -25161,7 +25165,7 @@ export namespace Prisma {
     hired_date?: DateTimeNullableFilter<"employee"> | Date | string | null
     employee_email?: StringNullableFilter<"employee"> | string | null
     employee_phone?: StringFilter<"employee"> | string
-    branch_id?: StringFilter<"employee"> | string
+    branch_id?: UuidFilter<"employee"> | string
     employee_image?: StringNullableFilter<"employee"> | string | null
     branch_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
     role_updated_on?: DateTimeNullableFilter<"employee"> | Date | string | null
@@ -25188,7 +25192,7 @@ export namespace Prisma {
     OR?: inventoryScalarWhereInput[]
     NOT?: inventoryScalarWhereInput | inventoryScalarWhereInput[]
     product_id?: UuidFilter<"inventory"> | string
-    branch_id?: StringFilter<"inventory"> | string
+    branch_id?: UuidFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
     updated_on?: DateTimeNullableFilter<"inventory"> | Date | string | null
@@ -25217,7 +25221,7 @@ export namespace Prisma {
     order_id?: IntFilter<"sales_history"> | number
     customer_id?: IntNullableFilter<"sales_history"> | number | null
     cashier_id?: IntFilter<"sales_history"> | number
-    branch_id?: StringFilter<"sales_history"> | string
+    branch_id?: UuidFilter<"sales_history"> | string
     created_at?: DateTimeNullableFilter<"sales_history"> | Date | string | null
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
@@ -25612,17 +25616,18 @@ export namespace Prisma {
     create: XOR<user_credentialsCreateWithoutEmployeeInput, user_credentialsUncheckedCreateWithoutEmployeeInput>
   }
 
-  export type working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourCreateWithoutEmployeeInput = {
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
     present: boolean
     total_hours?: Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_updated_byToemployee: employeeCreateNestedOneWithoutWorking_hour_working_hour_updated_byToemployeeInput
+    marked_by: employeeCreateNestedOneWithoutWorking_hour_marked_byInput
   }
 
-  export type working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id?: number
+  export type working_hourUncheckedCreateWithoutEmployeeInput = {
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -25631,28 +25636,29 @@ export namespace Prisma {
     total_hours?: Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourCreateOrConnectWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourCreateOrConnectWithoutEmployeeInput = {
     where: working_hourWhereUniqueInput
-    create: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput>
+    create: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput>
   }
 
-  export type working_hourCreateManyEmployee_working_hour_employee_idToemployeeInputEnvelope = {
-    data: working_hourCreateManyEmployee_working_hour_employee_idToemployeeInput | working_hourCreateManyEmployee_working_hour_employee_idToemployeeInput[]
+  export type working_hourCreateManyEmployeeInputEnvelope = {
+    data: working_hourCreateManyEmployeeInput | working_hourCreateManyEmployeeInput[]
     skipDuplicates?: boolean
   }
 
-  export type working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourCreateWithoutMarked_byInput = {
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
     present: boolean
     total_hours?: Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee: employeeCreateNestedOneWithoutWorking_hour_working_hour_employee_idToemployeeInput
+    employee: employeeCreateNestedOneWithoutWorking_hourInput
   }
 
-  export type working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id?: number
+  export type working_hourUncheckedCreateWithoutMarked_byInput = {
     employee_id: number
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -25660,13 +25666,13 @@ export namespace Prisma {
     total_hours?: Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourCreateOrConnectWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourCreateOrConnectWithoutMarked_byInput = {
     where: working_hourWhereUniqueInput
-    create: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput>
+    create: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput>
   }
 
-  export type working_hourCreateManyEmployee_working_hour_updated_byToemployeeInputEnvelope = {
-    data: working_hourCreateManyEmployee_working_hour_updated_byToemployeeInput | working_hourCreateManyEmployee_working_hour_updated_byToemployeeInput[]
+  export type working_hourCreateManyMarked_byInputEnvelope = {
+    data: working_hourCreateManyMarked_byInput | working_hourCreateManyMarked_byInput[]
     skipDuplicates?: boolean
   }
 
@@ -25766,28 +25772,28 @@ export namespace Prisma {
     updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourUpsertWithWhereUniqueWithoutEmployeeInput = {
     where: working_hourWhereUniqueInput
-    update: XOR<working_hourUpdateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedUpdateWithoutEmployee_working_hour_employee_idToemployeeInput>
-    create: XOR<working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput>
+    update: XOR<working_hourUpdateWithoutEmployeeInput, working_hourUncheckedUpdateWithoutEmployeeInput>
+    create: XOR<working_hourCreateWithoutEmployeeInput, working_hourUncheckedCreateWithoutEmployeeInput>
   }
 
-  export type working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourUpdateWithWhereUniqueWithoutEmployeeInput = {
     where: working_hourWhereUniqueInput
-    data: XOR<working_hourUpdateWithoutEmployee_working_hour_employee_idToemployeeInput, working_hourUncheckedUpdateWithoutEmployee_working_hour_employee_idToemployeeInput>
+    data: XOR<working_hourUpdateWithoutEmployeeInput, working_hourUncheckedUpdateWithoutEmployeeInput>
   }
 
-  export type working_hourUpdateManyWithWhereWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourUpdateManyWithWhereWithoutEmployeeInput = {
     where: working_hourScalarWhereInput
-    data: XOR<working_hourUpdateManyMutationInput, working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeInput>
+    data: XOR<working_hourUpdateManyMutationInput, working_hourUncheckedUpdateManyWithoutEmployeeInput>
   }
 
   export type working_hourScalarWhereInput = {
     AND?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
     OR?: working_hourScalarWhereInput[]
     NOT?: working_hourScalarWhereInput | working_hourScalarWhereInput[]
-    record_id?: IntFilter<"working_hour"> | number
     employee_id?: IntFilter<"working_hour"> | number
+    branch_id?: UuidFilter<"working_hour"> | string
     date?: StringFilter<"working_hour"> | string
     shift_on?: StringFilter<"working_hour"> | string
     shift_off?: StringFilter<"working_hour"> | string
@@ -25796,20 +25802,20 @@ export namespace Prisma {
     total_hours?: DecimalNullableFilter<"working_hour"> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourUpsertWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourUpsertWithWhereUniqueWithoutMarked_byInput = {
     where: working_hourWhereUniqueInput
-    update: XOR<working_hourUpdateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedUpdateWithoutEmployee_working_hour_updated_byToemployeeInput>
-    create: XOR<working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput>
+    update: XOR<working_hourUpdateWithoutMarked_byInput, working_hourUncheckedUpdateWithoutMarked_byInput>
+    create: XOR<working_hourCreateWithoutMarked_byInput, working_hourUncheckedCreateWithoutMarked_byInput>
   }
 
-  export type working_hourUpdateWithWhereUniqueWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourUpdateWithWhereUniqueWithoutMarked_byInput = {
     where: working_hourWhereUniqueInput
-    data: XOR<working_hourUpdateWithoutEmployee_working_hour_updated_byToemployeeInput, working_hourUncheckedUpdateWithoutEmployee_working_hour_updated_byToemployeeInput>
+    data: XOR<working_hourUpdateWithoutMarked_byInput, working_hourUncheckedUpdateWithoutMarked_byInput>
   }
 
-  export type working_hourUpdateManyWithWhereWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourUpdateManyWithWhereWithoutMarked_byInput = {
     where: working_hourScalarWhereInput
-    data: XOR<working_hourUpdateManyMutationInput, working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeInput>
+    data: XOR<working_hourUpdateManyMutationInput, working_hourUncheckedUpdateManyWithoutMarked_byInput>
   }
 
   export type branchCreateWithoutInventoryInput = {
@@ -26271,8 +26277,8 @@ export namespace Prisma {
     branch: branchCreateNestedOneWithoutEmployeeInput
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUncheckedCreateWithoutSales_historyInput = {
@@ -26287,8 +26293,8 @@ export namespace Prisma {
     branch_updated_on?: Date | string | null
     role_updated_on?: Date | string | null
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeCreateOrConnectWithoutSales_historyInput = {
@@ -26413,8 +26419,8 @@ export namespace Prisma {
     branch?: branchUpdateOneRequiredWithoutEmployeeNestedInput
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateWithoutSales_historyInput = {
@@ -26429,8 +26435,8 @@ export namespace Prisma {
     branch_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
   export type payment_methodUpsertWithoutSales_historyInput = {
@@ -26524,8 +26530,8 @@ export namespace Prisma {
     branch: branchCreateNestedOneWithoutEmployeeInput
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUncheckedCreateWithoutUser_credentialsInput = {
@@ -26540,8 +26546,8 @@ export namespace Prisma {
     branch_updated_on?: Date | string | null
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeCreateOrConnectWithoutUser_credentialsInput = {
@@ -26571,8 +26577,8 @@ export namespace Prisma {
     branch?: branchUpdateOneRequiredWithoutEmployeeNestedInput
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateWithoutUser_credentialsInput = {
@@ -26587,8 +26593,8 @@ export namespace Prisma {
     branch_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeCreateWithoutUser_roleInput = {
@@ -26602,8 +26608,8 @@ export namespace Prisma {
     branch: branchCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeUncheckedCreateWithoutUser_roleInput = {
@@ -26618,8 +26624,8 @@ export namespace Prisma {
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
   export type employeeCreateOrConnectWithoutUser_roleInput = {
@@ -26648,7 +26654,7 @@ export namespace Prisma {
     data: XOR<employeeUpdateManyMutationInput, employeeUncheckedUpdateManyWithoutUser_roleInput>
   }
 
-  export type employeeCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeCreateWithoutWorking_hourInput = {
     employee_name: string
     hired_date?: Date | string | null
     employee_email?: string | null
@@ -26660,10 +26666,10 @@ export namespace Prisma {
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour_marked_by?: working_hourCreateNestedManyWithoutMarked_byInput
   }
 
-  export type employeeUncheckedCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeUncheckedCreateWithoutWorking_hourInput = {
     employee_id?: number
     employee_name: string
     role_id: number
@@ -26676,15 +26682,15 @@ export namespace Prisma {
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_updated_byToemployeeInput
+    working_hour_marked_by?: working_hourUncheckedCreateNestedManyWithoutMarked_byInput
   }
 
-  export type employeeCreateOrConnectWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeCreateOrConnectWithoutWorking_hourInput = {
     where: employeeWhereUniqueInput
-    create: XOR<employeeCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
+    create: XOR<employeeCreateWithoutWorking_hourInput, employeeUncheckedCreateWithoutWorking_hourInput>
   }
 
-  export type employeeCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeCreateWithoutWorking_hour_marked_byInput = {
     employee_name: string
     hired_date?: Date | string | null
     employee_email?: string | null
@@ -26696,10 +26702,10 @@ export namespace Prisma {
     user_role: user_roleCreateNestedOneWithoutEmployeeInput
     sales_history?: sales_historyCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
+    working_hour?: working_hourCreateNestedManyWithoutEmployeeInput
   }
 
-  export type employeeUncheckedCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeUncheckedCreateWithoutWorking_hour_marked_byInput = {
     employee_id?: number
     employee_name: string
     role_id: number
@@ -26712,26 +26718,26 @@ export namespace Prisma {
     role_updated_on?: Date | string | null
     sales_history?: sales_historyUncheckedCreateNestedManyWithoutEmployeeInput
     user_credentials?: user_credentialsUncheckedCreateNestedOneWithoutEmployeeInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedCreateNestedManyWithoutEmployee_working_hour_employee_idToemployeeInput
+    working_hour?: working_hourUncheckedCreateNestedManyWithoutEmployeeInput
   }
 
-  export type employeeCreateOrConnectWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeCreateOrConnectWithoutWorking_hour_marked_byInput = {
     where: employeeWhereUniqueInput
-    create: XOR<employeeCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
+    create: XOR<employeeCreateWithoutWorking_hour_marked_byInput, employeeUncheckedCreateWithoutWorking_hour_marked_byInput>
   }
 
-  export type employeeUpsertWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
-    update: XOR<employeeUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
-    create: XOR<employeeCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
+  export type employeeUpsertWithoutWorking_hourInput = {
+    update: XOR<employeeUpdateWithoutWorking_hourInput, employeeUncheckedUpdateWithoutWorking_hourInput>
+    create: XOR<employeeCreateWithoutWorking_hourInput, employeeUncheckedCreateWithoutWorking_hourInput>
     where?: employeeWhereInput
   }
 
-  export type employeeUpdateToOneWithWhereWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeUpdateToOneWithWhereWithoutWorking_hourInput = {
     where?: employeeWhereInput
-    data: XOR<employeeUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput, employeeUncheckedUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput>
+    data: XOR<employeeUpdateWithoutWorking_hourInput, employeeUncheckedUpdateWithoutWorking_hourInput>
   }
 
-  export type employeeUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeUpdateWithoutWorking_hourInput = {
     employee_name?: StringFieldUpdateOperationsInput | string
     hired_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     employee_email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26743,10 +26749,10 @@ export namespace Prisma {
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
-  export type employeeUncheckedUpdateWithoutWorking_hour_working_hour_employee_idToemployeeInput = {
+  export type employeeUncheckedUpdateWithoutWorking_hourInput = {
     employee_id?: IntFieldUpdateOperationsInput | number
     employee_name?: StringFieldUpdateOperationsInput | string
     role_id?: IntFieldUpdateOperationsInput | number
@@ -26759,21 +26765,21 @@ export namespace Prisma {
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
-  export type employeeUpsertWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
-    update: XOR<employeeUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
-    create: XOR<employeeCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedCreateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
+  export type employeeUpsertWithoutWorking_hour_marked_byInput = {
+    update: XOR<employeeUpdateWithoutWorking_hour_marked_byInput, employeeUncheckedUpdateWithoutWorking_hour_marked_byInput>
+    create: XOR<employeeCreateWithoutWorking_hour_marked_byInput, employeeUncheckedCreateWithoutWorking_hour_marked_byInput>
     where?: employeeWhereInput
   }
 
-  export type employeeUpdateToOneWithWhereWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeUpdateToOneWithWhereWithoutWorking_hour_marked_byInput = {
     where?: employeeWhereInput
-    data: XOR<employeeUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput, employeeUncheckedUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput>
+    data: XOR<employeeUpdateWithoutWorking_hour_marked_byInput, employeeUncheckedUpdateWithoutWorking_hour_marked_byInput>
   }
 
-  export type employeeUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeUpdateWithoutWorking_hour_marked_byInput = {
     employee_name?: StringFieldUpdateOperationsInput | string
     hired_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     employee_email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26785,10 +26791,10 @@ export namespace Prisma {
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
   }
 
-  export type employeeUncheckedUpdateWithoutWorking_hour_working_hour_updated_byToemployeeInput = {
+  export type employeeUncheckedUpdateWithoutWorking_hour_marked_byInput = {
     employee_id?: IntFieldUpdateOperationsInput | number
     employee_name?: StringFieldUpdateOperationsInput | string
     role_id?: IntFieldUpdateOperationsInput | number
@@ -26801,7 +26807,7 @@ export namespace Prisma {
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type employeeCreateManyBranchInput = {
@@ -26847,8 +26853,8 @@ export namespace Prisma {
     user_role?: user_roleUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateWithoutBranchInput = {
@@ -26863,8 +26869,8 @@ export namespace Prisma {
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateManyWithoutBranchInput = {
@@ -27070,8 +27076,8 @@ export namespace Prisma {
     product_count?: number | null
   }
 
-  export type working_hourCreateManyEmployee_working_hour_employee_idToemployeeInput = {
-    record_id?: number
+  export type working_hourCreateManyEmployeeInput = {
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -27080,9 +27086,9 @@ export namespace Prisma {
     total_hours?: Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourCreateManyEmployee_working_hour_updated_byToemployeeInput = {
-    record_id?: number
+  export type working_hourCreateManyMarked_byInput = {
     employee_id: number
+    branch_id: string
     date: string
     shift_on: string
     shift_off: string
@@ -27130,27 +27136,18 @@ export namespace Prisma {
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type working_hourUpdateWithoutEmployee_working_hour_employee_idToemployeeInput = {
+  export type working_hourUpdateWithoutEmployeeInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
     present?: BoolFieldUpdateOperationsInput | boolean
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_updated_byToemployee?: employeeUpdateOneRequiredWithoutWorking_hour_working_hour_updated_byToemployeeNestedInput
+    marked_by?: employeeUpdateOneRequiredWithoutWorking_hour_marked_byNestedInput
   }
 
-  export type working_hourUncheckedUpdateWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
-    date?: StringFieldUpdateOperationsInput | string
-    shift_on?: StringFieldUpdateOperationsInput | string
-    shift_off?: StringFieldUpdateOperationsInput | string
-    updated_by?: IntFieldUpdateOperationsInput | number
-    present?: BoolFieldUpdateOperationsInput | boolean
-    total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
+  export type working_hourUncheckedUpdateWithoutEmployeeInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -27159,18 +27156,29 @@ export namespace Prisma {
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourUpdateWithoutEmployee_working_hour_updated_byToemployeeInput = {
+  export type working_hourUncheckedUpdateManyWithoutEmployeeInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    shift_on?: StringFieldUpdateOperationsInput | string
+    shift_off?: StringFieldUpdateOperationsInput | string
+    updated_by?: IntFieldUpdateOperationsInput | number
+    present?: BoolFieldUpdateOperationsInput | boolean
+    total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type working_hourUpdateWithoutMarked_byInput = {
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
     present?: BoolFieldUpdateOperationsInput | boolean
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    employee_working_hour_employee_idToemployee?: employeeUpdateOneRequiredWithoutWorking_hour_working_hour_employee_idToemployeeNestedInput
+    employee?: employeeUpdateOneRequiredWithoutWorking_hourNestedInput
   }
 
-  export type working_hourUncheckedUpdateWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
+  export type working_hourUncheckedUpdateWithoutMarked_byInput = {
     employee_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -27178,9 +27186,9 @@ export namespace Prisma {
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
+  export type working_hourUncheckedUpdateManyWithoutMarked_byInput = {
     employee_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: StringFieldUpdateOperationsInput | string
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -27418,8 +27426,8 @@ export namespace Prisma {
     branch?: branchUpdateOneRequiredWithoutEmployeeNestedInput
     sales_history?: sales_historyUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateWithoutUser_roleInput = {
@@ -27434,8 +27442,8 @@ export namespace Prisma {
     role_updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sales_history?: sales_historyUncheckedUpdateManyWithoutEmployeeNestedInput
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
-    working_hour_working_hour_employee_idToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_employee_idToemployeeNestedInput
-    working_hour_working_hour_updated_byToemployee?: working_hourUncheckedUpdateManyWithoutEmployee_working_hour_updated_byToemployeeNestedInput
+    working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
+    working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
   }
 
   export type employeeUncheckedUpdateManyWithoutUser_roleInput = {

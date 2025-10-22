@@ -253,8 +253,8 @@ exports.Prisma.Variable_optionsScalarFieldEnum = {
 };
 
 exports.Prisma.Working_hourScalarFieldEnum = {
-  record_id: 'record_id',
   employee_id: 'employee_id',
+  branch_id: 'branch_id',
   date: 'date',
   shift_on: 'shift_on',
   shift_off: 'shift_off',

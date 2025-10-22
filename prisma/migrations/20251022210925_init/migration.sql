@@ -8,7 +8,7 @@ CREATE TABLE "access_type" (
 
 -- CreateTable
 CREATE TABLE "branch" (
-    "branch_id" TEXT NOT NULL,
+    "branch_id" UUID NOT NULL,
     "branch_city" VARCHAR(255) NOT NULL,
     "branch_address" VARCHAR(200) NOT NULL,
     "branch_phone" VARCHAR(13) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE "employee" (
     "hired_date" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "employee_email" VARCHAR(255),
     "employee_phone" VARCHAR(13) NOT NULL,
-    "branch_id" TEXT NOT NULL,
+    "branch_id" UUID NOT NULL,
     "employee_image" VARCHAR(255),
     "branch_updated_on" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "role_updated_on" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
@@ -81,7 +81,7 @@ CREATE TABLE "employee" (
 -- CreateTable
 CREATE TABLE "inventory" (
     "product_id" UUID NOT NULL,
-    "branch_id" TEXT NOT NULL,
+    "branch_id" UUID NOT NULL,
     "quantity" INTEGER,
     "reorder_level" INTEGER,
     "updated_on" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
@@ -121,7 +121,7 @@ CREATE TABLE "sales_history" (
     "order_id" SERIAL NOT NULL,
     "customer_id" INTEGER,
     "cashier_id" INTEGER NOT NULL,
-    "branch_id" TEXT NOT NULL,
+    "branch_id" UUID NOT NULL,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "total_amount" DECIMAL(1000,2),
     "profit" DECIMAL(1000,2) DEFAULT 0.00,

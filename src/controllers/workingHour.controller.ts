@@ -14,6 +14,7 @@ interface EmployeeRecordBody {
   updated_by: number;
   present: boolean;
   total_hours: number;
+  branch_id: string;
 }
 
 export const GetEmployeeRecordByDate: RequestHandler = async (req, res) => {
@@ -38,9 +39,9 @@ export const GetEmployeeRecordByDateBranch: RequestHandler = async (req, res) =>
 };
 
 export const AddEmployeeRecord: RequestHandler<unknown, unknown, EmployeeRecordBody> = async (req, res) => {
-  const { employee_id, date, shift_on, shift_off, updated_by, present, total_hours } = req.body;
+  const { employee_id, date, shift_on, shift_off, updated_by, present, total_hours, branch_id } = req.body;
 
-  return await addEmployeeRecord(employee_id, date, shift_on, shift_off, updated_by, present, total_hours)
+  return await addEmployeeRecord(employee_id, date, shift_on, shift_off, updated_by, present, total_hours, branch_id)
     .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };

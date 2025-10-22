@@ -17,9 +17,9 @@ export const getEmployees = async () => {
   });
 };
 
-export const getEmployee = async (id: string) => {
+export const getEmployee = async (id: number) => {
   return await prisma.employee.findUnique({
-    where: { employee_id: Number(id) },
+    where: { employee_id: id },
     include: {
       branch: {
         select: {

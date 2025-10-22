@@ -89,7 +89,7 @@ VALUES
 
 INSERT INTO user_credentials (user_id, username, password) 
 VALUES
-(1, 'somesh', crypt('1111',gen_salt('bf'))),
+(1, 'somesh', '$2b$12$JotH3Y0O2ChThIspRWQvqeEBrUQkgvJLL5Ch402.mXhLPzL6fsuxG'),
 (2,'johndoe', crypt('password1',gen_salt('bf'))),
 (3,'janesmith', crypt('password2',gen_salt('bf'))),
 (4,'robertjohnson', crypt('password3',gen_salt('bf'))),

@@ -1,4 +1,5 @@
 import prisma from "../config/prisma";
+import { hashPassword } from "../utils/hash";
 
 export type RegisterPayload = {
   employee_name: string;
@@ -10,8 +11,10 @@ export type RegisterPayload = {
   employee_image: string;
 };
 
-export const login = async (username: string, password: string): Promise<{ employee_id?: string }> => {
-  return await prisma.$queryRaw`SELECT user_id as employee_id FROM  user_credentials WHERE username = ${username} AND password = crypt(${password}, password)`;
+export const getUserCredentialsByUsername = async (username: string) => {
+  return await prisma.user_credentials.findUnique({
+    where: { username },
+  });
 };
 
 export const register = async ({
@@ -35,11 +38,13 @@ export const register = async ({
       },
     });
 
+    const hashedPassword = await hashPassword(employee_userName);
+
     await prisma.user_credentials.create({
       data: {
         user_id: employee.employee_id,
         username: employee_userName,
-        password: employee_userName, // Default password is the username
+        password: hashedPassword, // Default password is the username
       },
     });
 
@@ -55,8 +60,12 @@ export const isUsernameTaken = async (username: string) => {
   );
 };
 
-export const resetPassword = async (username: string, password: string) => {
-  return await prisma.$executeRaw`UPDATE user_credentials SET password = crypt(${password}, gen_salt('bf')) WHERE username = ${username} returning *`;
+export const resetPassword = async (user_id: number, password: string) => {
+  const hashedPassword = await hashPassword(password);
+  return await prisma.user_credentials.updateMany({
+    where: { user_id },
+    data: { password: hashedPassword },
+  });
 };
 
 export const checkPassword = async (username: string, password: string) => {

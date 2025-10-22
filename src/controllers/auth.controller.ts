@@ -1,7 +1,14 @@
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import { checkPassword, isUsernameTaken, login, register, resetPassword } from "../models/auth.model";
+import {
+  checkPassword,
+  getUserCredentialsByUsername,
+  isUsernameTaken,
+  register,
+  resetPassword,
+} from "../models/auth.model";
 import { getEmployee } from "../models/employee.model";
+import { verifyPassword } from "../utils/hash";
 
 interface LoginBody {
   username: string;
@@ -25,19 +32,22 @@ interface ResetPasswordBody {
 
 export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, res) => {
   const { username, password } = req.body;
+  console.log(username, password);
 
   try {
-    const authResult = await login(username, password);
-    const employee_id = authResult?.employee_id;
-
-    if (!employee_id) {
-      return res.status(400).json({ error: { username: "Invalid username/password." } });
+    const user_credentials = await getUserCredentialsByUsername(username);
+    if (!user_credentials) {
+      return res.status(400).json({ error: { username: "Invalid username." } });
     }
 
-    const employee = await getEmployee(employee_id);
+    const isPasswordValid = await verifyPassword(password, user_credentials.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: { username: "Invalid password." } });
+    }
 
+    const employee = await getEmployee(user_credentials.user_id);
     if (!employee) {
-      return res.status(400).json({ error: { username: "Invalid username/password." } });
+      return res.status(400).json({ error: { username: "Employee not found." } });
     }
 
     const secret = process.env.SECRET_KEY;
@@ -119,11 +129,14 @@ export const ResetPasswordHandler: RequestHandler<unknown, unknown, ResetPasswor
       return res.status(400).json({ error: { username: "User name is not exist." } });
     }
 
-    const data = await login(username, password);
-    const employee_id = data.employee_id;
+    const userCredentials = await getUserCredentialsByUsername(username);
+    if (!userCredentials) {
+      return res.status(400).json({ error: { username: "Invalid username." } });
+    }
 
-    if (!employee_id) {
-      return res.status(400).json({ error: { username: "Invalid username/password." } });
+    const isCurrentPasswordValid = await verifyPassword(password, userCredentials.password);
+    if (!isCurrentPasswordValid) {
+      return res.status(400).json({ error: { password: "Invalid current password." } });
     }
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
@@ -140,7 +153,7 @@ export const ResetPasswordHandler: RequestHandler<unknown, unknown, ResetPasswor
       return res.status(400).json({ error: { newPassword: "Password same as previous." } });
     }
 
-    const result = await resetPassword(username, newPassword);
+    const result = await resetPassword(userCredentials.user_id, newPassword);
 
     if (result) {
       return res.status(200).json({ message: "Reset password successful" });

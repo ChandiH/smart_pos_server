@@ -14,7 +14,7 @@ model access_type {
 }
 
 model branch {
-  branch_id      String          @id @default(uuid())
+  branch_id      String          @id @default(uuid()) @db.Uuid
   branch_city    String          @unique @db.VarChar(255)
   branch_address String          @db.VarChar(200)
   branch_phone   String          @unique @db.VarChar(13)
@@ -63,28 +63,28 @@ model discount {
 }
 
 model employee {
-  employee_id                                     Int               @id @default(autoincrement())
-  employee_name                                   String            @db.VarChar(255)
-  role_id                                         Int
-  hired_date                                      DateTime?         @default(now()) @db.Timestamptz(6)
-  employee_email                                  String?           @unique @db.VarChar(255)
-  employee_phone                                  String            @unique @db.VarChar(13)
-  branch_id                                       String
-  employee_image                                  String?           @db.VarChar(255)
-  branch_updated_on                               DateTime?         @default(now()) @db.Timestamptz(6)
-  role_updated_on                                 DateTime?         @default(now()) @db.Timestamptz(6)
-  branch                                          branch            @relation(fields: [branch_id], references: [branch_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_branch")
-  user_role                                       user_role         @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_role")
-  sales_history                                   sales_history[]
-  user_credentials                                user_credentials?
-  working_hour_working_hour_employee_idToemployee working_hour[]    @relation("working_hour_employee_idToemployee")
-  working_hour_working_hour_updated_byToemployee  working_hour[]    @relation("working_hour_updated_byToemployee")
+  employee_id            Int               @id @default(autoincrement())
+  employee_name          String            @db.VarChar(255)
+  role_id                Int
+  hired_date             DateTime?         @default(now()) @db.Timestamptz(6)
+  employee_email         String?           @unique @db.VarChar(255)
+  employee_phone         String            @unique @db.VarChar(13)
+  branch_id              String            @db.Uuid
+  employee_image         String?           @db.VarChar(255)
+  branch_updated_on      DateTime?         @default(now()) @db.Timestamptz(6)
+  role_updated_on        DateTime?         @default(now()) @db.Timestamptz(6)
+  branch                 branch            @relation(fields: [branch_id], references: [branch_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_branch")
+  user_role              user_role         @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_role")
+  sales_history          sales_history[]
+  user_credentials       user_credentials?
+  working_hour           working_hour[]    @relation("working_hour_employee_idToemployee")
+  working_hour_marked_by working_hour[]    @relation("working_hour_updated_byToemployee")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model inventory {
   product_id    String    @db.Uuid
-  branch_id     String
+  branch_id     String    @db.Uuid
   quantity      Int?
   reorder_level Int?
   updated_on    DateTime? @default(now()) @db.Timestamptz(6)
@@ -125,7 +125,7 @@ model sales_history {
   order_id          Int             @id @default(autoincrement())
   customer_id       Int?
   cashier_id        Int
-  branch_id         String
+  branch_id         String          @db.Uuid
   created_at        DateTime?       @default(now()) @db.Timestamptz(6)
   total_amount      Decimal?        @db.Decimal(1000, 2)
   profit            Decimal?        @default(0.00) @db.Decimal(1000, 2)
@@ -174,14 +174,16 @@ model variable_options {
 }
 
 model working_hour {
-  record_id                                   Int      @id @default(autoincrement())
-  employee_id                                 Int
-  date                                        String   @db.VarChar(12)
-  shift_on                                    String   @db.VarChar(5)
-  shift_off                                   String   @db.VarChar(5)
-  updated_by                                  Int
-  present                                     Boolean
-  total_hours                                 Decimal? @db.Decimal(100, 2)
-  employee_working_hour_employee_idToemployee employee @relation("working_hour_employee_idToemployee", fields: [employee_id], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_id")
-  employee_working_hour_updated_byToemployee  employee @relation("working_hour_updated_byToemployee", fields: [updated_by], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_updated_by")
+  employee_id Int
+  branch_id   String   @db.Uuid
+  date        String   @db.VarChar(12)
+  shift_on    String   @db.VarChar(5)
+  shift_off   String   @db.VarChar(5)
+  updated_by  Int
+  present     Boolean
+  total_hours Decimal? @db.Decimal(100, 2)
+  employee    employee @relation("working_hour_employee_idToemployee", fields: [employee_id], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_id")
+  marked_by   employee @relation("working_hour_updated_byToemployee", fields: [updated_by], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_updated_by")
+
+  @@id([employee_id, branch_id, date])
 }

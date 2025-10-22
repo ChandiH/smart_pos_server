@@ -1,7 +1,7 @@
 import prisma from "../config/prisma";
 
 export const insertSalesData = async (salesData: unknown) => {
-  return await prisma.$queryRaw`CALL insert_sales_data_and_update(${salesData})`;
+  return await prisma.$executeRaw`CALL insert_sales_data_and_update(${JSON.stringify(salesData)}::jsonb);`;
 };
 
 export const getRewardsPointsPercentage = async () => {

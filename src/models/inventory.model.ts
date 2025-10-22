@@ -26,14 +26,11 @@ export const getInventoryByBranchId = async (id: string) => {
 };
 
 export const getInventoryByProductId = async (id: string) => {
-  return await prisma.inventory.findMany({
+  return await prisma.product.findUnique({
     where: { product_id: id },
     include: {
-      branch: {
-        select: {
-          branch_city: true,
-        },
-      },
+      inventory: true,
+      category: true,
     },
   });
 };
