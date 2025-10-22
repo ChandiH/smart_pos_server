@@ -1,41 +1,19 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
 
-type VariableRow = {
-  variable_value: string;
+export const insertSalesData = async (salesData: unknown) => {
+  return await prisma.$queryRaw`CALL insert_sales_data_and_update(${salesData})`;
 };
 
-const insertSalesData = (salesData: unknown): Promise<QueryResult> => {
-  return pool.query("CALL insert_sales_data_and_update($1::jsonb)", [
-    salesData,
-  ]);
+export const getRewardsPointsPercentage = async () => {
+  return await prisma.variable_options.findUnique({
+    where: { variable_name: "rewards_points_percentage" },
+    select: { variable_value: true },
+  });
 };
 
-const getRewardsPointsPercentage =
-  (): Promise<QueryResult<VariableRow>> => {
-    return pool.query<VariableRow>(
-      "SELECT variable_value FROM variable_options WHERE variable_name = 'rewards_points_percentage'"
-    );
-  };
-
-const updateRewardsPointsPercentage = (
-  rewardsPointsPercentage: number
-): Promise<QueryResult> => {
-  return pool.query(
-    "UPDATE variable_options SET variable_value = $1 WHERE variable_id = 1",
-    [rewardsPointsPercentage]
-  );
+export const updateRewardsPointsPercentage = async (rewardsPointsPercentage: number) => {
+  return await prisma.variable_options.update({
+    where: { variable_name: "rewards_points_percentage" },
+    data: { variable_value: rewardsPointsPercentage },
+  });
 };
-
-const cartModel = {
-  insertSalesData,
-  getRewardsPointsPercentage,
-  updateRewardsPointsPercentage,
-};
-
-export {
-  insertSalesData,
-  getRewardsPointsPercentage,
-  updateRewardsPointsPercentage,
-};
-export default cartModel;

@@ -1,31 +1,20 @@
-import { Router, type RequestHandler } from "express";
-import chartController from "../controllers/chart.controller";
-
-type ChartController = {
-  getDailySalesForbranch: RequestHandler;
-  getSalesView: RequestHandler;
-  getMonthlySummary: RequestHandler;
-  getTopSellingBranch: RequestHandler;
-  getMonths: RequestHandler;
-  getTopSellingProduct: RequestHandler;
-};
-
-const {
-  getDailySalesForbranch,
-  getSalesView,
-  getMonthlySummary,
-  getTopSellingBranch,
-  getMonths,
-  getTopSellingProduct,
-} = chartController as ChartController;
+import { Router } from "express";
+import {
+  GetDailySalesForbranch,
+  GetMonthlySummary,
+  GetMonths,
+  GetSalesView,
+  GetTopSellingBranch,
+  GetTopSellingProduct,
+} from "../controllers/chart.controller";
 
 const router = Router();
 
-router.get("/sale_history/:id", getSalesView);
-router.get("/:year_month/:branch_id", getDailySalesForbranch);
-router.get("/monthly_summary", getMonthlySummary);
-router.get("/:target_month", getTopSellingBranch);
-router.get("/three/months/now", getMonths);
-router.get("/top/selling/products", getTopSellingProduct);
+router.get("/sale_history/:id", GetSalesView);
+router.get("/:year_month/:branch_id", GetDailySalesForbranch);
+router.get("/monthly_summary", GetMonthlySummary);
+router.get("/:target_month", GetTopSellingBranch);
+router.get("/three/months/now", GetMonths);
+router.get("/top/selling/products", GetTopSellingProduct);
 
 export default router;

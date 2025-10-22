@@ -1,104 +1,85 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import { prisma } from "../config/prisma";
 
-type EmployeeRow = Record<string, unknown>;
-
-const getEmployees = (): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `select employee.*, branch.branch_city as branch_name , user_role.role_name 
-    from employee inner join branch 
-            on employee.branch_id = branch.branch_id 
-                  inner join user_role on 
-                      user_role.role_id = employee.role_id
-      `
-  );
+export const getEmployees = async () => {
+  return await prisma.employee.findMany({
+    include: {
+      branch: {
+        select: {
+          branch_city: true,
+        },
+      },
+      user_role: {
+        select: {
+          role_name: true,
+        },
+      },
+    },
+  });
 };
 
-const getEmployee = (id: string): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `select employee.*, branch.branch_city as branch_name
-    from employee
-    inner join branch on employee.branch_id = branch.branch_id
-    where employee.employee_id = $1
-    `,
-    [id]
-  );
+export const getEmployee = async (id: string) => {
+  return await prisma.employee.findUnique({
+    where: { employee_id: Number(id) },
+    include: {
+      branch: {
+        select: {
+          branch_city: true,
+        },
+      },
+      user_role: {
+        select: {
+          role_name: true,
+          user_access: true,
+        },
+      },
+    },
+  });
 };
 
-const getEmployeesByBranch = (id: string): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `select employee.*, user_role.role_name
-    from employee
-    inner join user_role on employee.role_id = user_role.role_id
-    where employee.branch_id=$1`,
-    [id]
-  );
+export const getEmployeesByBranchID = async (branch_id: string) => {
+  return await prisma.employee.findMany({
+    where: { branch_id },
+    include: {
+      user_role: {
+        select: {
+          role_name: true,
+        },
+      },
+    },
+  });
 };
 
-const getEmployeesByRole = (id: string): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(`select * from employee where role_id=$1`, [
-    id,
-  ]);
+export const getEmployeesByRole = async (role_id: string) => {
+  return await prisma.employee.findMany({
+    where: { role_id: Number(role_id) },
+  });
 };
 
-const getUserEmployee = (id: number): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `select employee.*, branch.branch_city as branch_name, user_role.role_name, user_role.user_access
-    from employee
-    inner join branch on employee.branch_id = branch.branch_id
-    inner join user_role on user_role.role_id = employee.role_id
-    where employee.employee_id = $1
-    `,
-    [id]
-  );
-};
-
-const updateEmployee = (
+export const updateEmployee = async (
   employee_name: string,
   role_id: number,
   employee_email: string,
   employee_phone: string,
-  branch_id: number,
+  branch_id: string,
   id: string
-): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `update employee 
-    set employee_name= $1, role_id= $2, employee_email= $3, employee_phone= $4,
-     branch_id= $5
-    where employee_id= $6 returning *`,
-    [employee_name, role_id, employee_email, employee_phone, branch_id, id]
-  );
+) => {
+  return await prisma.employee.update({
+    where: { employee_id: Number(id) },
+    data: {
+      employee_name,
+      role_id,
+      employee_email,
+      employee_phone,
+      branch_id,
+    },
+  });
 };
 
-const updateImage = (
-  employee_id: string,
-  imageURL: string
-): Promise<QueryResult<EmployeeRow>> => {
-  return pool.query<EmployeeRow>(
-    `update employee 
-  set employee_image= $2
-  where employee_id= $1`,
-    [employee_id, imageURL]
-  );
+export const updateImage = async (employee_id: string, imageURL: string) => {
+  return await prisma.employee.update({
+    where: { employee_id: Number(employee_id) },
+    data: {
+      employee_image: imageURL,
+    },
+  });
 };
-
-const employeeModel = {
-  getEmployees,
-  getEmployee,
-  getEmployeesByBranch,
-  getEmployeesByRole,
-  updateEmployee,
-  getUserEmployee,
-  updateImage,
-};
-
-export {
-  getEmployees,
-  getEmployee,
-  getEmployeesByBranch,
-  getEmployeesByRole,
-  updateEmployee,
-  getUserEmployee,
-  updateImage,
-};
-export default employeeModel;

@@ -1,56 +1,37 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
 
-type ChartRow = Record<string, unknown>;
-
-const getDailySalesForbranch = (
-  year_month: string,
-  branch_id: string
-): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    "SELECT day,total_sales FROM branch_monthly_sales($1,$2) order by day ",
-    [year_month, branch_id]
-  );
+export const getDailySalesForbranch = async (year_month: string, branch_id: string) => {
+  return await prisma.$queryRaw`SELECT day,total_sales FROM branch_monthly_sales(${year_month},${branch_id}) order by day `;
 };
 
-const getSalesView = (id: string): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>("SELECT * FROM get_sales_data_by_branch($1)", [
-    id,
-  ]);
+export const getSalesView = async (id: string) => {
+  return await prisma.$queryRaw`SELECT * FROM get_sales_data_by_branch(${id})`;
 };
 
-const getMonthlySummary = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    `select sum(profit) as gross_profit ,sum(total_amount) as net_sale, count(order_id)::Integer as total_orders
+export const getMonthlySummary = async () => {
+  return await prisma.$queryRaw`select sum(profit) as gross_profit ,sum(total_amount) as net_sale, count(order_id)::Integer as total_orders
     from sales_history
     where to_char(created_at, 'YYYY-MM') = to_char(now()::date, 'YYYY-MM')
-	group by to_char(created_at, 'YYYY-MM')
-`
-  );
+	  group by to_char(created_at, 'YYYY-MM')`;
 };
 
-const getTopSellingBranch = (
-  target_month: string
-): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>("SELECT * FROM get_top_branch_sales($1)", [
-    target_month,
-  ]);
+export const getTopSellingBranch = async (target_month: string) => {
+  return await prisma.$queryRaw`SELECT * FROM get_top_branch_sales(${target_month})`;
 };
 
-const getMonths = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(`
-  SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '2 months', 'YYYY-MM') AS month_name
-UNION
-SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '1 month', 'YYYY-MM')
-UNION
-SELECT TO_CHAR(date_trunc('month', current_date), 'YYYY-MM')
-order by month_name desc;
-`);
+export const getMonths = async () => {
+  return await prisma.$queryRaw`
+    SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '2 months', 'YYYY-MM') AS month_name
+    UNION
+    SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '1 month', 'YYYY-MM')
+    UNION
+    SELECT TO_CHAR(date_trunc('month', current_date), 'YYYY-MM')
+    order by month_name desc;`;
 };
 
-const getTopSellingProduct = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    `WITH current_month_sales AS (
+export const getTopSellingProduct = async () => {
+  return await prisma.$queryRaw`
+    WITH current_month_sales AS (
       SELECT
         p.product_name,
         SUM(CASE WHEN DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE) THEN c.quantity ELSE 0 END) AS current_month_count
@@ -86,26 +67,5 @@ const getTopSellingProduct = (): Promise<QueryResult<ChartRow>> => {
       current_month_sales cm
       LEFT JOIN last_month_sales lm ON cm.product_name = lm.product_name
     ORDER BY
-      cm.current_month_count DESC;
-    `
-  );
+      cm.current_month_count DESC;`;
 };
-
-const chartModel = {
-  getDailySalesForbranch,
-  getMonthlySummary,
-  getSalesView,
-  getTopSellingBranch,
-  getMonths,
-  getTopSellingProduct,
-};
-
-export {
-  getDailySalesForbranch,
-  getMonthlySummary,
-  getSalesView,
-  getTopSellingBranch,
-  getMonths,
-  getTopSellingProduct,
-};
-export default chartModel;

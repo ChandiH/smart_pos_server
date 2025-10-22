@@ -4692,7 +4692,6 @@ export namespace Prisma {
   export type CartAvgAggregateOutputType = {
     cart_id: number | null
     order_id: number | null
-    product_id: number | null
     quantity: number | null
     sub_total_amount: Decimal | null
   }
@@ -4700,7 +4699,6 @@ export namespace Prisma {
   export type CartSumAggregateOutputType = {
     cart_id: number | null
     order_id: number | null
-    product_id: number | null
     quantity: number | null
     sub_total_amount: Decimal | null
   }
@@ -4708,7 +4706,7 @@ export namespace Prisma {
   export type CartMinAggregateOutputType = {
     cart_id: number | null
     order_id: number | null
-    product_id: number | null
+    product_id: string | null
     quantity: number | null
     sub_total_amount: Decimal | null
     created_at: Date | null
@@ -4717,7 +4715,7 @@ export namespace Prisma {
   export type CartMaxAggregateOutputType = {
     cart_id: number | null
     order_id: number | null
-    product_id: number | null
+    product_id: string | null
     quantity: number | null
     sub_total_amount: Decimal | null
     created_at: Date | null
@@ -4737,7 +4735,6 @@ export namespace Prisma {
   export type CartAvgAggregateInputType = {
     cart_id?: true
     order_id?: true
-    product_id?: true
     quantity?: true
     sub_total_amount?: true
   }
@@ -4745,7 +4742,6 @@ export namespace Prisma {
   export type CartSumAggregateInputType = {
     cart_id?: true
     order_id?: true
-    product_id?: true
     quantity?: true
     sub_total_amount?: true
   }
@@ -4867,7 +4863,7 @@ export namespace Prisma {
   export type CartGroupByOutputType = {
     cart_id: number
     order_id: number | null
-    product_id: number
+    product_id: string
     quantity: number
     sub_total_amount: Decimal | null
     created_at: Date | null
@@ -4957,7 +4953,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       cart_id: number
       order_id: number | null
-      product_id: number
+      product_id: string
       quantity: number
       sub_total_amount: Prisma.Decimal | null
       created_at: Date | null
@@ -5388,7 +5384,7 @@ export namespace Prisma {
   interface cartFieldRefs {
     readonly cart_id: FieldRef<"cart", 'Int'>
     readonly order_id: FieldRef<"cart", 'Int'>
-    readonly product_id: FieldRef<"cart", 'Int'>
+    readonly product_id: FieldRef<"cart", 'String'>
     readonly quantity: FieldRef<"cart", 'Int'>
     readonly sub_total_amount: FieldRef<"cart", 'Decimal'>
     readonly created_at: FieldRef<"cart", 'DateTime'>
@@ -10352,19 +10348,17 @@ export namespace Prisma {
   }
 
   export type InventoryAvgAggregateOutputType = {
-    product_id: number | null
     quantity: number | null
     reorder_level: number | null
   }
 
   export type InventorySumAggregateOutputType = {
-    product_id: number | null
     quantity: number | null
     reorder_level: number | null
   }
 
   export type InventoryMinAggregateOutputType = {
-    product_id: number | null
+    product_id: string | null
     branch_id: string | null
     quantity: number | null
     reorder_level: number | null
@@ -10372,7 +10366,7 @@ export namespace Prisma {
   }
 
   export type InventoryMaxAggregateOutputType = {
-    product_id: number | null
+    product_id: string | null
     branch_id: string | null
     quantity: number | null
     reorder_level: number | null
@@ -10390,13 +10384,11 @@ export namespace Prisma {
 
 
   export type InventoryAvgAggregateInputType = {
-    product_id?: true
     quantity?: true
     reorder_level?: true
   }
 
   export type InventorySumAggregateInputType = {
-    product_id?: true
     quantity?: true
     reorder_level?: true
   }
@@ -10513,7 +10505,7 @@ export namespace Prisma {
   }
 
   export type InventoryGroupByOutputType = {
-    product_id: number
+    product_id: string
     branch_id: string
     quantity: number | null
     reorder_level: number | null
@@ -10598,7 +10590,7 @@ export namespace Prisma {
       product: Prisma.$productPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      product_id: number
+      product_id: string
       branch_id: string
       quantity: number | null
       reorder_level: number | null
@@ -11028,7 +11020,7 @@ export namespace Prisma {
    * Fields of the inventory model
    */
   interface inventoryFieldRefs {
-    readonly product_id: FieldRef<"inventory", 'Int'>
+    readonly product_id: FieldRef<"inventory", 'String'>
     readonly branch_id: FieldRef<"inventory", 'String'>
     readonly quantity: FieldRef<"inventory", 'Int'>
     readonly reorder_level: FieldRef<"inventory", 'Int'>
@@ -12525,7 +12517,6 @@ export namespace Prisma {
   }
 
   export type ProductAvgAggregateOutputType = {
-    product_id: number | null
     category_id: number | null
     buying_price: Decimal | null
     retail_price: Decimal | null
@@ -12534,7 +12525,6 @@ export namespace Prisma {
   }
 
   export type ProductSumAggregateOutputType = {
-    product_id: number | null
     category_id: number | null
     buying_price: Decimal | null
     retail_price: Decimal | null
@@ -12543,7 +12533,7 @@ export namespace Prisma {
   }
 
   export type ProductMinAggregateOutputType = {
-    product_id: number | null
+    product_id: string | null
     product_name: string | null
     product_desc: string | null
     category_id: number | null
@@ -12558,7 +12548,7 @@ export namespace Prisma {
   }
 
   export type ProductMaxAggregateOutputType = {
-    product_id: number | null
+    product_id: string | null
     product_name: string | null
     product_desc: string | null
     category_id: number | null
@@ -12591,7 +12581,6 @@ export namespace Prisma {
 
 
   export type ProductAvgAggregateInputType = {
-    product_id?: true
     category_id?: true
     buying_price?: true
     retail_price?: true
@@ -12600,7 +12589,6 @@ export namespace Prisma {
   }
 
   export type ProductSumAggregateInputType = {
-    product_id?: true
     category_id?: true
     buying_price?: true
     retail_price?: true
@@ -12742,7 +12730,7 @@ export namespace Prisma {
   }
 
   export type ProductGroupByOutputType = {
-    product_id: number
+    product_id: string
     product_name: string
     product_desc: string | null
     category_id: number
@@ -12875,7 +12863,7 @@ export namespace Prisma {
       supplier: Prisma.$supplierPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      product_id: number
+      product_id: string
       product_name: string
       product_desc: string | null
       category_id: number
@@ -13315,7 +13303,7 @@ export namespace Prisma {
    * Fields of the product model
    */
   interface productFieldRefs {
-    readonly product_id: FieldRef<"product", 'Int'>
+    readonly product_id: FieldRef<"product", 'String'>
     readonly product_name: FieldRef<"product", 'String'>
     readonly product_desc: FieldRef<"product", 'String'>
     readonly category_id: FieldRef<"product", 'Int'>
@@ -20963,7 +20951,7 @@ export namespace Prisma {
     NOT?: cartWhereInput | cartWhereInput[]
     cart_id?: IntFilter<"cart"> | number
     order_id?: IntNullableFilter<"cart"> | number | null
-    product_id?: IntFilter<"cart"> | number
+    product_id?: UuidFilter<"cart"> | string
     quantity?: IntFilter<"cart"> | number
     sub_total_amount?: DecimalNullableFilter<"cart"> | Decimal | DecimalJsLike | number | string | null
     created_at?: DateTimeNullableFilter<"cart"> | Date | string | null
@@ -20988,7 +20976,7 @@ export namespace Prisma {
     OR?: cartWhereInput[]
     NOT?: cartWhereInput | cartWhereInput[]
     order_id?: IntNullableFilter<"cart"> | number | null
-    product_id?: IntFilter<"cart"> | number
+    product_id?: UuidFilter<"cart"> | string
     quantity?: IntFilter<"cart"> | number
     sub_total_amount?: DecimalNullableFilter<"cart"> | Decimal | DecimalJsLike | number | string | null
     created_at?: DateTimeNullableFilter<"cart"> | Date | string | null
@@ -21016,7 +21004,7 @@ export namespace Prisma {
     NOT?: cartScalarWhereWithAggregatesInput | cartScalarWhereWithAggregatesInput[]
     cart_id?: IntWithAggregatesFilter<"cart"> | number
     order_id?: IntNullableWithAggregatesFilter<"cart"> | number | null
-    product_id?: IntWithAggregatesFilter<"cart"> | number
+    product_id?: UuidWithAggregatesFilter<"cart"> | string
     quantity?: IntWithAggregatesFilter<"cart"> | number
     sub_total_amount?: DecimalNullableWithAggregatesFilter<"cart"> | Decimal | DecimalJsLike | number | string | null
     created_at?: DateTimeNullableWithAggregatesFilter<"cart"> | Date | string | null
@@ -21286,7 +21274,7 @@ export namespace Prisma {
     AND?: inventoryWhereInput | inventoryWhereInput[]
     OR?: inventoryWhereInput[]
     NOT?: inventoryWhereInput | inventoryWhereInput[]
-    product_id?: IntFilter<"inventory"> | number
+    product_id?: UuidFilter<"inventory"> | string
     branch_id?: StringFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
@@ -21310,7 +21298,7 @@ export namespace Prisma {
     AND?: inventoryWhereInput | inventoryWhereInput[]
     OR?: inventoryWhereInput[]
     NOT?: inventoryWhereInput | inventoryWhereInput[]
-    product_id?: IntFilter<"inventory"> | number
+    product_id?: UuidFilter<"inventory"> | string
     branch_id?: StringFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
@@ -21336,7 +21324,7 @@ export namespace Prisma {
     AND?: inventoryScalarWhereWithAggregatesInput | inventoryScalarWhereWithAggregatesInput[]
     OR?: inventoryScalarWhereWithAggregatesInput[]
     NOT?: inventoryScalarWhereWithAggregatesInput | inventoryScalarWhereWithAggregatesInput[]
-    product_id?: IntWithAggregatesFilter<"inventory"> | number
+    product_id?: UuidWithAggregatesFilter<"inventory"> | string
     branch_id?: StringWithAggregatesFilter<"inventory"> | string
     quantity?: IntNullableWithAggregatesFilter<"inventory"> | number | null
     reorder_level?: IntNullableWithAggregatesFilter<"inventory"> | number | null
@@ -21389,7 +21377,7 @@ export namespace Prisma {
     AND?: productWhereInput | productWhereInput[]
     OR?: productWhereInput[]
     NOT?: productWhereInput | productWhereInput[]
-    product_id?: IntFilter<"product"> | number
+    product_id?: UuidFilter<"product"> | string
     product_name?: StringFilter<"product"> | string
     product_desc?: StringNullableFilter<"product"> | string | null
     category_id?: IntFilter<"product"> | number
@@ -21429,7 +21417,7 @@ export namespace Prisma {
   }
 
   export type productWhereUniqueInput = Prisma.AtLeast<{
-    product_id?: number
+    product_id?: string
     product_name?: string
     product_barcode?: string
     AND?: productWhereInput | productWhereInput[]
@@ -21476,7 +21464,7 @@ export namespace Prisma {
     AND?: productScalarWhereWithAggregatesInput | productScalarWhereWithAggregatesInput[]
     OR?: productScalarWhereWithAggregatesInput[]
     NOT?: productScalarWhereWithAggregatesInput | productScalarWhereWithAggregatesInput[]
-    product_id?: IntWithAggregatesFilter<"product"> | number
+    product_id?: UuidWithAggregatesFilter<"product"> | string
     product_name?: StringWithAggregatesFilter<"product"> | string
     product_desc?: StringNullableWithAggregatesFilter<"product"> | string | null
     category_id?: IntWithAggregatesFilter<"product"> | number
@@ -21998,7 +21986,7 @@ export namespace Prisma {
   export type cartUncheckedCreateInput = {
     cart_id?: number
     order_id?: number | null
-    product_id: number
+    product_id: string
     quantity: number
     sub_total_amount?: Decimal | DecimalJsLike | number | string | null
     created_at?: Date | string | null
@@ -22015,7 +22003,7 @@ export namespace Prisma {
   export type cartUncheckedUpdateInput = {
     cart_id?: IntFieldUpdateOperationsInput | number
     order_id?: NullableIntFieldUpdateOperationsInput | number | null
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     sub_total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22024,7 +22012,7 @@ export namespace Prisma {
   export type cartCreateManyInput = {
     cart_id?: number
     order_id?: number | null
-    product_id: number
+    product_id: string
     quantity: number
     sub_total_amount?: Decimal | DecimalJsLike | number | string | null
     created_at?: Date | string | null
@@ -22039,7 +22027,7 @@ export namespace Prisma {
   export type cartUncheckedUpdateManyInput = {
     cart_id?: IntFieldUpdateOperationsInput | number
     order_id?: NullableIntFieldUpdateOperationsInput | number | null
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     sub_total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22082,7 +22070,6 @@ export namespace Prisma {
   }
 
   export type customerCreateInput = {
-    customer_id: number
     customer_name: string
     customer_email?: string | null
     customer_phone: string
@@ -22094,7 +22081,7 @@ export namespace Prisma {
   }
 
   export type customerUncheckedCreateInput = {
-    customer_id: number
+    customer_id?: number
     customer_name: string
     customer_email?: string | null
     customer_phone: string
@@ -22106,7 +22093,6 @@ export namespace Prisma {
   }
 
   export type customerUpdateInput = {
-    customer_id?: IntFieldUpdateOperationsInput | number
     customer_name?: StringFieldUpdateOperationsInput | string
     customer_email?: NullableStringFieldUpdateOperationsInput | string | null
     customer_phone?: StringFieldUpdateOperationsInput | string
@@ -22130,7 +22116,7 @@ export namespace Prisma {
   }
 
   export type customerCreateManyInput = {
-    customer_id: number
+    customer_id?: number
     customer_name: string
     customer_email?: string | null
     customer_phone: string
@@ -22141,7 +22127,6 @@ export namespace Prisma {
   }
 
   export type customerUpdateManyMutationInput = {
-    customer_id?: IntFieldUpdateOperationsInput | number
     customer_name?: StringFieldUpdateOperationsInput | string
     customer_email?: NullableStringFieldUpdateOperationsInput | string | null
     customer_phone?: StringFieldUpdateOperationsInput | string
@@ -22319,7 +22304,7 @@ export namespace Prisma {
   }
 
   export type inventoryUncheckedCreateInput = {
-    product_id: number
+    product_id: string
     branch_id: string
     quantity?: number | null
     reorder_level?: number | null
@@ -22335,7 +22320,7 @@ export namespace Prisma {
   }
 
   export type inventoryUncheckedUpdateInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     branch_id?: StringFieldUpdateOperationsInput | string
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     reorder_level?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22343,7 +22328,7 @@ export namespace Prisma {
   }
 
   export type inventoryCreateManyInput = {
-    product_id: number
+    product_id: string
     branch_id: string
     quantity?: number | null
     reorder_level?: number | null
@@ -22357,7 +22342,7 @@ export namespace Prisma {
   }
 
   export type inventoryUncheckedUpdateManyInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     branch_id?: StringFieldUpdateOperationsInput | string
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     reorder_level?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22401,7 +22386,7 @@ export namespace Prisma {
   }
 
   export type productCreateInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -22419,7 +22404,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedCreateInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -22437,7 +22422,7 @@ export namespace Prisma {
   }
 
   export type productUpdateInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -22455,7 +22440,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number
@@ -22473,7 +22458,7 @@ export namespace Prisma {
   }
 
   export type productCreateManyInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -22489,7 +22474,7 @@ export namespace Prisma {
   }
 
   export type productUpdateManyMutationInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -22503,7 +22488,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateManyInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number
@@ -22822,7 +22807,6 @@ export namespace Prisma {
   }
 
   export type working_hourCreateInput = {
-    record_id: number
     date: string
     shift_on: string
     shift_off: string
@@ -22833,7 +22817,7 @@ export namespace Prisma {
   }
 
   export type working_hourUncheckedCreateInput = {
-    record_id: number
+    record_id?: number
     employee_id: number
     date: string
     shift_on: string
@@ -22844,7 +22828,6 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -22866,7 +22849,7 @@ export namespace Prisma {
   }
 
   export type working_hourCreateManyInput = {
-    record_id: number
+    record_id?: number
     employee_id: number
     date: string
     shift_on: string
@@ -22877,7 +22860,6 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateManyMutationInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -23077,6 +23059,18 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type DecimalNullableFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
@@ -23110,7 +23104,6 @@ export namespace Prisma {
   export type cartAvgOrderByAggregateInput = {
     cart_id?: SortOrder
     order_id?: SortOrder
-    product_id?: SortOrder
     quantity?: SortOrder
     sub_total_amount?: SortOrder
   }
@@ -23136,7 +23129,6 @@ export namespace Prisma {
   export type cartSumOrderByAggregateInput = {
     cart_id?: SortOrder
     order_id?: SortOrder
-    product_id?: SortOrder
     quantity?: SortOrder
     sub_total_amount?: SortOrder
   }
@@ -23155,6 +23147,21 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23417,7 +23424,7 @@ export namespace Prisma {
   }
 
   export type inventoryProduct_idBranch_idCompoundUniqueInput = {
-    product_id: number
+    product_id: string
     branch_id: string
   }
 
@@ -23430,7 +23437,6 @@ export namespace Prisma {
   }
 
   export type inventoryAvgOrderByAggregateInput = {
-    product_id?: SortOrder
     quantity?: SortOrder
     reorder_level?: SortOrder
   }
@@ -23452,7 +23458,6 @@ export namespace Prisma {
   }
 
   export type inventorySumOrderByAggregateInput = {
-    product_id?: SortOrder
     quantity?: SortOrder
     reorder_level?: SortOrder
   }
@@ -23530,7 +23535,6 @@ export namespace Prisma {
   }
 
   export type productAvgOrderByAggregateInput = {
-    product_id?: SortOrder
     category_id?: SortOrder
     buying_price?: SortOrder
     retail_price?: SortOrder
@@ -23569,7 +23573,6 @@ export namespace Prisma {
   }
 
   export type productSumOrderByAggregateInput = {
-    product_id?: SortOrder
     category_id?: SortOrder
     buying_price?: SortOrder
     retail_price?: SortOrder
@@ -24867,6 +24870,17 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type NestedDecimalNullableFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
@@ -24903,6 +24917,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -25054,7 +25082,7 @@ export namespace Prisma {
   }
 
   export type inventoryUncheckedCreateWithoutBranchInput = {
-    product_id: number
+    product_id: string
     quantity?: number | null
     reorder_level?: number | null
     updated_on?: Date | string | null
@@ -25159,7 +25187,7 @@ export namespace Prisma {
     AND?: inventoryScalarWhereInput | inventoryScalarWhereInput[]
     OR?: inventoryScalarWhereInput[]
     NOT?: inventoryScalarWhereInput | inventoryScalarWhereInput[]
-    product_id?: IntFilter<"inventory"> | number
+    product_id?: UuidFilter<"inventory"> | string
     branch_id?: StringFilter<"inventory"> | string
     quantity?: IntNullableFilter<"inventory"> | number | null
     reorder_level?: IntNullableFilter<"inventory"> | number | null
@@ -25200,7 +25228,7 @@ export namespace Prisma {
   }
 
   export type productCreateWithoutCartInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -25217,7 +25245,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedCreateWithoutCartInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -25282,7 +25310,7 @@ export namespace Prisma {
   }
 
   export type productUpdateWithoutCartInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -25299,7 +25327,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateWithoutCartInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number
@@ -25354,7 +25382,7 @@ export namespace Prisma {
   }
 
   export type productCreateWithoutCategoryInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -25371,7 +25399,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedCreateWithoutCategoryInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -25417,7 +25445,7 @@ export namespace Prisma {
     AND?: productScalarWhereInput | productScalarWhereInput[]
     OR?: productScalarWhereInput[]
     NOT?: productScalarWhereInput | productScalarWhereInput[]
-    product_id?: IntFilter<"product"> | number
+    product_id?: UuidFilter<"product"> | string
     product_name?: StringFilter<"product"> | string
     product_desc?: StringNullableFilter<"product"> | string | null
     category_id?: IntFilter<"product"> | number
@@ -25585,7 +25613,6 @@ export namespace Prisma {
   }
 
   export type working_hourCreateWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id: number
     date: string
     shift_on: string
     shift_off: string
@@ -25595,7 +25622,7 @@ export namespace Prisma {
   }
 
   export type working_hourUncheckedCreateWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id: number
+    record_id?: number
     date: string
     shift_on: string
     shift_off: string
@@ -25615,7 +25642,6 @@ export namespace Prisma {
   }
 
   export type working_hourCreateWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id: number
     date: string
     shift_on: string
     shift_off: string
@@ -25625,7 +25651,7 @@ export namespace Prisma {
   }
 
   export type working_hourUncheckedCreateWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id: number
+    record_id?: number
     employee_id: number
     date: string
     shift_on: string
@@ -25814,7 +25840,7 @@ export namespace Prisma {
   }
 
   export type productCreateWithoutInventoryInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -25831,7 +25857,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedCreateWithoutInventoryInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -25897,7 +25923,7 @@ export namespace Prisma {
   }
 
   export type productUpdateWithoutInventoryInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -25914,7 +25940,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateWithoutInventoryInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number
@@ -26088,7 +26114,7 @@ export namespace Prisma {
     NOT?: cartScalarWhereInput | cartScalarWhereInput[]
     cart_id?: IntFilter<"cart"> | number
     order_id?: IntNullableFilter<"cart"> | number | null
-    product_id?: IntFilter<"cart"> | number
+    product_id?: UuidFilter<"cart"> | string
     quantity?: IntFilter<"cart"> | number
     sub_total_amount?: DecimalNullableFilter<"cart"> | Decimal | DecimalJsLike | number | string | null
     created_at?: DateTimeNullableFilter<"cart"> | Date | string | null
@@ -26165,7 +26191,7 @@ export namespace Prisma {
 
   export type cartUncheckedCreateWithoutSales_historyInput = {
     cart_id?: number
-    product_id: number
+    product_id: string
     quantity: number
     sub_total_amount?: Decimal | DecimalJsLike | number | string | null
     created_at?: Date | string | null
@@ -26209,7 +26235,6 @@ export namespace Prisma {
   }
 
   export type customerCreateWithoutSales_historyInput = {
-    customer_id: number
     customer_name: string
     customer_email?: string | null
     customer_phone: string
@@ -26220,7 +26245,7 @@ export namespace Prisma {
   }
 
   export type customerUncheckedCreateWithoutSales_historyInput = {
-    customer_id: number
+    customer_id?: number
     customer_name: string
     customer_email?: string | null
     customer_phone: string
@@ -26346,7 +26371,6 @@ export namespace Prisma {
   }
 
   export type customerUpdateWithoutSales_historyInput = {
-    customer_id?: IntFieldUpdateOperationsInput | number
     customer_name?: StringFieldUpdateOperationsInput | string
     customer_email?: NullableStringFieldUpdateOperationsInput | string | null
     customer_phone?: StringFieldUpdateOperationsInput | string
@@ -26430,7 +26454,7 @@ export namespace Prisma {
   }
 
   export type productCreateWithoutSupplierInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -26447,7 +26471,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedCreateWithoutSupplierInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -26793,7 +26817,7 @@ export namespace Prisma {
   }
 
   export type inventoryCreateManyBranchInput = {
-    product_id: number
+    product_id: string
     quantity?: number | null
     reorder_level?: number | null
     updated_on?: Date | string | null
@@ -26863,14 +26887,14 @@ export namespace Prisma {
   }
 
   export type inventoryUncheckedUpdateWithoutBranchInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     reorder_level?: NullableIntFieldUpdateOperationsInput | number | null
     updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type inventoryUncheckedUpdateManyWithoutBranchInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     reorder_level?: NullableIntFieldUpdateOperationsInput | number | null
     updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26917,7 +26941,7 @@ export namespace Prisma {
   }
 
   export type productCreateManyCategoryInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     product_image?: productCreateproduct_imageInput | string[]
@@ -26932,7 +26956,7 @@ export namespace Prisma {
   }
 
   export type productUpdateWithoutCategoryInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -26949,7 +26973,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateWithoutCategoryInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -26966,7 +26990,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateManyWithoutCategoryInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -27047,7 +27071,7 @@ export namespace Prisma {
   }
 
   export type working_hourCreateManyEmployee_working_hour_employee_idToemployeeInput = {
-    record_id: number
+    record_id?: number
     date: string
     shift_on: string
     shift_off: string
@@ -27057,7 +27081,7 @@ export namespace Prisma {
   }
 
   export type working_hourCreateManyEmployee_working_hour_updated_byToemployeeInput = {
-    record_id: number
+    record_id?: number
     employee_id: number
     date: string
     shift_on: string
@@ -27107,7 +27131,6 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateWithoutEmployee_working_hour_employee_idToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -27137,7 +27160,6 @@ export namespace Prisma {
   }
 
   export type working_hourUpdateWithoutEmployee_working_hour_updated_byToemployeeInput = {
-    record_id?: IntFieldUpdateOperationsInput | number
     date?: StringFieldUpdateOperationsInput | string
     shift_on?: StringFieldUpdateOperationsInput | string
     shift_off?: StringFieldUpdateOperationsInput | string
@@ -27280,7 +27302,7 @@ export namespace Prisma {
 
   export type cartCreateManySales_historyInput = {
     cart_id?: number
-    product_id: number
+    product_id: string
     quantity: number
     sub_total_amount?: Decimal | DecimalJsLike | number | string | null
     created_at?: Date | string | null
@@ -27295,7 +27317,7 @@ export namespace Prisma {
 
   export type cartUncheckedUpdateWithoutSales_historyInput = {
     cart_id?: IntFieldUpdateOperationsInput | number
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     sub_total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27303,14 +27325,14 @@ export namespace Prisma {
 
   export type cartUncheckedUpdateManyWithoutSales_historyInput = {
     cart_id?: IntFieldUpdateOperationsInput | number
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     sub_total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type productCreateManySupplierInput = {
-    product_id: number
+    product_id?: string
     product_name: string
     product_desc?: string | null
     category_id: number
@@ -27325,7 +27347,7 @@ export namespace Prisma {
   }
 
   export type productUpdateWithoutSupplierInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     product_image?: productUpdateproduct_imageInput | string[]
@@ -27342,7 +27364,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateWithoutSupplierInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number
@@ -27359,7 +27381,7 @@ export namespace Prisma {
   }
 
   export type productUncheckedUpdateManyWithoutSupplierInput = {
-    product_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
     product_name?: StringFieldUpdateOperationsInput | string
     product_desc?: NullableStringFieldUpdateOperationsInput | string | null
     category_id?: IntFieldUpdateOperationsInput | number

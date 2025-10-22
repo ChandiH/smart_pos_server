@@ -1,46 +1,50 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
 
-type WorkingHourRow = Record<string, unknown>;
-
-const getEmployeeRecordByDate = (
-  date: string
-): Promise<QueryResult<WorkingHourRow>> => {
-  return pool.query<WorkingHourRow>(
-    `select working_hour.*, employee.employee_name, user_role.role_name from working_hour 
-    inner join employee on employee.employee_id = working_hour.employee_id 
-    inner join user_role on user_role.role_id = employee.role_id
-    where date=$1`,
-    [date]
-  );
+export const getEmployeeRecordByDate = async (date: string) => {
+  return await prisma.employee.findMany({
+    where: {
+      working_hour_working_hour_employee_idToemployee: {
+        some: { date: date },
+      },
+    },
+    include: {
+      user_role: true,
+      working_hour_working_hour_employee_idToemployee: true,
+      working_hour_working_hour_updated_byToemployee: true,
+    },
+  });
 };
 
-const getEmployeeRecordByBranch = (
-  branch_id: string
-): Promise<QueryResult<WorkingHourRow>> => {
-  return pool.query<WorkingHourRow>(
-    `select working_hour.*, employee.employee_name, user_role.role_name from working_hour 
-    inner join employee on employee.employee_id = working_hour.employee_id
-    inner join user_role on user_role.role_id = employee.role_id 
-    where employee.branch_id=$1`,
-    [branch_id]
-  );
+export const getEmployeeRecordByBranch = async (branch_id: string) => {
+  return await prisma.employee.findMany({
+    where: {
+      branch_id: branch_id,
+    },
+    include: {
+      user_role: true,
+      working_hour_working_hour_employee_idToemployee: true,
+      working_hour_working_hour_updated_byToemployee: true,
+    },
+  });
 };
 
-const getEmployeeRecordByDateBranch = (
-  date: string,
-  branch_id: string
-): Promise<QueryResult<WorkingHourRow>> => {
-  return pool.query<WorkingHourRow>(
-    `select working_hour.*, employee.employee_name, user_role.role_name from working_hour 
-    inner join employee on employee.employee_id = working_hour.employee_id
-    inner join user_role on user_role.role_id = employee.role_id 
-    where employee.branch_id=$1 and working_hour.date=$2`,
-    [branch_id, date]
-  );
+export const getEmployeeRecordByDateBranch = async (date: string, branch_id: string) => {
+  return await prisma.employee.findMany({
+    where: {
+      branch_id: branch_id,
+      working_hour_working_hour_employee_idToemployee: {
+        some: { date: date },
+      },
+    },
+    include: {
+      user_role: true,
+      working_hour_working_hour_employee_idToemployee: true,
+      working_hour_working_hour_updated_byToemployee: true,
+    },
+  });
 };
 
-const addEmployeeRecord = (
+export const addEmployeeRecord = async (
   employee_id: number,
   date: string,
   shift_on: string,
@@ -48,25 +52,16 @@ const addEmployeeRecord = (
   updated_by: number,
   present: boolean,
   total_hours: number
-): Promise<QueryResult<WorkingHourRow>> => {
-  return pool.query<WorkingHourRow>(
-    `INSERT INTO working_hour (employee_id, date, shift_on, shift_off, updated_by, present, total_hours)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) returning *`,
-    [employee_id, date, shift_on, shift_off, updated_by, present, total_hours]
-  );
+) => {
+  return await prisma.working_hour.create({
+    data: {
+      employee_id,
+      date,
+      shift_on,
+      shift_off,
+      updated_by,
+      present,
+      total_hours,
+    },
+  });
 };
-
-const workingHourModel = {
-  getEmployeeRecordByDate,
-  getEmployeeRecordByBranch,
-  getEmployeeRecordByDateBranch,
-  addEmployeeRecord,
-};
-
-export {
-  getEmployeeRecordByDate,
-  getEmployeeRecordByBranch,
-  getEmployeeRecordByDateBranch,
-  addEmployeeRecord,
-};
-export default workingHourModel;

@@ -1,9 +1,4 @@
-import type { PoolClient, QueryResult } from "pg";
-import { pool } from "../config/config";
-
-type LoginRow = {
-  employee_id: number;
-};
+import prisma from "../config/prisma";
 
 export type RegisterPayload = {
   employee_name: string;
@@ -15,17 +10,11 @@ export type RegisterPayload = {
   employee_image: string;
 };
 
-const login = (
-  username: string,
-  password: string
-): Promise<QueryResult<LoginRow>> => {
-  return pool.query<LoginRow>(
-    "SELECT user_id as employee_id FROM  user_credentials WHERE username = $1 AND password = crypt($2, password)",
-    [username, password]
-  );
+export const login = async (username: string, password: string): Promise<{ employee_id?: string }> => {
+  return await prisma.$queryRaw`SELECT user_id as employee_id FROM  user_credentials WHERE username = ${username} AND password = crypt(${password}, password)`;
 };
 
-const register = async ({
+export const register = async ({
   employee_name,
   employee_userName,
   role_id,
@@ -33,81 +22,43 @@ const register = async ({
   employee_phone,
   branch_id,
   employee_image,
-}: RegisterPayload): Promise<boolean> => {
-  const client: PoolClient = await pool.connect();
-  try {
-    await client.query("BEGIN");
-
-    const employeeResult = await client.query<{ employee_id: number }>(
-      "INSERT INTO employee (employee_name, role_id, employee_email, employee_phone, branch_id,employee_image) VALUES ($1, $2, $3, $4, $5,$6) RETURNING employee_id",
-      [
+}: RegisterPayload) => {
+  return await prisma.$transaction(async (prisma) => {
+    const employee = await prisma.employee.create({
+      data: {
         employee_name,
         role_id,
         employee_email,
         employee_phone,
-        branch_id,
+        branch_id: branch_id.toString(),
         employee_image,
-      ]
-    );
+      },
+    });
 
-    const employee_id = employeeResult.rows[0]?.employee_id;
+    await prisma.user_credentials.create({
+      data: {
+        user_id: employee.employee_id,
+        username: employee_userName,
+        password: employee_userName, // Default password is the username
+      },
+    });
 
-    if (!employee_id) {
-      throw new Error("Failed to create employee record");
-    }
-
-    await client.query(
-      "INSERT INTO user_credentials (user_id, username, password) VALUES ($1, $2, crypt($3, gen_salt('bf')))",
-      [employee_id, employee_userName, employee_userName]
-    );
-
-    await client.query("COMMIT");
     return true;
-  } catch (error) {
-    await client.query("ROLLBACK");
-    throw error;
-  } finally {
-    client.release();
-  }
+  });
 };
 
-const isUsernameTaken = async (username: string): Promise<boolean> => {
-  const result = await pool.query(
-    "SELECT 1 FROM user_credentials WHERE username = $1 LIMIT 1",
-    [username]
+export const isUsernameTaken = async (username: string) => {
+  return (
+    (await prisma.user_credentials.count({
+      where: { username },
+    })) > 0
   );
-  return (result.rowCount ?? 0) > 0;
 };
 
-const resetPassword = async (
-  username: string,
-  password: string
-): Promise<boolean> => {
-  const result = await pool.query(
-    "UPDATE user_credentials SET password = crypt($1, gen_salt('bf')) WHERE username = $2 returning *",
-    [password, username]
-  );
-  return (result.rowCount ?? 0) > 0;
+export const resetPassword = async (username: string, password: string) => {
+  return await prisma.$executeRaw`UPDATE user_credentials SET password = crypt(${password}, gen_salt('bf')) WHERE username = ${username} returning *`;
 };
 
-const checkPassword = async (
-  username: string,
-  password: string
-): Promise<boolean> => {
-  const result = await pool.query(
-    "SELECT 1 FROM user_credentials WHERE username = $1 AND password = crypt($2, password) LIMIT 1",
-    [username, password]
-  );
-  return (result.rowCount ?? 0) > 0;
+export const checkPassword = async (username: string, password: string) => {
+  return await prisma.$queryRaw`SELECT 1 FROM user_credentials WHERE username = ${username} AND password = crypt(${password}, password) LIMIT 1`;
 };
-
-const authModel = {
-  login,
-  register,
-  isUsernameTaken,
-  resetPassword,
-  checkPassword,
-};
-
-export { login, register, isUsernameTaken, resetPassword, checkPassword };
-export default authModel;

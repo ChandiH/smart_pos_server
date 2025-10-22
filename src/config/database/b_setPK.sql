@@ -69,12 +69,8 @@ EXECUTE FUNCTION BeforeInsertCategory();
 CREATE OR REPLACE FUNCTION BeforeInsertProduct()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM product) THEN
-       NEW.product_id = 1;
-   ELSE
-       -- Find the maximum product_id value and increment it by 1
-       SELECT MAX(product_id) + 1 INTO NEW.product_id FROM product;
+   IF NEW.product_id IS NULL THEN
+       NEW.product_id := gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -312,5 +308,4 @@ FOR EACH ROW
 EXECUTE FUNCTION BeforeInsertWorking_hour();
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
 

@@ -7,7 +7,7 @@ DECLARE
     item jsonb;
 	
     order_number integer;
-    branches_id INTEGER;
+    branches_id uuid;
 BEGIN
     order_data := sales_data->'order';
     INSERT INTO sales_history (order_id, customer_id, cashier_id, total_amount, profit, payment_method_id, reference_id,
@@ -20,7 +20,7 @@ BEGIN
         (order_data->>'profit')::numeric,
         (order_data->>'payment_method_id')::integer,
         (order_data->>'reference_id'),
-        (order_data->>'branch_id')::integer,
+        (order_data->>'branch_id')::uuid,
         (order_data->>'rewards_points')::numeric,
         (order_data->>'product_count')::integer
     FROM sales_history
@@ -41,17 +41,17 @@ BEGIN
         INSERT INTO cart (order_id, product_id, quantity)
         VALUES (
             order_number,
-            (item->>'product_id')::integer,
+            (item->>'product_id')::uuid,
             (item->>'quantity')::integer
         );		
 		UPDATE inventory
         SET quantity = quantity - (item->>'quantity')::integer
-        WHERE product_id = (item->>'product_id')::integer AND branch_id =  (order_data->>'branch_id')::integer;
+        WHERE product_id = (item->>'product_id')::uuid AND branch_id =  (order_data->>'branch_id')::uuid;
 		UPDATE cart
         SET sub_total_amount = 
-            (item->>'quantity')::numeric * (SELECT retail_price FROM product WHERE product_id = (item->>'product_id')::integer) -
-            (SELECT discount FROM product WHERE product_id = (item->>'product_id')::integer)
-        WHERE order_id = order_number AND product_id = (item->>'product_id')::integer;
+            (item->>'quantity')::numeric * (SELECT retail_price FROM product WHERE product_id = (item->>'product_id')::uuid) -
+            (SELECT discount FROM product WHERE product_id = (item->>'product_id')::uuid)
+        WHERE order_id = order_number AND product_id = (item->>'product_id')::uuid;
     END LOOP;
 END;
 $$;
@@ -59,7 +59,7 @@ $$;
 -- chart_for_daily_sales
 CREATE OR REPLACE FUNCTION branch_monthly_sales(
     target_month text,
-    target_branch_id integer
+    target_branch_id uuid
 )
 RETURNS TABLE (day text, total_sales numeric) AS $$
 BEGIN
@@ -80,8 +80,8 @@ $$ LANGUAGE plpgsql;
 ------------------------------------------------------------------------------------------------------------------------
 --Top 5 products with highest sales
 CREATE OR REPLACE FUNCTION get_top_5_products_in_branch(
-	branch_id_input integer)
-    RETURNS TABLE(product_id integer, total_quantity integer, product_name text, branch_id integer, branch_city text) 
+	branch_id_input uuid)
+    RETURNS TABLE(product_id uuid, total_quantity integer, product_name text, branch_id uuid, branch_city text) 
 AS $$
 BEGIN
     RETURN QUERY
@@ -114,7 +114,7 @@ END;
 $$ LANGUAGE plpgsql;
 ------------------------------------------------------------------------------------------------------------------------
 --Sales History Today for current user
-CREATE OR REPLACE FUNCTION get_sales_data_by_branch(id integer)
+CREATE OR REPLACE FUNCTION get_sales_data_by_branch(id uuid)
 RETURNS TABLE (
     order_id integer,
     customer varchar(255),

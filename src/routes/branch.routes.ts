@@ -1,16 +1,11 @@
 import { Router } from "express";
-import {
-  addNewBranch,
-  getAllBranches,
-  getBranchByID,
-  updateBranchByID,
-} from "../controllers/branch.controller";
+import { AddBranch, GetBranchByID, GetBranches, UpdateBranchByID } from "../controllers/branch.controller";
 
 const router = Router();
 
-router.get("/", getAllBranches);
-router.get("/:id", getBranchByID);
-router.post("/", addNewBranch);
-router.put("/:id", updateBranchByID);
+router.get("/", GetBranches);
+router.get("/:id", GetBranchByID);
+router.post("/", AddBranch);
+router.put("/:id", UpdateBranchByID);
 
 export default router;

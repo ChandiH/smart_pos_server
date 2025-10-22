@@ -20,9 +20,8 @@ CREATE TABLE category (
     category_name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Products
 CREATE TABLE product (
-    product_id INTEGER  PRIMARY KEY,
+    product_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     product_name VARCHAR(100) NOT NULL UNIQUE,
     product_desc VARCHAR(200),
     category_id INTEGER NOT NULL,
@@ -37,9 +36,8 @@ CREATE TABLE product (
     updated_on TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inventory
 CREATE TABLE inventory (
-    product_id INTEGER NOT NULL,
+    product_id UUID NOT NULL,
     branch_id INTEGER NOT NULL,
     quantity INTEGER check (quantity >= 0),
     reorder_level INTEGER ,
@@ -47,11 +45,10 @@ CREATE TABLE inventory (
     PRIMARY KEY(product_id, branch_id)
 );
 
--- Cart
 CREATE TABLE cart (
     cart_id INTEGER  PRIMARY KEY,
     order_id INTEGER ,
-    product_id INTEGER NOT NULL,
+    product_id UUID NOT NULL,
     quantity INTEGER NOT NULL check (quantity > 0),
     sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0),
     created_at date DEFAULT CURRENT_DATE

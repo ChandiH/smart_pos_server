@@ -1,19 +1,10 @@
-import { Router, type RequestHandler } from "express";
-import supplierController from "../controllers/supplier.controller";
-
-type SupplierController = {
-  getSuppliers: RequestHandler;
-  getSupplier: RequestHandler;
-  addSupplier: RequestHandler;
-};
-
-const { getSuppliers, getSupplier, addSupplier } =
-  supplierController as SupplierController;
+import { Router } from "express";
+import { AddSupplier, GetSupplier, GetSuppliers } from "../controllers/supplier.controller";
 
 const router = Router();
 
-router.get("/", getSuppliers);
-router.get("/:id", getSupplier);
-router.post("/", addSupplier);
+router.get("/", GetSuppliers);
+router.get("/:id", GetSupplier);
+router.post("/", AddSupplier);
 
 export default router;

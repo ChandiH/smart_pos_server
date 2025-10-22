@@ -29,7 +29,7 @@ model branch {
 model cart {
   cart_id          Int            @id @default(autoincrement())
   order_id         Int?
-  product_id       Int
+  product_id       String         @db.Uuid
   quantity         Int
   sub_total_amount Decimal?       @db.Decimal(1000, 2)
   created_at       DateTime?      @default(dbgenerated("CURRENT_DATE")) @db.Date
@@ -44,7 +44,7 @@ model category {
 }
 
 model customer {
-  customer_id      Int             @id
+  customer_id      Int             @id @default(autoincrement())
   customer_name    String          @db.VarChar(255)
   customer_email   String?         @unique @db.VarChar(255)
   customer_phone   String          @unique @db.VarChar(13)
@@ -83,7 +83,7 @@ model employee {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model inventory {
-  product_id    Int
+  product_id    String    @db.Uuid
   branch_id     String
   quantity      Int?
   reorder_level Int?
@@ -101,7 +101,7 @@ model payment_method {
 }
 
 model product {
-  product_id      Int         @id
+  product_id      String      @id @default(uuid()) @db.Uuid
   product_name    String      @unique @db.VarChar(100)
   product_desc    String?     @db.VarChar(200)
   category_id     Int
@@ -174,7 +174,7 @@ model variable_options {
 }
 
 model working_hour {
-  record_id                                   Int      @id
+  record_id                                   Int      @id @default(autoincrement())
   employee_id                                 Int
   date                                        String   @db.VarChar(12)
   shift_on                                    String   @db.VarChar(5)
