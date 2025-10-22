@@ -26,6 +26,7 @@ const simpleRoutes: Array<[string, Router]> = [
   ["/supplier", supplierRouter],
   ["/chart", chartRouter],
   ["/user-role", userRoleRouter],
+  ["/category", categoryRouter],
 ];
 
 // middleware
