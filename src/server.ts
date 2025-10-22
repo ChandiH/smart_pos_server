@@ -33,7 +33,7 @@ const simpleRoutes: Array<[string, Router]> = [
 import { logRequest } from "./middleware/log";
 import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
-import { pool } from "./config/config";
+import prisma from "./config/prisma";
 
 const app = express();
 
@@ -41,27 +41,24 @@ app.use(express.json());
 // app.use(express.urlencoded());
 app.use(cors());
 
-pool.connect((err) => {
-  if (err) {
-    console.error("Error connecting to the database:", err);
-  } else {
-    console.log("Connected to the database");
-  }
-});
+prisma
+  .$connect()
+  .then(() => {
+    console.log("✅ Connected to the database via Prisma");
+  })
+  .catch((err) => {
+    console.error("❌ Prisma connection error:", err);
+  });
 
 app.use(logRequest);
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/static/image", express.static(path.join(__dirname, "public/image")));
 app.post("/upload", upload.single("file"), (req, res) => {
-  return res
-    .status(200)
-    .json({ message: "File uploaded successfully!", file: req.file });
+  return res.status(200).json({ message: "File uploaded successfully!", file: req.file });
 });
 app.post("/upload-multiple", upload.array("files"), (req, res) => {
-  return res
-    .status(200)
-    .json({ message: "Files uploaded successfully!", files: req.files });
+  return res.status(200).json({ message: "Files uploaded successfully!", files: req.files });
 });
 
 app.use("/auth", authRouter);
