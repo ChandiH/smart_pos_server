@@ -10,6 +10,11 @@ export default defineConfig([
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
     ignores: ["dist/**", "node_modules/**"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-console": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
   },
   tseslint.configs.recommended,
 ]);

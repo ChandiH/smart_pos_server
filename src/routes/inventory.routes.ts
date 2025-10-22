@@ -1,6 +1,6 @@
 import { Router, type RequestHandler } from "express";
 import inventoryController from "../controllers/inventory.controller";
-import categoryController from "../controllers/category.controller";
+import { addNewCategory, getCategories } from "../controllers/category.controller";
 
 type InventoryController = {
   getInventory: RequestHandler;
@@ -9,26 +9,14 @@ type InventoryController = {
   updateInventory: RequestHandler;
 };
 
-type CategoryController = {
-  getCategories: RequestHandler;
-  addCategory: RequestHandler;
-};
-
-const {
-  getInventory,
-  getInventoryByBranchId,
-  getInevntoryByProductId,
-  updateInventory,
-} = inventoryController as InventoryController;
-
-const { getCategories, addCategory } =
-  categoryController as CategoryController;
+const { getInventory, getInventoryByBranchId, getInevntoryByProductId, updateInventory } =
+  inventoryController as InventoryController;
 
 const router = Router();
 
 router.get("/", getInventory);
 router.get("/category", getCategories);
-router.post("/category", addCategory);
+router.post("/category", addNewCategory);
 router.get("/product/:id", getInevntoryByProductId);
 router.get("/branch/:id", getInventoryByBranchId);
 router.post("/", updateInventory);

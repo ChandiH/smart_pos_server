@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model access_type {
+  access_type_id Int    @id @default(autoincrement())
+  access_name    String @unique @db.VarChar(100)
+}
+
+model branch {
+  branch_id      String             @id @default(uuid())
+  branch_city    String          @unique @db.VarChar(255)
+  branch_address String          @db.VarChar(200)
+  branch_phone   String          @unique @db.VarChar(13)
+  branch_email   String          @unique @db.VarChar(255)
+  created_at     DateTime?       @default(now()) @db.Timestamptz(6)
+  employee       employee[]
+  inventory      inventory[]
+  sales_history  sales_history[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cart {
+  cart_id          Int            @id @default(autoincrement())
+  order_id         Int?
+  product_id       Int
+  quantity         Int
+  sub_total_amount Decimal?       @db.Decimal(1000, 2)
+  created_at       DateTime?      @default(dbgenerated("CURRENT_DATE")) @db.Date
+  product          product        @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cart_product")
+  sales_history    sales_history? @relation(fields: [order_id], references: [order_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_cart_sales_history")
+}
+
+model category {
+  category_id   Int       @id @default(autoincrement())
+  category_name String    @unique @db.VarChar(50)
+  product       product[]
+}
+
+model customer {
+  customer_id      Int             @id
+  customer_name    String          @db.VarChar(255)
+  customer_email   String?         @unique @db.VarChar(255)
+  customer_phone   String          @unique @db.VarChar(13)
+  customer_address String?         @db.VarChar(200)
+  visit_count      Int?            @default(0)
+  rewards_points   Decimal?        @default(0.00) @db.Decimal(1000, 2)
+  created_at       DateTime?       @default(now()) @db.Timestamptz(6)
+  sales_history    sales_history[]
+}
+
+model discount {
+  discount_id         Int     @id @default(autoincrement())
+  discount_name       String  @unique @db.VarChar(255)
+  discount_desc       String? @db.VarChar(200)
+  discount_percentage Decimal @db.Decimal(5, 2)
+}
+
+model employee {
+  employee_id                                     Int               @id @default(autoincrement())
+  employee_name                                   String            @db.VarChar(255)
+  role_id                                         Int
+  hired_date                                      DateTime?         @default(now()) @db.Timestamptz(6)
+  employee_email                                  String?           @unique @db.VarChar(255)
+  employee_phone                                  String            @unique @db.VarChar(13)
+  branch_id                                       String
+  employee_image                                  String?           @db.VarChar(255)
+  branch_updated_on                               DateTime?         @default(now()) @db.Timestamptz(6)
+  role_updated_on                                 DateTime?         @default(now()) @db.Timestamptz(6)
+  branch                                          branch            @relation(fields: [branch_id], references: [branch_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_branch")
+  user_role                                       user_role         @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_role")
+  sales_history                                   sales_history[]
+  user_credentials                                user_credentials?
+  working_hour_working_hour_employee_idToemployee working_hour[]    @relation("working_hour_employee_idToemployee")
+  working_hour_working_hour_updated_byToemployee  working_hour[]    @relation("working_hour_updated_byToemployee")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model inventory {
+  product_id    Int
+  branch_id     String
+  quantity      Int?
+  reorder_level Int?
+  updated_on    DateTime? @default(now()) @db.Timestamptz(6)
+  branch        branch    @relation(fields: [branch_id], references: [branch_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_inventory_branch")
+  product       product   @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_inventory_product")
+
+  @@id([product_id, branch_id])
+}
+
+model payment_method {
+  payment_method_id   Int             @id @default(autoincrement())
+  payment_method_name String          @unique @db.VarChar(255)
+  sales_history       sales_history[]
+}
+
+model product {
+  product_id      Int         @id
+  product_name    String      @unique @db.VarChar(100)
+  product_desc    String?     @db.VarChar(200)
+  category_id     Int
+  product_image   String[]    @db.VarChar
+  buying_price    Decimal     @db.Decimal(1000, 2)
+  retail_price    Decimal     @db.Decimal(1000, 2)
+  discount        Decimal?    @db.Decimal(1000, 2)
+  supplier_id     Int
+  product_barcode String      @unique @db.VarChar(255)
+  removed         Boolean?    @default(false)
+  created_at      DateTime?   @default(now()) @db.Timestamp(6)
+  updated_on      DateTime?   @default(now()) @db.Timestamp(6)
+  cart            cart[]
+  inventory       inventory[]
+  category        category    @relation(fields: [category_id], references: [category_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product_category")
+  supplier        supplier    @relation(fields: [supplier_id], references: [supplier_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_supplier_id")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model sales_history {
+  order_id          Int             @id @default(autoincrement())
+  customer_id       Int?
+  cashier_id        Int
+  branch_id         String
+  created_at        DateTime?       @default(now()) @db.Timestamptz(6)
+  total_amount      Decimal?        @db.Decimal(1000, 2)
+  profit            Decimal?        @default(0.00) @db.Decimal(1000, 2)
+  rewards_points    Decimal?        @default(0.00) @db.Decimal(1000, 2)
+  payment_method_id Int?
+  reference_id      String?         @db.VarChar(255)
+  product_count     Int?
+  cart              cart[]
+  branch            branch          @relation(fields: [branch_id], references: [branch_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_branch")
+  customer          customer?       @relation(fields: [customer_id], references: [customer_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_customer")
+  employee          employee        @relation(fields: [cashier_id], references: [employee_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_employee")
+  payment_method    payment_method? @relation(fields: [payment_method_id], references: [payment_method_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_payment_method")
+}
+
+model supplier {
+  supplier_id      Int       @id @default(autoincrement())
+  supplier_name    String    @db.VarChar(200)
+  supplier_email   String?   @unique @db.VarChar(255)
+  supplier_phone   String    @unique @db.VarChar(13)
+  supplier_address String    @db.VarChar(200)
+  product          product[]
+}
+
+model user_credentials {
+  user_id    Int       @id
+  username   String    @unique @db.VarChar(30)
+  password   String    @unique @db.VarChar(200)
+  updated_on DateTime? @default(now()) @db.Timestamptz(6)
+  employee   employee  @relation(fields: [user_id], references: [employee_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_credentials_employee")
+}
+
+model user_role {
+  role_id     Int        @id @default(autoincrement())
+  role_name   String     @unique @db.VarChar(100)
+  role_desc   String     @db.VarChar(200)
+  user_access Int[]
+  employee    employee[]
+}
+
+model variable_options {
+  variable_id    Int       @id @default(autoincrement())
+  variable_name  String    @unique @db.VarChar(100)
+  created_at     DateTime? @default(now()) @db.Timestamptz(0)
+  variable_value Decimal?  @db.Decimal(1000, 2)
+  updated_on     DateTime? @default(now()) @db.Timestamptz(0)
+}
+
+model working_hour {
+  record_id                                   Int      @id
+  employee_id                                 Int
+  date                                        String   @db.VarChar(12)
+  shift_on                                    String   @db.VarChar(5)
+  shift_off                                   String   @db.VarChar(5)
+  updated_by                                  Int
+  present                                     Boolean
+  total_hours                                 Decimal? @db.Decimal(100, 2)
+  employee_working_hour_employee_idToemployee employee @relation("working_hour_employee_idToemployee", fields: [employee_id], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_id")
+  employee_working_hour_updated_byToemployee  employee @relation("working_hour_updated_byToemployee", fields: [updated_by], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_updated_by")
+}
