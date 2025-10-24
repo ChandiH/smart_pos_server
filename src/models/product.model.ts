@@ -1,9 +1,11 @@
 import { prisma } from "../config/prisma";
+import { product, product_variants, supplier } from "../prisma";
 
 export const getProducts = async () => {
   return await prisma.product.findMany({
     include: {
       category: true,
+      variants: true,
     },
     orderBy: {
       product_id: "asc",
@@ -11,42 +13,58 @@ export const getProducts = async () => {
   });
 };
 
-export const getProduct = async (id: string) => {
+export const getProduct = async (id: product["product_id"]) => {
   return await prisma.product.findUnique({
     where: { product_id: id },
     include: {
+      variants: true,
       category: true,
+      supplier: true,
+      inventory: true,
     },
   });
 };
 
 export const addProduct = async (
-  product_name: string,
-  product_desc: string,
-  category_id: number | string,
-  product_image: string[],
-  buying_price: number | string,
-  retail_price: number | string,
-  discount: number | string,
-  supplier_id: number | string,
-  product_barcode: string
+  data: Omit<product, "product_id" | "product_image" | "removed" | "created_at" | "updated_on">
 ) => {
   return await prisma.product.create({
-    data: {
-      product_name,
-      product_desc,
-      category_id: Number(category_id),
-      product_image,
-      buying_price: Number(buying_price),
-      retail_price: Number(retail_price),
-      discount: Number(discount),
-      supplier_id: Number(supplier_id),
-      product_barcode,
-    },
+    data,
   });
 };
 
-export const deleteProduct = async (id: string) => {
+export const addProductWithVariants = async (
+  data: Omit<product, "product_id" | "product_image" | "removed" | "created_at" | "updated_on">,
+  variants: Omit<product_variants, "variant_id" | "product_id">[]
+) => {
+  return await prisma.$transaction(async (tx) => {
+    const newProduct = await tx.product.create({
+      data,
+    });
+
+    if (variants.length === 0) {
+      return newProduct;
+    }
+
+    const newVariants = await Promise.all(
+      variants.map((variant) =>
+        tx.product_variants.create({
+          data: {
+            discount: variant.discount,
+            buying_price: variant.buying_price,
+            retail_price: variant.retail_price,
+            label: variant.label,
+            product_id: newProduct.product_id,
+          },
+        })
+      )
+    );
+
+    return { ...newProduct, variants: [...newVariants] };
+  });
+};
+
+export const deleteProduct = async (id: product["product_id"]) => {
   return await prisma.product.update({
     where: { product_id: id },
     data: { removed: true },
@@ -54,37 +72,39 @@ export const deleteProduct = async (id: string) => {
 };
 
 export const updateProduct = async (
-  product_name: string,
-  product_desc: string,
-  category_id: number | string,
-  buying_price: number | string,
-  retail_price: number | string,
-  discount: number | string,
-  supplier_id: number | string,
-  product_barcode: string,
-  product_image: string[],
-  id: string
+  id: product["product_id"],
+  data: Omit<product, "product_id" | "removed" | "created_at" | "updated_on">
 ) => {
   return await prisma.product.update({
     where: { product_id: id },
-    data: {
-      product_name,
-      product_desc,
-      category_id: Number(category_id),
-      buying_price: Number(buying_price),
-      retail_price: Number(retail_price),
-      discount: Number(discount),
-      supplier_id: Number(supplier_id),
-      product_barcode,
-      product_image,
-    },
+    data,
   });
 };
 
-export const updateProductDiscount = async (product_id: string, discount: number | string) => {
-  return await prisma.product.update({
-    where: { product_id },
-    data: { discount: Number(discount) },
+export const addProductVariants = async (variants: Omit<product_variants, "variant_id">[]) => {
+  return prisma.$transaction(
+    variants.map((variant) =>
+      prisma.product_variants.create({
+        data: variant,
+      })
+    )
+  );
+};
+
+export const updateProductVariants = async (variants: product_variants[]) => {
+  return prisma.$transaction(
+    variants.map((variant) =>
+      prisma.product_variants.update({
+        where: { variant_id: variant.variant_id },
+        data: variant,
+      })
+    )
+  );
+};
+
+export const deleteProductVariant = async (variant_id: product_variants["product_id"]) => {
+  return prisma.product_variants.delete({
+    where: { variant_id },
   });
 };
 
@@ -96,7 +116,7 @@ export const getProductWithCategory = async () => {
   });
 };
 
-export const getProductsBySupplierId = async (id: string) => {
+export const getProductsBySupplierId = async (id: supplier["supplier_id"]) => {
   return await prisma.product.findMany({
     where: { supplier_id: Number(id) },
     include: {

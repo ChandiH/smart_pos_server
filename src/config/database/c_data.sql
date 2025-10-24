@@ -123,50 +123,50 @@ VALUES
 
 
 INSERT INTO product (product_id, product_name, product_desc, category_id,
- product_image, buying_price, retail_price, discount, supplier_id, product_barcode, created_at)
+ product_image, stock_type, supplier_id, product_barcode, created_at)
 VALUES
     ('b34ea334-9f36-4c3e-92a1-449fdae018e7', 'Munchee Cream Cracker 100g', 'Delicious cream cracker biscuits from Munchee. Ideal for snacking.', 1,
-     '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',50.00, 70.00,1.00, 1, '1234-5678', '2022-03-10'),
+     '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '1234-5678', '2022-03-10'),
     ('6782cdfd-6476-4b95-974d-456a9383bbd0', 'Maliban Potato Cracker 110g','Delcios cracker in potatoe falvour',1,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 60.00, 70.00, 1.00,2, '2341-5678', '2022-03-10'),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '2341-5678', '2022-03-10'),
     ('c52c8756-9213-45ac-87cc-b3e49fac9095', 'Maliban Lemon Puff 200g', 'Delicious lemon puff biscuits from Maliban. Ideal for snacking.', 1,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 100.00, 120.00, 1.00, 2, '3456-1812', '2022-03-10'),
-    ('13f9f76c-0407-4092-a71a-375de6452c74', 'Doritos Cool Ranch Tortilla Chips','Delicious tortilla chips from Doritos. Ideal for snacking.', 2,  
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 150.00, 200.00, 1.00, 3, '4567-8123', '2022-03-10'),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '3456-1812', '2022-03-10'),
+    ('13f9f76c-0407-4092-a71a-375de6452c74', 'Doritos Cool Ranch Tortilla Chips','Delicious tortilla chips from Doritos. Ideal for snacking.', 2,
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '4567-8123', '2022-03-10'),
     ('4525dfa6-601c-4b79-a74b-c406acf73370',  'Pringles Original Potato Crisps ','Delicious potato crisps from Pringles. Ideal for snacking.', 2,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 240.00, 210.00, 1.00, 4, '5678-1235', '2022-03-10'),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '5678-1235', '2022-03-10'),
     ('38ec3114-66a3-4f71-b018-e63e8e286a8f',  'Coca-Cola 1.5L',  'Refreshing cola drink from Coca-Cola. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 200.00, 220.00, 1.00, 5, '6781-2346', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '6781-2346', '2022-03-10'),
     ('421179a8-d49f-49fa-b542-fd1a997b2cfb', 'Sprite 1.5L', 'Refreshing lemon-lime drink from Sprite. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 150.00, 230.00, 2.00, 6, '7812-3446', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '7812-3446', '2022-03-10'),
     ('5e51e5e5-1d84-4f41-956a-70db73e8e7b6', 'Fanta 1.5L', 'Refreshing orange drink from Fanta. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 200.00, 250.00, 1.00, 1, '8123-4561', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '8123-4561', '2022-03-10'),
     ('8a6752b9-e9ca-44c6-a9c0-cc562a5ac21b', 'Kotmale Set Yoghurt 80g', 'Delicious natural yogurt. Perfect for a healthy snack.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 60.00, 80.00, 1.00, 2, '1234-5644', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '1234-5644', '2022-03-10'),
     ('f2ea548c-0b0a-4124-9f97-4f5c211534c8', 'Kotmale Cheddar Cheese 250g', 'High-quality cheddar cheese. Great for sandwiches and recipes.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 700.00, 900.00, 1.00, 3, '1345-6781', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '1345-6781', '2022-03-10'),
     ('ef8a2608-3168-4cec-9e5c-9f03f5555699', 'Kotmale Fresh Milk 1L', 'High-quality fresh milk. Ideal for drinking and cooking.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 510.00, 600.00, 1.00, 6, '3456-2812', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '3456-2812', '2022-03-10'),
     ('e53ec0ef-eec0-4e3f-8e75-79e2e29c9b5d', 'Kotmale Salted Butter 200g', 'Premium salted butter. Perfect for cooking and baking.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 600.00, 750.00, 1.00, 3, '5678-9012', '2022-03-11'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '5678-9012', '2022-03-11'),
     ('0acf7d7e-b925-4422-b8c3-9e9e2069dcf4', 'Coconut Milk 400ml', 'High-quality coconut milk . Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',360.00, 475.00, 1.00, 5, '8812-3456', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '8812-3456', '2022-03-10'),
     ('63de162b-3ffa-4b1e-9963-53c24e90b18c', 'Coconut Oil 500ml', 'High-quality coconut oil from Carl. Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',220.00, 360.00, 1.00, 6, '8123-4567', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '8123-4567', '2022-03-10'),
     ('fe476643-4e56-40b4-a9ef-a8063256654f', 'Carl Coconut Vinegar 500ml', 'High-quality coconut vinegar from Carl. Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',200.00, 225.00, 1.00, 4, '1234-1678', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '1234-1678', '2022-03-10'),
     ('d87c4075-3991-4168-9a8a-cf41183474a2', 'Colgate Toothpaste 100g', 'Colgate toothpaste for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 180.00, 190.00, 1.00, 1, '2345-6781', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '2345-6781', '2022-03-10'),
     ('3b0913d5-e5fe-44bc-833a-bdd633267f63', 'Colgate one Toothbrush packet ', 'Colgate toothbrush for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',120.00, 200.00, 1.00, 3, '3456-7812', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '3456-7812', '2022-03-10'),
     ('c813f8a5-19ea-4687-94ab-fd9e189ccdd6', 'Colgate Mouthwash 500ml', 'Colgate mouthwash for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',160.00, 320.00, 1.00, 4, '4567-9123', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '4567-9123', '2022-03-10'),
     ('98f6c185-4401-4252-8ab8-60dc63836f0a', 'Parker Pen 12 set', 'Parker pen for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',700.00, 850.00, 1.00, 5, '5678-1234', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '5678-1234', '2022-03-10'),
     ('5dba6b8a-349c-43e3-8449-ffa0e6849e2d', 'A4 Paper 400 Packet', 'A4 paper for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',800.00, 1250.00, 1.00, 6, '6781-2345', '2022-03-10'),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '6781-2345', '2022-03-10'),
     ('dbf199c1-3968-4fc3-b4af-e7f99838521f', 'Pencil 24 set', 'Pencil for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}',100.00, 450.00, 1.00, 5, '7812-3456', '2022-03-10') ;
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '7812-3456', '2022-03-10') ;
 
     
 INSERT INTO inventory (product_id, branch_id, quantity,updated_on,  reorder_level)
@@ -404,3 +404,15 @@ VALUES
 INSERT INTO variable_options(
 	 variable_name, variable_value)
 	VALUES ('rewards_points_percentage', '0.05');
+
+INSERT INTO product_variants(variant_id, product_id, label, buying_price, retail_price, discount)
+VALUES 
+    ('2e33d164-6e1c-4721-9683-4b9b59ed1f2e', 'b34ea334-9f36-4c3e-92a1-449fdae018e7', '100g old',  50.00, 70.00, 1.25),
+    ('060df6a9-db92-48e4-bbc4-9f4406245d05', 'b34ea334-9f36-4c3e-92a1-449fdae018e7', '120g old',  55.00, 70.00, 0.25),
+    ('cf98dd29-f672-4c8b-a08e-8b982bbec325', 'b34ea334-9f36-4c3e-92a1-449fdae018e7', '130g old',  60.00, 70.00, 2.25),
+    ('36bd9ff0-c868-41c5-b344-bd102df7a3da', '6782cdfd-6476-4b95-974d-456a9383bbd0', '100g old',  150.00, 170.00, 10.25),
+    ('3a19b43f-9e9c-4614-8f24-64cf1d0ea0c3', '6782cdfd-6476-4b95-974d-456a9383bbd0', '110g old',  250.00, 370.00, 16.25),
+    ('e1605d7e-a7f8-49b5-8e3b-ae0441c3dc5d', '6782cdfd-6476-4b95-974d-456a9383bbd0', '120g old',  350.00, 470.00, 21.00),
+    ('891dd2c3-5099-438d-a442-5182d56dd0a2', '38ec3114-66a3-4f71-b018-e63e8e286a8f', '100g old',  510.00, 710.00, 10.25),
+    ('fcd7338e-bb30-4451-854b-1289391cb793', '38ec3114-66a3-4f71-b018-e63e8e286a8f', '100g old',  530.00, 720.00, 15.25),
+    ('06f669dc-a4fe-4d36-a14c-85b17040b8c7', '38ec3114-66a3-4f71-b018-e63e8e286a8f', '100g old',  540.00, 730.00, 18.25);

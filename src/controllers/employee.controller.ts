@@ -45,7 +45,7 @@ export const GetEmployeesByRole: RequestHandler = async (req, res) => {
 
 export const GetEmployee: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  return await getEmployee(id)
+  return await getEmployee(Number(id))
     .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };
@@ -63,7 +63,7 @@ export const UpdateEmployeeImage: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = await getEmployee(id);
+    const result = await getEmployee(Number(id));
 
     if (result?.employee_image && result.employee_image !== "employee-image-placeholder.jpg") {
       deleteImage(`public\\image\\${result.employee_image}`);

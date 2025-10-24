@@ -1,23 +1,33 @@
 import prisma from "../config/prisma";
+import { supplier } from "../prisma";
 
 export const getSuppliers = async () => {
-  return await prisma.supplier.findMany();
+  return await prisma.supplier.findMany({
+    include: {
+      product: true,
+    },
+  });
 };
 
 export const getSupplier = async (id: string) => {
   return await prisma.supplier.findUnique({
     where: { supplier_id: Number(id) },
+    include: {
+      product: true,
+    },
   });
 };
 
-export const addSupplier = async (name: string, email: string, phone: string, address: string) => {
+export const addSupplier = async (data: Omit<supplier, "supplier_id">) => {
   return await prisma.supplier.create({
-    data: {
-      supplier_name: name,
-      supplier_email: email,
-      supplier_phone: phone,
-      supplier_address: address,
-    },
+    data,
+  });
+};
+
+export const updateSupplier = async (id: supplier["supplier_id"], data: Partial<Omit<supplier, "supplier_id">>) => {
+  return await prisma.supplier.update({
+    where: { supplier_id: Number(id) },
+    data,
   });
 };
 

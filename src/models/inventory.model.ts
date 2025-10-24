@@ -25,6 +25,17 @@ export const getInventoryByBranchId = async (id: string) => {
   });
 };
 
+export const getInventoryWithProduct = async () => {
+  return await prisma.product.findMany({
+    include: {
+      inventory: true,
+      category: true,
+      supplier: true,
+      variants: true,
+    },
+  });
+};
+
 export const getInventoryByProductId = async (id: string) => {
   return await prisma.product.findUnique({
     where: { product_id: id },

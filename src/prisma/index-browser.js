@@ -156,6 +156,7 @@ exports.Prisma.CustomerScalarFieldEnum = {
   customer_address: 'customer_address',
   visit_count: 'visit_count',
   rewards_points: 'rewards_points',
+  credits: 'credits',
   created_at: 'created_at'
 };
 
@@ -198,14 +199,21 @@ exports.Prisma.ProductScalarFieldEnum = {
   product_desc: 'product_desc',
   category_id: 'category_id',
   product_image: 'product_image',
-  buying_price: 'buying_price',
-  retail_price: 'retail_price',
-  discount: 'discount',
   supplier_id: 'supplier_id',
   product_barcode: 'product_barcode',
+  stock_type: 'stock_type',
   removed: 'removed',
   created_at: 'created_at',
   updated_on: 'updated_on'
+};
+
+exports.Prisma.Product_variantsScalarFieldEnum = {
+  variant_id: 'variant_id',
+  product_id: 'product_id',
+  label: 'label',
+  buying_price: 'buying_price',
+  retail_price: 'retail_price',
+  discount: 'discount'
 };
 
 exports.Prisma.Sales_historyScalarFieldEnum = {
@@ -290,6 +298,7 @@ exports.Prisma.ModelName = {
   inventory: 'inventory',
   payment_method: 'payment_method',
   product: 'product',
+  product_variants: 'product_variants',
   sales_history: 'sales_history',
   supplier: 'supplier',
   user_credentials: 'user_credentials',

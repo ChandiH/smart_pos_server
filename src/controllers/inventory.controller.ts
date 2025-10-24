@@ -5,6 +5,7 @@ import {
   getInventory,
   getInventoryByBranchId,
   getInventoryByProductId,
+  getInventoryWithProduct,
   updateInventory,
 } from "../models/inventory.model";
 
@@ -28,7 +29,13 @@ export const GetInventoryByBranchId: RequestHandler = async (req, res) => {
     .catch((err) => res.status(400).json({ error: err }));
 };
 
-export const GetInevntoryByProductId: RequestHandler = async (req, res) => {
+export const GetInventoryWithProduct: RequestHandler = async (_req, res) => {
+  return await getInventoryWithProduct()
+    .then((data) => res.status(200).json({ data }))
+    .catch((err) => res.status(400).json({ error: err }));
+};
+
+export const GetInventoryByProductId: RequestHandler = async (req, res) => {
   const { id } = req.params;
   return await getInventoryByProductId(id)
     .then((data) => res.status(200).json({ data }))
