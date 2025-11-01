@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
-    "prisma:reset": "npx prisma migrate reset"
+    "prisma:reset": "npx prisma migrate reset",
+    "printer": "tsx watch src/printer-agent.ts"
   },
   "author": "Somesh Chandimal",
   "license": "ISC",
@@ -27,7 +28,8 @@
     "iconv-lite": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
