@@ -1,9 +1,5 @@
 import prisma from "../config/prisma";
 
-export const insertSalesData = async (salesData: unknown) => {
-  return await prisma.$executeRaw`CALL insert_sales_data_and_update(${JSON.stringify(salesData)}::jsonb);`;
-};
-
 export const getRewardsPointsPercentage = async () => {
   return await prisma.variable_options.findUnique({
     where: { variable_name: "rewards_points_percentage" },

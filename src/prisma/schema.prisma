@@ -95,12 +95,6 @@ model inventory {
   @@id([product_id, branch_id])
 }
 
-model payment_method {
-  payment_method_id   Int             @id @default(autoincrement())
-  payment_method_name String          @unique @db.VarChar(255)
-  sales_history       sales_history[]
-}
-
 model product {
   product_id      String             @id @default(uuid()) @db.Uuid
   product_name    String             @unique @db.VarChar(100)
@@ -132,22 +126,21 @@ model product_variants {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model sales_history {
-  order_id          Int             @id @default(autoincrement())
-  customer_id       Int?
-  cashier_id        Int
-  branch_id         String          @db.Uuid
-  created_at        DateTime?       @default(now()) @db.Timestamptz(6)
-  total_amount      Decimal?        @db.Decimal(1000, 2)
-  profit            Decimal?        @default(0.00) @db.Decimal(1000, 2)
-  rewards_points    Decimal?        @default(0.00) @db.Decimal(1000, 2)
-  payment_method_id Int?
-  reference_id      String?         @db.VarChar(255)
-  product_count     Int?
-  cart              cart[]
-  branch            branch          @relation(fields: [branch_id], references: [branch_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_branch")
-  customer          customer?       @relation(fields: [customer_id], references: [customer_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_customer")
-  employee          employee        @relation(fields: [cashier_id], references: [employee_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_employee")
-  payment_method    payment_method? @relation(fields: [payment_method_id], references: [payment_method_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_payment_method")
+  order_id       Int       @id @default(autoincrement())
+  customer_id    Int?
+  cashier_id     Int
+  branch_id      String    @db.Uuid
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  total_amount   Decimal?  @db.Decimal(1000, 2)
+  profit         Decimal?  @default(0.00) @db.Decimal(1000, 2)
+  rewards_points Decimal?  @default(0.00) @db.Decimal(1000, 2)
+  payment_method String?   @db.VarChar(20)
+  reference      String?   @db.VarChar(255)
+  product_count  Int?
+  cart           cart[]
+  branch         branch    @relation(fields: [branch_id], references: [branch_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_branch")
+  customer       customer? @relation(fields: [customer_id], references: [customer_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_customer")
+  employee       employee  @relation(fields: [cashier_id], references: [employee_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_sales_history_employee")
 }
 
 model supplier {

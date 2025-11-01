@@ -188,11 +188,6 @@ exports.Prisma.InventoryScalarFieldEnum = {
   updated_on: 'updated_on'
 };
 
-exports.Prisma.Payment_methodScalarFieldEnum = {
-  payment_method_id: 'payment_method_id',
-  payment_method_name: 'payment_method_name'
-};
-
 exports.Prisma.ProductScalarFieldEnum = {
   product_id: 'product_id',
   product_name: 'product_name',
@@ -225,8 +220,8 @@ exports.Prisma.Sales_historyScalarFieldEnum = {
   total_amount: 'total_amount',
   profit: 'profit',
   rewards_points: 'rewards_points',
-  payment_method_id: 'payment_method_id',
-  reference_id: 'reference_id',
+  payment_method: 'payment_method',
+  reference: 'reference',
   product_count: 'product_count'
 };
 
@@ -296,7 +291,6 @@ exports.Prisma.ModelName = {
   discount: 'discount',
   employee: 'employee',
   inventory: 'inventory',
-  payment_method: 'payment_method',
   product: 'product',
   product_variants: 'product_variants',
   sales_history: 'sales_history',

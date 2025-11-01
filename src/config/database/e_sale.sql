@@ -49,8 +49,8 @@ BEGIN
         WHERE product_id = (item->>'product_id')::uuid AND branch_id =  (order_data->>'branch_id')::uuid;
 		UPDATE cart
         SET sub_total_amount = 
-            (item->>'quantity')::numeric * (SELECT retail_price FROM product WHERE product_id = (item->>'product_id')::uuid) -
-            (SELECT discount FROM product WHERE product_id = (item->>'product_id')::uuid)
+            (item->>'quantity')::numeric * (SELECT retail_price FROM product_variants WHERE variant_id = (item->>'variant_id')::uuid) -
+            (item->>'quantity')::numeric * (SELECT discount FROM product_variants WHERE variant_id = (item->>'variant_id')::uuid)
         WHERE order_id = order_number AND product_id = (item->>'product_id')::uuid;
     END LOOP;
 END;

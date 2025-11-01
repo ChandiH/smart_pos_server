@@ -34,6 +34,7 @@ import { logRequest } from "./middleware/log";
 import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
 import prisma from "./config/prisma";
+import { printReceiptToNetwork } from "./utils/printer";
 
 const app = express();
 
@@ -65,6 +66,17 @@ app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", upload.single("file"), employeeRouter);
 app.use("/product", upload.array("files"), productRouter);
+
+app.post("/print-receipt", async (req, res) => {
+  try {
+    const { ip = "192.168.1.90", port = 9100, receipt } = req.body;
+    await printReceiptToNetwork(ip, port, receipt.lines, true, receipt.openDrawer);
+    res.json({ ok: true });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
 
 simpleRoutes.forEach(([path, router]) => {
   app.use(path, router);

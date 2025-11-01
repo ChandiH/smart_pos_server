@@ -54,11 +54,6 @@ export type employee = $Result.DefaultSelection<Prisma.$employeePayload>
  */
 export type inventory = $Result.DefaultSelection<Prisma.$inventoryPayload>
 /**
- * Model payment_method
- * 
- */
-export type payment_method = $Result.DefaultSelection<Prisma.$payment_methodPayload>
-/**
  * Model product
  * 
  */
@@ -296,16 +291,6 @@ export class PrismaClient<
     * ```
     */
   get inventory(): Prisma.inventoryDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.payment_method`: Exposes CRUD operations for the **payment_method** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Payment_methods
-    * const payment_methods = await prisma.payment_method.findMany()
-    * ```
-    */
-  get payment_method(): Prisma.payment_methodDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.product`: Exposes CRUD operations for the **product** model.
@@ -834,7 +819,6 @@ export namespace Prisma {
     discount: 'discount',
     employee: 'employee',
     inventory: 'inventory',
-    payment_method: 'payment_method',
     product: 'product',
     product_variants: 'product_variants',
     sales_history: 'sales_history',
@@ -861,7 +845,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "access_type" | "branch" | "cart" | "category" | "customer" | "discount" | "employee" | "inventory" | "payment_method" | "product" | "product_variants" | "sales_history" | "supplier" | "user_credentials" | "user_role" | "variable_options" | "working_hour"
+      modelProps: "access_type" | "branch" | "cart" | "category" | "customer" | "discount" | "employee" | "inventory" | "product" | "product_variants" | "sales_history" | "supplier" | "user_credentials" | "user_role" | "variable_options" | "working_hour"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1454,80 +1438,6 @@ export namespace Prisma {
           count: {
             args: Prisma.inventoryCountArgs<ExtArgs>
             result: $Utils.Optional<InventoryCountAggregateOutputType> | number
-          }
-        }
-      }
-      payment_method: {
-        payload: Prisma.$payment_methodPayload<ExtArgs>
-        fields: Prisma.payment_methodFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.payment_methodFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.payment_methodFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          findFirst: {
-            args: Prisma.payment_methodFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.payment_methodFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          findMany: {
-            args: Prisma.payment_methodFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>[]
-          }
-          create: {
-            args: Prisma.payment_methodCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          createMany: {
-            args: Prisma.payment_methodCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.payment_methodCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>[]
-          }
-          delete: {
-            args: Prisma.payment_methodDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          update: {
-            args: Prisma.payment_methodUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          deleteMany: {
-            args: Prisma.payment_methodDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.payment_methodUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.payment_methodUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>[]
-          }
-          upsert: {
-            args: Prisma.payment_methodUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$payment_methodPayload>
-          }
-          aggregate: {
-            args: Prisma.Payment_methodAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePayment_method>
-          }
-          groupBy: {
-            args: Prisma.payment_methodGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Payment_methodGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.payment_methodCountArgs<ExtArgs>
-            result: $Utils.Optional<Payment_methodCountAggregateOutputType> | number
           }
         }
       }
@@ -2227,7 +2137,6 @@ export namespace Prisma {
     discount?: discountOmit
     employee?: employeeOmit
     inventory?: inventoryOmit
-    payment_method?: payment_methodOmit
     product?: productOmit
     product_variants?: product_variantsOmit
     sales_history?: sales_historyOmit
@@ -2468,37 +2377,6 @@ export namespace Prisma {
    */
   export type EmployeeCountOutputTypeCountWorking_hour_marked_byArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: working_hourWhereInput
-  }
-
-
-  /**
-   * Count Type Payment_methodCountOutputType
-   */
-
-  export type Payment_methodCountOutputType = {
-    sales_history: number
-  }
-
-  export type Payment_methodCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sales_history?: boolean | Payment_methodCountOutputTypeCountSales_historyArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * Payment_methodCountOutputType without action
-   */
-  export type Payment_methodCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Payment_methodCountOutputType
-     */
-    select?: Payment_methodCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * Payment_methodCountOutputType without action
-   */
-  export type Payment_methodCountOutputTypeCountSales_historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: sales_historyWhereInput
   }
 
 
@@ -11557,1071 +11435,6 @@ export namespace Prisma {
 
 
   /**
-   * Model payment_method
-   */
-
-  export type AggregatePayment_method = {
-    _count: Payment_methodCountAggregateOutputType | null
-    _avg: Payment_methodAvgAggregateOutputType | null
-    _sum: Payment_methodSumAggregateOutputType | null
-    _min: Payment_methodMinAggregateOutputType | null
-    _max: Payment_methodMaxAggregateOutputType | null
-  }
-
-  export type Payment_methodAvgAggregateOutputType = {
-    payment_method_id: number | null
-  }
-
-  export type Payment_methodSumAggregateOutputType = {
-    payment_method_id: number | null
-  }
-
-  export type Payment_methodMinAggregateOutputType = {
-    payment_method_id: number | null
-    payment_method_name: string | null
-  }
-
-  export type Payment_methodMaxAggregateOutputType = {
-    payment_method_id: number | null
-    payment_method_name: string | null
-  }
-
-  export type Payment_methodCountAggregateOutputType = {
-    payment_method_id: number
-    payment_method_name: number
-    _all: number
-  }
-
-
-  export type Payment_methodAvgAggregateInputType = {
-    payment_method_id?: true
-  }
-
-  export type Payment_methodSumAggregateInputType = {
-    payment_method_id?: true
-  }
-
-  export type Payment_methodMinAggregateInputType = {
-    payment_method_id?: true
-    payment_method_name?: true
-  }
-
-  export type Payment_methodMaxAggregateInputType = {
-    payment_method_id?: true
-    payment_method_name?: true
-  }
-
-  export type Payment_methodCountAggregateInputType = {
-    payment_method_id?: true
-    payment_method_name?: true
-    _all?: true
-  }
-
-  export type Payment_methodAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which payment_method to aggregate.
-     */
-    where?: payment_methodWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of payment_methods to fetch.
-     */
-    orderBy?: payment_methodOrderByWithRelationInput | payment_methodOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: payment_methodWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` payment_methods from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` payment_methods.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned payment_methods
-    **/
-    _count?: true | Payment_methodCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Payment_methodAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Payment_methodSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Payment_methodMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Payment_methodMaxAggregateInputType
-  }
-
-  export type GetPayment_methodAggregateType<T extends Payment_methodAggregateArgs> = {
-        [P in keyof T & keyof AggregatePayment_method]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePayment_method[P]>
-      : GetScalarType<T[P], AggregatePayment_method[P]>
-  }
-
-
-
-
-  export type payment_methodGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: payment_methodWhereInput
-    orderBy?: payment_methodOrderByWithAggregationInput | payment_methodOrderByWithAggregationInput[]
-    by: Payment_methodScalarFieldEnum[] | Payment_methodScalarFieldEnum
-    having?: payment_methodScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Payment_methodCountAggregateInputType | true
-    _avg?: Payment_methodAvgAggregateInputType
-    _sum?: Payment_methodSumAggregateInputType
-    _min?: Payment_methodMinAggregateInputType
-    _max?: Payment_methodMaxAggregateInputType
-  }
-
-  export type Payment_methodGroupByOutputType = {
-    payment_method_id: number
-    payment_method_name: string
-    _count: Payment_methodCountAggregateOutputType | null
-    _avg: Payment_methodAvgAggregateOutputType | null
-    _sum: Payment_methodSumAggregateOutputType | null
-    _min: Payment_methodMinAggregateOutputType | null
-    _max: Payment_methodMaxAggregateOutputType | null
-  }
-
-  type GetPayment_methodGroupByPayload<T extends payment_methodGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Payment_methodGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Payment_methodGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Payment_methodGroupByOutputType[P]>
-            : GetScalarType<T[P], Payment_methodGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type payment_methodSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    payment_method_id?: boolean
-    payment_method_name?: boolean
-    sales_history?: boolean | payment_method$sales_historyArgs<ExtArgs>
-    _count?: boolean | Payment_methodCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["payment_method"]>
-
-  export type payment_methodSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    payment_method_id?: boolean
-    payment_method_name?: boolean
-  }, ExtArgs["result"]["payment_method"]>
-
-  export type payment_methodSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    payment_method_id?: boolean
-    payment_method_name?: boolean
-  }, ExtArgs["result"]["payment_method"]>
-
-  export type payment_methodSelectScalar = {
-    payment_method_id?: boolean
-    payment_method_name?: boolean
-  }
-
-  export type payment_methodOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"payment_method_id" | "payment_method_name", ExtArgs["result"]["payment_method"]>
-  export type payment_methodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sales_history?: boolean | payment_method$sales_historyArgs<ExtArgs>
-    _count?: boolean | Payment_methodCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type payment_methodIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type payment_methodIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $payment_methodPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "payment_method"
-    objects: {
-      sales_history: Prisma.$sales_historyPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      payment_method_id: number
-      payment_method_name: string
-    }, ExtArgs["result"]["payment_method"]>
-    composites: {}
-  }
-
-  type payment_methodGetPayload<S extends boolean | null | undefined | payment_methodDefaultArgs> = $Result.GetResult<Prisma.$payment_methodPayload, S>
-
-  type payment_methodCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<payment_methodFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Payment_methodCountAggregateInputType | true
-    }
-
-  export interface payment_methodDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['payment_method'], meta: { name: 'payment_method' } }
-    /**
-     * Find zero or one Payment_method that matches the filter.
-     * @param {payment_methodFindUniqueArgs} args - Arguments to find a Payment_method
-     * @example
-     * // Get one Payment_method
-     * const payment_method = await prisma.payment_method.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends payment_methodFindUniqueArgs>(args: SelectSubset<T, payment_methodFindUniqueArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Payment_method that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {payment_methodFindUniqueOrThrowArgs} args - Arguments to find a Payment_method
-     * @example
-     * // Get one Payment_method
-     * const payment_method = await prisma.payment_method.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends payment_methodFindUniqueOrThrowArgs>(args: SelectSubset<T, payment_methodFindUniqueOrThrowArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Payment_method that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodFindFirstArgs} args - Arguments to find a Payment_method
-     * @example
-     * // Get one Payment_method
-     * const payment_method = await prisma.payment_method.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends payment_methodFindFirstArgs>(args?: SelectSubset<T, payment_methodFindFirstArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Payment_method that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodFindFirstOrThrowArgs} args - Arguments to find a Payment_method
-     * @example
-     * // Get one Payment_method
-     * const payment_method = await prisma.payment_method.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends payment_methodFindFirstOrThrowArgs>(args?: SelectSubset<T, payment_methodFindFirstOrThrowArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Payment_methods that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Payment_methods
-     * const payment_methods = await prisma.payment_method.findMany()
-     * 
-     * // Get first 10 Payment_methods
-     * const payment_methods = await prisma.payment_method.findMany({ take: 10 })
-     * 
-     * // Only select the `payment_method_id`
-     * const payment_methodWithPayment_method_idOnly = await prisma.payment_method.findMany({ select: { payment_method_id: true } })
-     * 
-     */
-    findMany<T extends payment_methodFindManyArgs>(args?: SelectSubset<T, payment_methodFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Payment_method.
-     * @param {payment_methodCreateArgs} args - Arguments to create a Payment_method.
-     * @example
-     * // Create one Payment_method
-     * const Payment_method = await prisma.payment_method.create({
-     *   data: {
-     *     // ... data to create a Payment_method
-     *   }
-     * })
-     * 
-     */
-    create<T extends payment_methodCreateArgs>(args: SelectSubset<T, payment_methodCreateArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Payment_methods.
-     * @param {payment_methodCreateManyArgs} args - Arguments to create many Payment_methods.
-     * @example
-     * // Create many Payment_methods
-     * const payment_method = await prisma.payment_method.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends payment_methodCreateManyArgs>(args?: SelectSubset<T, payment_methodCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Payment_methods and returns the data saved in the database.
-     * @param {payment_methodCreateManyAndReturnArgs} args - Arguments to create many Payment_methods.
-     * @example
-     * // Create many Payment_methods
-     * const payment_method = await prisma.payment_method.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Payment_methods and only return the `payment_method_id`
-     * const payment_methodWithPayment_method_idOnly = await prisma.payment_method.createManyAndReturn({
-     *   select: { payment_method_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends payment_methodCreateManyAndReturnArgs>(args?: SelectSubset<T, payment_methodCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Payment_method.
-     * @param {payment_methodDeleteArgs} args - Arguments to delete one Payment_method.
-     * @example
-     * // Delete one Payment_method
-     * const Payment_method = await prisma.payment_method.delete({
-     *   where: {
-     *     // ... filter to delete one Payment_method
-     *   }
-     * })
-     * 
-     */
-    delete<T extends payment_methodDeleteArgs>(args: SelectSubset<T, payment_methodDeleteArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Payment_method.
-     * @param {payment_methodUpdateArgs} args - Arguments to update one Payment_method.
-     * @example
-     * // Update one Payment_method
-     * const payment_method = await prisma.payment_method.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends payment_methodUpdateArgs>(args: SelectSubset<T, payment_methodUpdateArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Payment_methods.
-     * @param {payment_methodDeleteManyArgs} args - Arguments to filter Payment_methods to delete.
-     * @example
-     * // Delete a few Payment_methods
-     * const { count } = await prisma.payment_method.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends payment_methodDeleteManyArgs>(args?: SelectSubset<T, payment_methodDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Payment_methods.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Payment_methods
-     * const payment_method = await prisma.payment_method.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends payment_methodUpdateManyArgs>(args: SelectSubset<T, payment_methodUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Payment_methods and returns the data updated in the database.
-     * @param {payment_methodUpdateManyAndReturnArgs} args - Arguments to update many Payment_methods.
-     * @example
-     * // Update many Payment_methods
-     * const payment_method = await prisma.payment_method.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Payment_methods and only return the `payment_method_id`
-     * const payment_methodWithPayment_method_idOnly = await prisma.payment_method.updateManyAndReturn({
-     *   select: { payment_method_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends payment_methodUpdateManyAndReturnArgs>(args: SelectSubset<T, payment_methodUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Payment_method.
-     * @param {payment_methodUpsertArgs} args - Arguments to update or create a Payment_method.
-     * @example
-     * // Update or create a Payment_method
-     * const payment_method = await prisma.payment_method.upsert({
-     *   create: {
-     *     // ... data to create a Payment_method
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Payment_method we want to update
-     *   }
-     * })
-     */
-    upsert<T extends payment_methodUpsertArgs>(args: SelectSubset<T, payment_methodUpsertArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Payment_methods.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodCountArgs} args - Arguments to filter Payment_methods to count.
-     * @example
-     * // Count the number of Payment_methods
-     * const count = await prisma.payment_method.count({
-     *   where: {
-     *     // ... the filter for the Payment_methods we want to count
-     *   }
-     * })
-    **/
-    count<T extends payment_methodCountArgs>(
-      args?: Subset<T, payment_methodCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Payment_methodCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Payment_method.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Payment_methodAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Payment_methodAggregateArgs>(args: Subset<T, Payment_methodAggregateArgs>): Prisma.PrismaPromise<GetPayment_methodAggregateType<T>>
-
-    /**
-     * Group by Payment_method.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {payment_methodGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends payment_methodGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: payment_methodGroupByArgs['orderBy'] }
-        : { orderBy?: payment_methodGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, payment_methodGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPayment_methodGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the payment_method model
-   */
-  readonly fields: payment_methodFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for payment_method.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__payment_methodClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    sales_history<T extends payment_method$sales_historyArgs<ExtArgs> = {}>(args?: Subset<T, payment_method$sales_historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sales_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the payment_method model
-   */
-  interface payment_methodFieldRefs {
-    readonly payment_method_id: FieldRef<"payment_method", 'Int'>
-    readonly payment_method_name: FieldRef<"payment_method", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * payment_method findUnique
-   */
-  export type payment_methodFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter, which payment_method to fetch.
-     */
-    where: payment_methodWhereUniqueInput
-  }
-
-  /**
-   * payment_method findUniqueOrThrow
-   */
-  export type payment_methodFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter, which payment_method to fetch.
-     */
-    where: payment_methodWhereUniqueInput
-  }
-
-  /**
-   * payment_method findFirst
-   */
-  export type payment_methodFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter, which payment_method to fetch.
-     */
-    where?: payment_methodWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of payment_methods to fetch.
-     */
-    orderBy?: payment_methodOrderByWithRelationInput | payment_methodOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for payment_methods.
-     */
-    cursor?: payment_methodWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` payment_methods from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` payment_methods.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of payment_methods.
-     */
-    distinct?: Payment_methodScalarFieldEnum | Payment_methodScalarFieldEnum[]
-  }
-
-  /**
-   * payment_method findFirstOrThrow
-   */
-  export type payment_methodFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter, which payment_method to fetch.
-     */
-    where?: payment_methodWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of payment_methods to fetch.
-     */
-    orderBy?: payment_methodOrderByWithRelationInput | payment_methodOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for payment_methods.
-     */
-    cursor?: payment_methodWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` payment_methods from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` payment_methods.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of payment_methods.
-     */
-    distinct?: Payment_methodScalarFieldEnum | Payment_methodScalarFieldEnum[]
-  }
-
-  /**
-   * payment_method findMany
-   */
-  export type payment_methodFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter, which payment_methods to fetch.
-     */
-    where?: payment_methodWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of payment_methods to fetch.
-     */
-    orderBy?: payment_methodOrderByWithRelationInput | payment_methodOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing payment_methods.
-     */
-    cursor?: payment_methodWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` payment_methods from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` payment_methods.
-     */
-    skip?: number
-    distinct?: Payment_methodScalarFieldEnum | Payment_methodScalarFieldEnum[]
-  }
-
-  /**
-   * payment_method create
-   */
-  export type payment_methodCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * The data needed to create a payment_method.
-     */
-    data: XOR<payment_methodCreateInput, payment_methodUncheckedCreateInput>
-  }
-
-  /**
-   * payment_method createMany
-   */
-  export type payment_methodCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many payment_methods.
-     */
-    data: payment_methodCreateManyInput | payment_methodCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * payment_method createManyAndReturn
-   */
-  export type payment_methodCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * The data used to create many payment_methods.
-     */
-    data: payment_methodCreateManyInput | payment_methodCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * payment_method update
-   */
-  export type payment_methodUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * The data needed to update a payment_method.
-     */
-    data: XOR<payment_methodUpdateInput, payment_methodUncheckedUpdateInput>
-    /**
-     * Choose, which payment_method to update.
-     */
-    where: payment_methodWhereUniqueInput
-  }
-
-  /**
-   * payment_method updateMany
-   */
-  export type payment_methodUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update payment_methods.
-     */
-    data: XOR<payment_methodUpdateManyMutationInput, payment_methodUncheckedUpdateManyInput>
-    /**
-     * Filter which payment_methods to update
-     */
-    where?: payment_methodWhereInput
-    /**
-     * Limit how many payment_methods to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * payment_method updateManyAndReturn
-   */
-  export type payment_methodUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * The data used to update payment_methods.
-     */
-    data: XOR<payment_methodUpdateManyMutationInput, payment_methodUncheckedUpdateManyInput>
-    /**
-     * Filter which payment_methods to update
-     */
-    where?: payment_methodWhereInput
-    /**
-     * Limit how many payment_methods to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * payment_method upsert
-   */
-  export type payment_methodUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * The filter to search for the payment_method to update in case it exists.
-     */
-    where: payment_methodWhereUniqueInput
-    /**
-     * In case the payment_method found by the `where` argument doesn't exist, create a new payment_method with this data.
-     */
-    create: XOR<payment_methodCreateInput, payment_methodUncheckedCreateInput>
-    /**
-     * In case the payment_method was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<payment_methodUpdateInput, payment_methodUncheckedUpdateInput>
-  }
-
-  /**
-   * payment_method delete
-   */
-  export type payment_methodDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    /**
-     * Filter which payment_method to delete.
-     */
-    where: payment_methodWhereUniqueInput
-  }
-
-  /**
-   * payment_method deleteMany
-   */
-  export type payment_methodDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which payment_methods to delete
-     */
-    where?: payment_methodWhereInput
-    /**
-     * Limit how many payment_methods to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * payment_method.sales_history
-   */
-  export type payment_method$sales_historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the sales_history
-     */
-    select?: sales_historySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the sales_history
-     */
-    omit?: sales_historyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: sales_historyInclude<ExtArgs> | null
-    where?: sales_historyWhereInput
-    orderBy?: sales_historyOrderByWithRelationInput | sales_historyOrderByWithRelationInput[]
-    cursor?: sales_historyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Sales_historyScalarFieldEnum | Sales_historyScalarFieldEnum[]
-  }
-
-  /**
-   * payment_method without action
-   */
-  export type payment_methodDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model product
    */
 
@@ -15017,7 +13830,6 @@ export namespace Prisma {
     total_amount: Decimal | null
     profit: Decimal | null
     rewards_points: Decimal | null
-    payment_method_id: number | null
     product_count: number | null
   }
 
@@ -15028,7 +13840,6 @@ export namespace Prisma {
     total_amount: Decimal | null
     profit: Decimal | null
     rewards_points: Decimal | null
-    payment_method_id: number | null
     product_count: number | null
   }
 
@@ -15041,8 +13852,8 @@ export namespace Prisma {
     total_amount: Decimal | null
     profit: Decimal | null
     rewards_points: Decimal | null
-    payment_method_id: number | null
-    reference_id: string | null
+    payment_method: string | null
+    reference: string | null
     product_count: number | null
   }
 
@@ -15055,8 +13866,8 @@ export namespace Prisma {
     total_amount: Decimal | null
     profit: Decimal | null
     rewards_points: Decimal | null
-    payment_method_id: number | null
-    reference_id: string | null
+    payment_method: string | null
+    reference: string | null
     product_count: number | null
   }
 
@@ -15069,8 +13880,8 @@ export namespace Prisma {
     total_amount: number
     profit: number
     rewards_points: number
-    payment_method_id: number
-    reference_id: number
+    payment_method: number
+    reference: number
     product_count: number
     _all: number
   }
@@ -15083,7 +13894,6 @@ export namespace Prisma {
     total_amount?: true
     profit?: true
     rewards_points?: true
-    payment_method_id?: true
     product_count?: true
   }
 
@@ -15094,7 +13904,6 @@ export namespace Prisma {
     total_amount?: true
     profit?: true
     rewards_points?: true
-    payment_method_id?: true
     product_count?: true
   }
 
@@ -15107,8 +13916,8 @@ export namespace Prisma {
     total_amount?: true
     profit?: true
     rewards_points?: true
-    payment_method_id?: true
-    reference_id?: true
+    payment_method?: true
+    reference?: true
     product_count?: true
   }
 
@@ -15121,8 +13930,8 @@ export namespace Prisma {
     total_amount?: true
     profit?: true
     rewards_points?: true
-    payment_method_id?: true
-    reference_id?: true
+    payment_method?: true
+    reference?: true
     product_count?: true
   }
 
@@ -15135,8 +13944,8 @@ export namespace Prisma {
     total_amount?: true
     profit?: true
     rewards_points?: true
-    payment_method_id?: true
-    reference_id?: true
+    payment_method?: true
+    reference?: true
     product_count?: true
     _all?: true
   }
@@ -15236,8 +14045,8 @@ export namespace Prisma {
     total_amount: Decimal | null
     profit: Decimal | null
     rewards_points: Decimal | null
-    payment_method_id: number | null
-    reference_id: string | null
+    payment_method: string | null
+    reference: string | null
     product_count: number | null
     _count: Sales_historyCountAggregateOutputType | null
     _avg: Sales_historyAvgAggregateOutputType | null
@@ -15269,14 +14078,13 @@ export namespace Prisma {
     total_amount?: boolean
     profit?: boolean
     rewards_points?: boolean
-    payment_method_id?: boolean
-    reference_id?: boolean
+    payment_method?: boolean
+    reference?: boolean
     product_count?: boolean
     cart?: boolean | sales_history$cartArgs<ExtArgs>
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
     _count?: boolean | Sales_historyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sales_history"]>
 
@@ -15289,13 +14097,12 @@ export namespace Prisma {
     total_amount?: boolean
     profit?: boolean
     rewards_points?: boolean
-    payment_method_id?: boolean
-    reference_id?: boolean
+    payment_method?: boolean
+    reference?: boolean
     product_count?: boolean
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
   }, ExtArgs["result"]["sales_history"]>
 
   export type sales_historySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15307,13 +14114,12 @@ export namespace Prisma {
     total_amount?: boolean
     profit?: boolean
     rewards_points?: boolean
-    payment_method_id?: boolean
-    reference_id?: boolean
+    payment_method?: boolean
+    reference?: boolean
     product_count?: boolean
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
   }, ExtArgs["result"]["sales_history"]>
 
   export type sales_historySelectScalar = {
@@ -15325,31 +14131,28 @@ export namespace Prisma {
     total_amount?: boolean
     profit?: boolean
     rewards_points?: boolean
-    payment_method_id?: boolean
-    reference_id?: boolean
+    payment_method?: boolean
+    reference?: boolean
     product_count?: boolean
   }
 
-  export type sales_historyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"order_id" | "customer_id" | "cashier_id" | "branch_id" | "created_at" | "total_amount" | "profit" | "rewards_points" | "payment_method_id" | "reference_id" | "product_count", ExtArgs["result"]["sales_history"]>
+  export type sales_historyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"order_id" | "customer_id" | "cashier_id" | "branch_id" | "created_at" | "total_amount" | "profit" | "rewards_points" | "payment_method" | "reference" | "product_count", ExtArgs["result"]["sales_history"]>
   export type sales_historyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cart?: boolean | sales_history$cartArgs<ExtArgs>
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
     _count?: boolean | Sales_historyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type sales_historyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
   }
   export type sales_historyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | branchDefaultArgs<ExtArgs>
     customer?: boolean | sales_history$customerArgs<ExtArgs>
     employee?: boolean | employeeDefaultArgs<ExtArgs>
-    payment_method?: boolean | sales_history$payment_methodArgs<ExtArgs>
   }
 
   export type $sales_historyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15359,7 +14162,6 @@ export namespace Prisma {
       branch: Prisma.$branchPayload<ExtArgs>
       customer: Prisma.$customerPayload<ExtArgs> | null
       employee: Prisma.$employeePayload<ExtArgs>
-      payment_method: Prisma.$payment_methodPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       order_id: number
@@ -15370,8 +14172,8 @@ export namespace Prisma {
       total_amount: Prisma.Decimal | null
       profit: Prisma.Decimal | null
       rewards_points: Prisma.Decimal | null
-      payment_method_id: number | null
-      reference_id: string | null
+      payment_method: string | null
+      reference: string | null
       product_count: number | null
     }, ExtArgs["result"]["sales_history"]>
     composites: {}
@@ -15771,7 +14573,6 @@ export namespace Prisma {
     branch<T extends branchDefaultArgs<ExtArgs> = {}>(args?: Subset<T, branchDefaultArgs<ExtArgs>>): Prisma__branchClient<$Result.GetResult<Prisma.$branchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     customer<T extends sales_history$customerArgs<ExtArgs> = {}>(args?: Subset<T, sales_history$customerArgs<ExtArgs>>): Prisma__customerClient<$Result.GetResult<Prisma.$customerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     employee<T extends employeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, employeeDefaultArgs<ExtArgs>>): Prisma__employeeClient<$Result.GetResult<Prisma.$employeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    payment_method<T extends sales_history$payment_methodArgs<ExtArgs> = {}>(args?: Subset<T, sales_history$payment_methodArgs<ExtArgs>>): Prisma__payment_methodClient<$Result.GetResult<Prisma.$payment_methodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15809,8 +14610,8 @@ export namespace Prisma {
     readonly total_amount: FieldRef<"sales_history", 'Decimal'>
     readonly profit: FieldRef<"sales_history", 'Decimal'>
     readonly rewards_points: FieldRef<"sales_history", 'Decimal'>
-    readonly payment_method_id: FieldRef<"sales_history", 'Int'>
-    readonly reference_id: FieldRef<"sales_history", 'String'>
+    readonly payment_method: FieldRef<"sales_history", 'String'>
+    readonly reference: FieldRef<"sales_history", 'String'>
     readonly product_count: FieldRef<"sales_history", 'Int'>
   }
     
@@ -16248,25 +15049,6 @@ export namespace Prisma {
      */
     include?: customerInclude<ExtArgs> | null
     where?: customerWhereInput
-  }
-
-  /**
-   * sales_history.payment_method
-   */
-  export type sales_history$payment_methodArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the payment_method
-     */
-    select?: payment_methodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the payment_method
-     */
-    omit?: payment_methodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: payment_methodInclude<ExtArgs> | null
-    where?: payment_methodWhereInput
   }
 
   /**
@@ -21848,14 +20630,6 @@ export namespace Prisma {
   export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
 
 
-  export const Payment_methodScalarFieldEnum: {
-    payment_method_id: 'payment_method_id',
-    payment_method_name: 'payment_method_name'
-  };
-
-  export type Payment_methodScalarFieldEnum = (typeof Payment_methodScalarFieldEnum)[keyof typeof Payment_methodScalarFieldEnum]
-
-
   export const ProductScalarFieldEnum: {
     product_id: 'product_id',
     product_name: 'product_name',
@@ -21894,8 +20668,8 @@ export namespace Prisma {
     total_amount: 'total_amount',
     profit: 'profit',
     rewards_points: 'rewards_points',
-    payment_method_id: 'payment_method_id',
-    reference_id: 'reference_id',
+    payment_method: 'payment_method',
+    reference: 'reference',
     product_count: 'product_count'
   };
 
@@ -22563,48 +21337,6 @@ export namespace Prisma {
     updated_on?: DateTimeNullableWithAggregatesFilter<"inventory"> | Date | string | null
   }
 
-  export type payment_methodWhereInput = {
-    AND?: payment_methodWhereInput | payment_methodWhereInput[]
-    OR?: payment_methodWhereInput[]
-    NOT?: payment_methodWhereInput | payment_methodWhereInput[]
-    payment_method_id?: IntFilter<"payment_method"> | number
-    payment_method_name?: StringFilter<"payment_method"> | string
-    sales_history?: Sales_historyListRelationFilter
-  }
-
-  export type payment_methodOrderByWithRelationInput = {
-    payment_method_id?: SortOrder
-    payment_method_name?: SortOrder
-    sales_history?: sales_historyOrderByRelationAggregateInput
-  }
-
-  export type payment_methodWhereUniqueInput = Prisma.AtLeast<{
-    payment_method_id?: number
-    payment_method_name?: string
-    AND?: payment_methodWhereInput | payment_methodWhereInput[]
-    OR?: payment_methodWhereInput[]
-    NOT?: payment_methodWhereInput | payment_methodWhereInput[]
-    sales_history?: Sales_historyListRelationFilter
-  }, "payment_method_id" | "payment_method_name">
-
-  export type payment_methodOrderByWithAggregationInput = {
-    payment_method_id?: SortOrder
-    payment_method_name?: SortOrder
-    _count?: payment_methodCountOrderByAggregateInput
-    _avg?: payment_methodAvgOrderByAggregateInput
-    _max?: payment_methodMaxOrderByAggregateInput
-    _min?: payment_methodMinOrderByAggregateInput
-    _sum?: payment_methodSumOrderByAggregateInput
-  }
-
-  export type payment_methodScalarWhereWithAggregatesInput = {
-    AND?: payment_methodScalarWhereWithAggregatesInput | payment_methodScalarWhereWithAggregatesInput[]
-    OR?: payment_methodScalarWhereWithAggregatesInput[]
-    NOT?: payment_methodScalarWhereWithAggregatesInput | payment_methodScalarWhereWithAggregatesInput[]
-    payment_method_id?: IntWithAggregatesFilter<"payment_method"> | number
-    payment_method_name?: StringWithAggregatesFilter<"payment_method"> | string
-  }
-
   export type productWhereInput = {
     AND?: productWhereInput | productWhereInput[]
     OR?: productWhereInput[]
@@ -22778,14 +21510,13 @@ export namespace Prisma {
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     rewards_points?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: IntNullableFilter<"sales_history"> | number | null
-    reference_id?: StringNullableFilter<"sales_history"> | string | null
+    payment_method?: StringNullableFilter<"sales_history"> | string | null
+    reference?: StringNullableFilter<"sales_history"> | string | null
     product_count?: IntNullableFilter<"sales_history"> | number | null
     cart?: CartListRelationFilter
     branch?: XOR<BranchScalarRelationFilter, branchWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, customerWhereInput> | null
     employee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
-    payment_method?: XOR<Payment_methodNullableScalarRelationFilter, payment_methodWhereInput> | null
   }
 
   export type sales_historyOrderByWithRelationInput = {
@@ -22797,14 +21528,13 @@ export namespace Prisma {
     total_amount?: SortOrderInput | SortOrder
     profit?: SortOrderInput | SortOrder
     rewards_points?: SortOrderInput | SortOrder
-    payment_method_id?: SortOrderInput | SortOrder
-    reference_id?: SortOrderInput | SortOrder
+    payment_method?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
     product_count?: SortOrderInput | SortOrder
     cart?: cartOrderByRelationAggregateInput
     branch?: branchOrderByWithRelationInput
     customer?: customerOrderByWithRelationInput
     employee?: employeeOrderByWithRelationInput
-    payment_method?: payment_methodOrderByWithRelationInput
   }
 
   export type sales_historyWhereUniqueInput = Prisma.AtLeast<{
@@ -22819,14 +21549,13 @@ export namespace Prisma {
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     rewards_points?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: IntNullableFilter<"sales_history"> | number | null
-    reference_id?: StringNullableFilter<"sales_history"> | string | null
+    payment_method?: StringNullableFilter<"sales_history"> | string | null
+    reference?: StringNullableFilter<"sales_history"> | string | null
     product_count?: IntNullableFilter<"sales_history"> | number | null
     cart?: CartListRelationFilter
     branch?: XOR<BranchScalarRelationFilter, branchWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, customerWhereInput> | null
     employee?: XOR<EmployeeScalarRelationFilter, employeeWhereInput>
-    payment_method?: XOR<Payment_methodNullableScalarRelationFilter, payment_methodWhereInput> | null
   }, "order_id">
 
   export type sales_historyOrderByWithAggregationInput = {
@@ -22838,8 +21567,8 @@ export namespace Prisma {
     total_amount?: SortOrderInput | SortOrder
     profit?: SortOrderInput | SortOrder
     rewards_points?: SortOrderInput | SortOrder
-    payment_method_id?: SortOrderInput | SortOrder
-    reference_id?: SortOrderInput | SortOrder
+    payment_method?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
     product_count?: SortOrderInput | SortOrder
     _count?: sales_historyCountOrderByAggregateInput
     _avg?: sales_historyAvgOrderByAggregateInput
@@ -22860,8 +21589,8 @@ export namespace Prisma {
     total_amount?: DecimalNullableWithAggregatesFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableWithAggregatesFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     rewards_points?: DecimalNullableWithAggregatesFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: IntNullableWithAggregatesFilter<"sales_history"> | number | null
-    reference_id?: StringNullableWithAggregatesFilter<"sales_history"> | string | null
+    payment_method?: StringNullableWithAggregatesFilter<"sales_history"> | string | null
+    reference?: StringNullableWithAggregatesFilter<"sales_history"> | string | null
     product_count?: IntNullableWithAggregatesFilter<"sales_history"> | number | null
   }
 
@@ -23644,42 +22373,6 @@ export namespace Prisma {
     updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type payment_methodCreateInput = {
-    payment_method_name: string
-    sales_history?: sales_historyCreateNestedManyWithoutPayment_methodInput
-  }
-
-  export type payment_methodUncheckedCreateInput = {
-    payment_method_id?: number
-    payment_method_name: string
-    sales_history?: sales_historyUncheckedCreateNestedManyWithoutPayment_methodInput
-  }
-
-  export type payment_methodUpdateInput = {
-    payment_method_name?: StringFieldUpdateOperationsInput | string
-    sales_history?: sales_historyUpdateManyWithoutPayment_methodNestedInput
-  }
-
-  export type payment_methodUncheckedUpdateInput = {
-    payment_method_id?: IntFieldUpdateOperationsInput | number
-    payment_method_name?: StringFieldUpdateOperationsInput | string
-    sales_history?: sales_historyUncheckedUpdateManyWithoutPayment_methodNestedInput
-  }
-
-  export type payment_methodCreateManyInput = {
-    payment_method_id?: number
-    payment_method_name: string
-  }
-
-  export type payment_methodUpdateManyMutationInput = {
-    payment_method_name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type payment_methodUncheckedUpdateManyInput = {
-    payment_method_id?: IntFieldUpdateOperationsInput | number
-    payment_method_name?: StringFieldUpdateOperationsInput | string
-  }
-
   export type productCreateInput = {
     product_id?: string
     product_name: string
@@ -23855,13 +22548,13 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartCreateNestedManyWithoutSales_historyInput
     branch: branchCreateNestedOneWithoutSales_historyInput
     customer?: customerCreateNestedOneWithoutSales_historyInput
     employee: employeeCreateNestedOneWithoutSales_historyInput
-    payment_method?: payment_methodCreateNestedOneWithoutSales_historyInput
   }
 
   export type sales_historyUncheckedCreateInput = {
@@ -23873,8 +22566,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartUncheckedCreateNestedManyWithoutSales_historyInput
   }
@@ -23884,13 +22577,13 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUpdateManyWithoutSales_historyNestedInput
     branch?: branchUpdateOneRequiredWithoutSales_historyNestedInput
     customer?: customerUpdateOneWithoutSales_historyNestedInput
     employee?: employeeUpdateOneRequiredWithoutSales_historyNestedInput
-    payment_method?: payment_methodUpdateOneWithoutSales_historyNestedInput
   }
 
   export type sales_historyUncheckedUpdateInput = {
@@ -23902,8 +22595,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUncheckedUpdateManyWithoutSales_historyNestedInput
   }
@@ -23917,8 +22610,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
   }
 
@@ -23927,7 +22620,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -23940,8 +22634,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -24817,29 +23511,6 @@ export namespace Prisma {
     reorder_level?: SortOrder
   }
 
-  export type payment_methodCountOrderByAggregateInput = {
-    payment_method_id?: SortOrder
-    payment_method_name?: SortOrder
-  }
-
-  export type payment_methodAvgOrderByAggregateInput = {
-    payment_method_id?: SortOrder
-  }
-
-  export type payment_methodMaxOrderByAggregateInput = {
-    payment_method_id?: SortOrder
-    payment_method_name?: SortOrder
-  }
-
-  export type payment_methodMinOrderByAggregateInput = {
-    payment_method_id?: SortOrder
-    payment_method_name?: SortOrder
-  }
-
-  export type payment_methodSumOrderByAggregateInput = {
-    payment_method_id?: SortOrder
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -24990,11 +23661,6 @@ export namespace Prisma {
     isNot?: employeeWhereInput
   }
 
-  export type Payment_methodNullableScalarRelationFilter = {
-    is?: payment_methodWhereInput | null
-    isNot?: payment_methodWhereInput | null
-  }
-
   export type sales_historyCountOrderByAggregateInput = {
     order_id?: SortOrder
     customer_id?: SortOrder
@@ -25004,8 +23670,8 @@ export namespace Prisma {
     total_amount?: SortOrder
     profit?: SortOrder
     rewards_points?: SortOrder
-    payment_method_id?: SortOrder
-    reference_id?: SortOrder
+    payment_method?: SortOrder
+    reference?: SortOrder
     product_count?: SortOrder
   }
 
@@ -25016,7 +23682,6 @@ export namespace Prisma {
     total_amount?: SortOrder
     profit?: SortOrder
     rewards_points?: SortOrder
-    payment_method_id?: SortOrder
     product_count?: SortOrder
   }
 
@@ -25029,8 +23694,8 @@ export namespace Prisma {
     total_amount?: SortOrder
     profit?: SortOrder
     rewards_points?: SortOrder
-    payment_method_id?: SortOrder
-    reference_id?: SortOrder
+    payment_method?: SortOrder
+    reference?: SortOrder
     product_count?: SortOrder
   }
 
@@ -25043,8 +23708,8 @@ export namespace Prisma {
     total_amount?: SortOrder
     profit?: SortOrder
     rewards_points?: SortOrder
-    payment_method_id?: SortOrder
-    reference_id?: SortOrder
+    payment_method?: SortOrder
+    reference?: SortOrder
     product_count?: SortOrder
   }
 
@@ -25055,7 +23720,6 @@ export namespace Prisma {
     total_amount?: SortOrder
     profit?: SortOrder
     rewards_points?: SortOrder
-    payment_method_id?: SortOrder
     product_count?: SortOrder
   }
 
@@ -25753,48 +24417,6 @@ export namespace Prisma {
     update?: XOR<XOR<productUpdateToOneWithWhereWithoutInventoryInput, productUpdateWithoutInventoryInput>, productUncheckedUpdateWithoutInventoryInput>
   }
 
-  export type sales_historyCreateNestedManyWithoutPayment_methodInput = {
-    create?: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput> | sales_historyCreateWithoutPayment_methodInput[] | sales_historyUncheckedCreateWithoutPayment_methodInput[]
-    connectOrCreate?: sales_historyCreateOrConnectWithoutPayment_methodInput | sales_historyCreateOrConnectWithoutPayment_methodInput[]
-    createMany?: sales_historyCreateManyPayment_methodInputEnvelope
-    connect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-  }
-
-  export type sales_historyUncheckedCreateNestedManyWithoutPayment_methodInput = {
-    create?: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput> | sales_historyCreateWithoutPayment_methodInput[] | sales_historyUncheckedCreateWithoutPayment_methodInput[]
-    connectOrCreate?: sales_historyCreateOrConnectWithoutPayment_methodInput | sales_historyCreateOrConnectWithoutPayment_methodInput[]
-    createMany?: sales_historyCreateManyPayment_methodInputEnvelope
-    connect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-  }
-
-  export type sales_historyUpdateManyWithoutPayment_methodNestedInput = {
-    create?: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput> | sales_historyCreateWithoutPayment_methodInput[] | sales_historyUncheckedCreateWithoutPayment_methodInput[]
-    connectOrCreate?: sales_historyCreateOrConnectWithoutPayment_methodInput | sales_historyCreateOrConnectWithoutPayment_methodInput[]
-    upsert?: sales_historyUpsertWithWhereUniqueWithoutPayment_methodInput | sales_historyUpsertWithWhereUniqueWithoutPayment_methodInput[]
-    createMany?: sales_historyCreateManyPayment_methodInputEnvelope
-    set?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    disconnect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    delete?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    connect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    update?: sales_historyUpdateWithWhereUniqueWithoutPayment_methodInput | sales_historyUpdateWithWhereUniqueWithoutPayment_methodInput[]
-    updateMany?: sales_historyUpdateManyWithWhereWithoutPayment_methodInput | sales_historyUpdateManyWithWhereWithoutPayment_methodInput[]
-    deleteMany?: sales_historyScalarWhereInput | sales_historyScalarWhereInput[]
-  }
-
-  export type sales_historyUncheckedUpdateManyWithoutPayment_methodNestedInput = {
-    create?: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput> | sales_historyCreateWithoutPayment_methodInput[] | sales_historyUncheckedCreateWithoutPayment_methodInput[]
-    connectOrCreate?: sales_historyCreateOrConnectWithoutPayment_methodInput | sales_historyCreateOrConnectWithoutPayment_methodInput[]
-    upsert?: sales_historyUpsertWithWhereUniqueWithoutPayment_methodInput | sales_historyUpsertWithWhereUniqueWithoutPayment_methodInput[]
-    createMany?: sales_historyCreateManyPayment_methodInputEnvelope
-    set?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    disconnect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    delete?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    connect?: sales_historyWhereUniqueInput | sales_historyWhereUniqueInput[]
-    update?: sales_historyUpdateWithWhereUniqueWithoutPayment_methodInput | sales_historyUpdateWithWhereUniqueWithoutPayment_methodInput[]
-    updateMany?: sales_historyUpdateManyWithWhereWithoutPayment_methodInput | sales_historyUpdateManyWithWhereWithoutPayment_methodInput[]
-    deleteMany?: sales_historyScalarWhereInput | sales_historyScalarWhereInput[]
-  }
-
   export type productCreateproduct_imageInput = {
     set: string[]
   }
@@ -26001,12 +24623,6 @@ export namespace Prisma {
     connect?: employeeWhereUniqueInput
   }
 
-  export type payment_methodCreateNestedOneWithoutSales_historyInput = {
-    create?: XOR<payment_methodCreateWithoutSales_historyInput, payment_methodUncheckedCreateWithoutSales_historyInput>
-    connectOrCreate?: payment_methodCreateOrConnectWithoutSales_historyInput
-    connect?: payment_methodWhereUniqueInput
-  }
-
   export type cartUncheckedCreateNestedManyWithoutSales_historyInput = {
     create?: XOR<cartCreateWithoutSales_historyInput, cartUncheckedCreateWithoutSales_historyInput> | cartCreateWithoutSales_historyInput[] | cartUncheckedCreateWithoutSales_historyInput[]
     connectOrCreate?: cartCreateOrConnectWithoutSales_historyInput | cartCreateOrConnectWithoutSales_historyInput[]
@@ -26052,16 +24668,6 @@ export namespace Prisma {
     upsert?: employeeUpsertWithoutSales_historyInput
     connect?: employeeWhereUniqueInput
     update?: XOR<XOR<employeeUpdateToOneWithWhereWithoutSales_historyInput, employeeUpdateWithoutSales_historyInput>, employeeUncheckedUpdateWithoutSales_historyInput>
-  }
-
-  export type payment_methodUpdateOneWithoutSales_historyNestedInput = {
-    create?: XOR<payment_methodCreateWithoutSales_historyInput, payment_methodUncheckedCreateWithoutSales_historyInput>
-    connectOrCreate?: payment_methodCreateOrConnectWithoutSales_historyInput
-    upsert?: payment_methodUpsertWithoutSales_historyInput
-    disconnect?: payment_methodWhereInput | boolean
-    delete?: payment_methodWhereInput | boolean
-    connect?: payment_methodWhereUniqueInput
-    update?: XOR<XOR<payment_methodUpdateToOneWithWhereWithoutSales_historyInput, payment_methodUpdateWithoutSales_historyInput>, payment_methodUncheckedUpdateWithoutSales_historyInput>
   }
 
   export type cartUncheckedUpdateManyWithoutSales_historyNestedInput = {
@@ -26555,12 +25161,12 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartCreateNestedManyWithoutSales_historyInput
     customer?: customerCreateNestedOneWithoutSales_historyInput
     employee: employeeCreateNestedOneWithoutSales_historyInput
-    payment_method?: payment_methodCreateNestedOneWithoutSales_historyInput
   }
 
   export type sales_historyUncheckedCreateWithoutBranchInput = {
@@ -26571,8 +25177,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartUncheckedCreateNestedManyWithoutSales_historyInput
   }
@@ -26674,8 +25280,8 @@ export namespace Prisma {
     total_amount?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     profit?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
     rewards_points?: DecimalNullableFilter<"sales_history"> | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: IntNullableFilter<"sales_history"> | number | null
-    reference_id?: StringNullableFilter<"sales_history"> | string | null
+    payment_method?: StringNullableFilter<"sales_history"> | string | null
+    reference?: StringNullableFilter<"sales_history"> | string | null
     product_count?: IntNullableFilter<"sales_history"> | number | null
   }
 
@@ -26721,12 +25327,12 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     branch: branchCreateNestedOneWithoutSales_historyInput
     customer?: customerCreateNestedOneWithoutSales_historyInput
     employee: employeeCreateNestedOneWithoutSales_historyInput
-    payment_method?: payment_methodCreateNestedOneWithoutSales_historyInput
   }
 
   export type sales_historyUncheckedCreateWithoutCartInput = {
@@ -26738,8 +25344,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
   }
 
@@ -26807,12 +25413,12 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     branch?: branchUpdateOneRequiredWithoutSales_historyNestedInput
     customer?: customerUpdateOneWithoutSales_historyNestedInput
     employee?: employeeUpdateOneRequiredWithoutSales_historyNestedInput
-    payment_method?: payment_methodUpdateOneWithoutSales_historyNestedInput
   }
 
   export type sales_historyUncheckedUpdateWithoutCartInput = {
@@ -26824,8 +25430,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -26909,12 +25515,12 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartCreateNestedManyWithoutSales_historyInput
     branch: branchCreateNestedOneWithoutSales_historyInput
     employee: employeeCreateNestedOneWithoutSales_historyInput
-    payment_method?: payment_methodCreateNestedOneWithoutSales_historyInput
   }
 
   export type sales_historyUncheckedCreateWithoutCustomerInput = {
@@ -26925,8 +25531,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartUncheckedCreateNestedManyWithoutSales_historyInput
   }
@@ -27007,12 +25613,12 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartCreateNestedManyWithoutSales_historyInput
     branch: branchCreateNestedOneWithoutSales_historyInput
     customer?: customerCreateNestedOneWithoutSales_historyInput
-    payment_method?: payment_methodCreateNestedOneWithoutSales_historyInput
   }
 
   export type sales_historyUncheckedCreateWithoutEmployeeInput = {
@@ -27023,8 +25629,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
     cart?: cartUncheckedCreateNestedManyWithoutSales_historyInput
   }
@@ -27396,59 +26002,6 @@ export namespace Prisma {
     updated_on?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cart?: cartUncheckedUpdateManyWithoutProductNestedInput
     variants?: product_variantsUncheckedUpdateManyWithoutProductNestedInput
-  }
-
-  export type sales_historyCreateWithoutPayment_methodInput = {
-    created_at?: Date | string | null
-    total_amount?: Decimal | DecimalJsLike | number | string | null
-    profit?: Decimal | DecimalJsLike | number | string | null
-    rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
-    product_count?: number | null
-    cart?: cartCreateNestedManyWithoutSales_historyInput
-    branch: branchCreateNestedOneWithoutSales_historyInput
-    customer?: customerCreateNestedOneWithoutSales_historyInput
-    employee: employeeCreateNestedOneWithoutSales_historyInput
-  }
-
-  export type sales_historyUncheckedCreateWithoutPayment_methodInput = {
-    order_id?: number
-    customer_id?: number | null
-    cashier_id: number
-    branch_id: string
-    created_at?: Date | string | null
-    total_amount?: Decimal | DecimalJsLike | number | string | null
-    profit?: Decimal | DecimalJsLike | number | string | null
-    rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
-    product_count?: number | null
-    cart?: cartUncheckedCreateNestedManyWithoutSales_historyInput
-  }
-
-  export type sales_historyCreateOrConnectWithoutPayment_methodInput = {
-    where: sales_historyWhereUniqueInput
-    create: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput>
-  }
-
-  export type sales_historyCreateManyPayment_methodInputEnvelope = {
-    data: sales_historyCreateManyPayment_methodInput | sales_historyCreateManyPayment_methodInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type sales_historyUpsertWithWhereUniqueWithoutPayment_methodInput = {
-    where: sales_historyWhereUniqueInput
-    update: XOR<sales_historyUpdateWithoutPayment_methodInput, sales_historyUncheckedUpdateWithoutPayment_methodInput>
-    create: XOR<sales_historyCreateWithoutPayment_methodInput, sales_historyUncheckedCreateWithoutPayment_methodInput>
-  }
-
-  export type sales_historyUpdateWithWhereUniqueWithoutPayment_methodInput = {
-    where: sales_historyWhereUniqueInput
-    data: XOR<sales_historyUpdateWithoutPayment_methodInput, sales_historyUncheckedUpdateWithoutPayment_methodInput>
-  }
-
-  export type sales_historyUpdateManyWithWhereWithoutPayment_methodInput = {
-    where: sales_historyScalarWhereInput
-    data: XOR<sales_historyUpdateManyMutationInput, sales_historyUncheckedUpdateManyWithoutPayment_methodInput>
   }
 
   export type cartCreateWithoutProductInput = {
@@ -27874,20 +26427,6 @@ export namespace Prisma {
     create: XOR<employeeCreateWithoutSales_historyInput, employeeUncheckedCreateWithoutSales_historyInput>
   }
 
-  export type payment_methodCreateWithoutSales_historyInput = {
-    payment_method_name: string
-  }
-
-  export type payment_methodUncheckedCreateWithoutSales_historyInput = {
-    payment_method_id?: number
-    payment_method_name: string
-  }
-
-  export type payment_methodCreateOrConnectWithoutSales_historyInput = {
-    where: payment_methodWhereUniqueInput
-    create: XOR<payment_methodCreateWithoutSales_historyInput, payment_methodUncheckedCreateWithoutSales_historyInput>
-  }
-
   export type cartUpsertWithWhereUniqueWithoutSales_historyInput = {
     where: cartWhereUniqueInput
     update: XOR<cartUpdateWithoutSales_historyInput, cartUncheckedUpdateWithoutSales_historyInput>
@@ -28011,26 +26550,6 @@ export namespace Prisma {
     user_credentials?: user_credentialsUncheckedUpdateOneWithoutEmployeeNestedInput
     working_hour?: working_hourUncheckedUpdateManyWithoutEmployeeNestedInput
     working_hour_marked_by?: working_hourUncheckedUpdateManyWithoutMarked_byNestedInput
-  }
-
-  export type payment_methodUpsertWithoutSales_historyInput = {
-    update: XOR<payment_methodUpdateWithoutSales_historyInput, payment_methodUncheckedUpdateWithoutSales_historyInput>
-    create: XOR<payment_methodCreateWithoutSales_historyInput, payment_methodUncheckedCreateWithoutSales_historyInput>
-    where?: payment_methodWhereInput
-  }
-
-  export type payment_methodUpdateToOneWithWhereWithoutSales_historyInput = {
-    where?: payment_methodWhereInput
-    data: XOR<payment_methodUpdateWithoutSales_historyInput, payment_methodUncheckedUpdateWithoutSales_historyInput>
-  }
-
-  export type payment_methodUpdateWithoutSales_historyInput = {
-    payment_method_name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type payment_methodUncheckedUpdateWithoutSales_historyInput = {
-    payment_method_id?: IntFieldUpdateOperationsInput | number
-    payment_method_name?: StringFieldUpdateOperationsInput | string
   }
 
   export type productCreateWithoutSupplierInput = {
@@ -28409,8 +26928,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
   }
 
@@ -28483,12 +27002,12 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUpdateManyWithoutSales_historyNestedInput
     customer?: customerUpdateOneWithoutSales_historyNestedInput
     employee?: employeeUpdateOneRequiredWithoutSales_historyNestedInput
-    payment_method?: payment_methodUpdateOneWithoutSales_historyNestedInput
   }
 
   export type sales_historyUncheckedUpdateWithoutBranchInput = {
@@ -28499,8 +27018,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUncheckedUpdateManyWithoutSales_historyNestedInput
   }
@@ -28513,8 +27032,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28584,8 +27103,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
   }
 
@@ -28594,12 +27113,12 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUpdateManyWithoutSales_historyNestedInput
     branch?: branchUpdateOneRequiredWithoutSales_historyNestedInput
     employee?: employeeUpdateOneRequiredWithoutSales_historyNestedInput
-    payment_method?: payment_methodUpdateOneWithoutSales_historyNestedInput
   }
 
   export type sales_historyUncheckedUpdateWithoutCustomerInput = {
@@ -28610,8 +27129,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUncheckedUpdateManyWithoutSales_historyNestedInput
   }
@@ -28624,8 +27143,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28637,8 +27156,8 @@ export namespace Prisma {
     total_amount?: Decimal | DecimalJsLike | number | string | null
     profit?: Decimal | DecimalJsLike | number | string | null
     rewards_points?: Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: number | null
-    reference_id?: string | null
+    payment_method?: string | null
+    reference?: string | null
     product_count?: number | null
   }
 
@@ -28667,12 +27186,12 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUpdateManyWithoutSales_historyNestedInput
     branch?: branchUpdateOneRequiredWithoutSales_historyNestedInput
     customer?: customerUpdateOneWithoutSales_historyNestedInput
-    payment_method?: payment_methodUpdateOneWithoutSales_historyNestedInput
   }
 
   export type sales_historyUncheckedUpdateWithoutEmployeeInput = {
@@ -28683,8 +27202,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
     cart?: cartUncheckedUpdateManyWithoutSales_historyNestedInput
   }
@@ -28697,8 +27216,8 @@ export namespace Prisma {
     total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    payment_method_id?: NullableIntFieldUpdateOperationsInput | number | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_method?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
     product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -28760,59 +27279,6 @@ export namespace Prisma {
     shift_off?: StringFieldUpdateOperationsInput | string
     present?: BoolFieldUpdateOperationsInput | boolean
     total_hours?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type sales_historyCreateManyPayment_methodInput = {
-    order_id?: number
-    customer_id?: number | null
-    cashier_id: number
-    branch_id: string
-    created_at?: Date | string | null
-    total_amount?: Decimal | DecimalJsLike | number | string | null
-    profit?: Decimal | DecimalJsLike | number | string | null
-    rewards_points?: Decimal | DecimalJsLike | number | string | null
-    reference_id?: string | null
-    product_count?: number | null
-  }
-
-  export type sales_historyUpdateWithoutPayment_methodInput = {
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
-    product_count?: NullableIntFieldUpdateOperationsInput | number | null
-    cart?: cartUpdateManyWithoutSales_historyNestedInput
-    branch?: branchUpdateOneRequiredWithoutSales_historyNestedInput
-    customer?: customerUpdateOneWithoutSales_historyNestedInput
-    employee?: employeeUpdateOneRequiredWithoutSales_historyNestedInput
-  }
-
-  export type sales_historyUncheckedUpdateWithoutPayment_methodInput = {
-    order_id?: IntFieldUpdateOperationsInput | number
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cashier_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
-    product_count?: NullableIntFieldUpdateOperationsInput | number | null
-    cart?: cartUncheckedUpdateManyWithoutSales_historyNestedInput
-  }
-
-  export type sales_historyUncheckedUpdateManyWithoutPayment_methodInput = {
-    order_id?: IntFieldUpdateOperationsInput | number
-    customer_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cashier_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    total_amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    profit?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rewards_points?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    reference_id?: NullableStringFieldUpdateOperationsInput | string | null
-    product_count?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type cartCreateManyProductInput = {

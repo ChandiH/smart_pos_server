@@ -20,9 +20,15 @@ importers:
       dotenv:
         specifier: ^16.3.1
         version: 16.6.1
+      escpos-buffer:
+        specifier: ^4.1.0
+        version: 4.1.0
       express:
         specifier: ^4.18.2
         version: 4.21.2
+      iconv-lite:
+        specifier: ^0.7.0
+        version: 0.7.0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -708,6 +714,10 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
+  escpos-buffer@4.1.0:
+    resolution: {integrity: sha512-ubmmnEYnYEm+h7MxJcoCUYaqplBWkDpdySyS0qJ1K6hirAUFFH0IqgYTHMF0w16/i3X08PUZ7eOT0VuEmaoF1w==}
+    engines: {node: '>= 14'}
+
   eslint-config-prettier@10.1.8:
     resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
     hasBin: true
@@ -899,6 +909,14 @@ packages:
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
+    engines: {node: '>=0.10.0'}
+
+  iconv-lite@0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+
+  iconv-lite@0.7.0:
+    resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
     engines: {node: '>=0.10.0'}
 
   ignore@5.3.2:
@@ -1365,6 +1383,9 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   tsx@4.20.6:
     resolution: {integrity: sha512-ytQKuwgmrrkDTFP4LjR0ToE2nqgy886GpvRSpU0JAnrdBYppuY5rLkRUYPU1yCryb24SsKBTL/hlDQAEFVwtZg==}
@@ -2035,6 +2056,11 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
+  escpos-buffer@4.1.0:
+    dependencies:
+      iconv-lite: 0.6.3
+      tslib: 2.8.1
+
   eslint-config-prettier@10.1.8(eslint@9.38.0(jiti@2.6.1)):
     dependencies:
       eslint: 9.38.0(jiti@2.6.1)
@@ -2285,6 +2311,14 @@ snapshots:
       toidentifier: 1.0.1
 
   iconv-lite@0.4.24:
+    dependencies:
+      safer-buffer: 2.1.2
+
+  iconv-lite@0.6.3:
+    dependencies:
+      safer-buffer: 2.1.2
+
+  iconv-lite@0.7.0:
     dependencies:
       safer-buffer: 2.1.2
 
@@ -2717,6 +2751,8 @@ snapshots:
   ts-api-utils@2.1.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
+
+  tslib@2.8.1: {}
 
   tsx@4.20.6:
     dependencies:

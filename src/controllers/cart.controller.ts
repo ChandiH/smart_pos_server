@@ -1,8 +1,9 @@
 import type { RequestHandler } from "express";
-import { getRewardsPointsPercentage, insertSalesData, updateRewardsPointsPercentage } from "../models/cart.model";
+import { getRewardsPointsPercentage, updateRewardsPointsPercentage } from "../models/cart.model";
+import { insertSalesData, type InsertSalesPayload } from "../services/sales.service";
 
 interface InsertSalesBody {
-  salesData: unknown;
+  salesData: InsertSalesPayload;
 }
 
 interface UpdateRewardsBody {
@@ -12,7 +13,8 @@ interface UpdateRewardsBody {
 export const InsertSalesData: RequestHandler<unknown, unknown, InsertSalesBody> = async (req, res) => {
   try {
     const { salesData } = req.body;
-    await await insertSalesData(salesData);
+    console.log(salesData);
+    await insertSalesData(salesData);
     return res.status(200).json({ message: "Sales data inserted successfully" });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to insert sales data";
