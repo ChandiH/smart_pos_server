@@ -4,7 +4,9 @@
   "description": "backend server application for smart pos(point of sale) system",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "concurrently --kill-others-on-fail -n PRINTER,API -c magenta,green \"pnpm run printer\" \"pnpm run dev:backend\"",
+    "dev:backend": "tsx watch src/server.ts",
+    "printer": "tsx watch src/printer-agent.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -13,8 +15,7 @@
     "format": "prettier --write .",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
-    "prisma:reset": "npx prisma migrate reset",
-    "printer": "tsx watch src/printer-agent.ts"
+    "prisma:reset": "npx prisma migrate reset"
   },
   "author": "Somesh Chandimal",
   "license": "ISC",
@@ -42,6 +43,7 @@
     "@types/pg": "^8.15.5",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
+    "concurrently": "^9.2.1",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
