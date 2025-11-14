@@ -1,20 +1,12 @@
-import express from "express";
-import cors from "cors";
-import { z } from "zod";
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import { spawn } from "node:child_process";
 import iconv from "iconv-lite";
+import z from "zod";
 
 /**
- * SECURITY: bind to localhost only; use a shared secret if you like.
- */
-const PORT = 3333; // local agent port
-const PRINTER_SHARE = process.env.PRINTER_SHARE || "XP80"; // the Windows printer share name
-
-/**
- * Simple ESC/POS line schema like the one we discussed
+ * Simple ESC/POS line schema
  */
 const LineSchema = z.union([
   z.object({ text: z.string(), align: z.enum(["L", "C", "R"]).optional(), bold: z.boolean().optional() }),
@@ -23,37 +15,17 @@ const LineSchema = z.union([
   z.object({ barcode: z.string() }),
 ]);
 
-const PrintPayload = z.object({
+export const PrintPayload = z.object({
   lines: z.array(LineSchema),
   cut: z.boolean().optional().default(true),
   openDrawer: z.boolean().optional().default(false),
   codepage: z.string().optional().default("cp437"),
 });
 
-const app = express();
-app.use(cors({ origin: [/^https?:\/\/localhost(:\d+)?$/], credentials: false }));
-app.use(express.json({ limit: "256kb" }));
-
-app.get("/health", (_req, res) => res.json({ ok: true }));
-
-app.post("/print-raw", async (req, res) => {
-  try {
-    const { lines, cut, openDrawer, codepage } = PrintPayload.parse(req.body);
-    const buf = buildEscposBuffer(lines, { cut, openDrawer, codepage });
-    await sendRawToWindowsQueue(buf, PRINTER_SHARE);
-    res.json({ ok: true });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    res.status(400).json({ ok: false, error: e.message });
-  }
-});
-
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`POS Print Agent listening on http://127.0.0.1:${PORT}`);
-});
+export type IPrintPayload = z.infer<typeof PrintPayload>;
 
 /** ----- ESC/POS builder ----- */
-function buildEscposBuffer(
+export function buildEscposBuffer(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   lines: any[],
   opts: { cut: boolean; openDrawer: boolean; codepage: string }
@@ -117,7 +89,7 @@ function buildEscposBuffer(
 }
 
 /** ----- Windows queue sender (no native deps) ----- */
-async function sendRawToWindowsQueue(buf: Buffer, shareName: string) {
+export async function sendRawToWindowsQueue(buf: Buffer, shareName: string) {
   // 1) Write to a temp .bin file
   const tmp = path.join(os.tmpdir(), `pos-${Date.now()}.bin`);
   await fs.writeFile(tmp, buf);

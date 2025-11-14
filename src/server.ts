@@ -18,6 +18,7 @@ import categoryRouter from "./routes/category.routes";
 import chartRouter from "./routes/chart.routes";
 import supplierRouter from "./routes/supplier.routes";
 import userRoleRouter from "./routes/userRole.routes";
+import printerRouter from "./routes/printer.route";
 
 const simpleRoutes: Array<[string, Router]> = [
   ["/cart", cartRouter],
@@ -34,13 +35,14 @@ import { logRequest } from "./middleware/log";
 import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
 import prisma from "./config/prisma";
-import { printReceiptToNetwork } from "./utils/printer";
 
 const app = express();
 
 app.use(express.json());
 // app.use(express.urlencoded());
 app.use(cors());
+
+app.set("trust proxy", true);
 
 prisma
   .$connect()
@@ -62,36 +64,13 @@ app.post("/upload-multiple", upload.array("files"), (req, res) => {
   return res.status(200).json({ message: "Files uploaded successfully!", files: req.files });
 });
 
+app.get("/health", (_req, res) => res.json({ ok: true }));
+
+app.use("/print-receipt", printerRouter);
 app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", upload.single("file"), employeeRouter);
 app.use("/product", upload.array("files"), productRouter);
-
-app.post("/print-receipt", async (req, res) => {
-  try {
-    const { ip = "192.168.1.90", port = 9100, receipt } = req.body ?? {};
-    const lineCount = Array.isArray(receipt?.lines) ? receipt.lines.length : 0;
-    console.log("[print-receipt] Request received", {
-      ip,
-      port,
-      openDrawer: receipt?.openDrawer ?? false,
-      lineCount,
-      hasReceipt: Boolean(receipt),
-    });
-    if (!receipt || !Array.isArray(receipt.lines)) {
-      console.warn("[print-receipt] Invalid receipt payload", { receipt });
-      return res.status(400).json({ ok: false, error: "Invalid receipt payload" });
-    }
-    console.log("[print-receipt] Sending receipt to printer", { ip, port });
-    await printReceiptToNetwork(ip, port, receipt.lines, true, receipt.openDrawer);
-    console.log("[print-receipt] Print job finished", { ip, port });
-    res.json({ ok: true });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    console.error("[print-receipt] Print job failed", { error: e, message: e?.message });
-    res.status(500).json({ ok: false, error: e.message });
-  }
-});
 
 simpleRoutes.forEach(([path, router]) => {
   app.use(path, router);
