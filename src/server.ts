@@ -79,6 +79,6 @@ prisma
       console.log(`🚀 Server running on http://localhost:${PORT}`);
     });
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.error("❌ Prisma connection error:", err);
 });
