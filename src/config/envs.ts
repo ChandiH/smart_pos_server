@@ -1,10 +1,14 @@
 import path from "path";
 import fs from "fs";
 
+export const SERVER_PORT = Number(process.env.PORT) || 4000;
+export const SECRET_KEY = process.env.SECRET_KEY || "your_jwt_secret";
+
 export const DATABASE_URL = process.env.DATABASE_URL || "";
 export const DATABASE_DOCKER = process.env.DATABASE_CONTAINER === "docker";
 
 // Printer Configs
+export const PRINTER_HOST = process.env.PRINTER_HOST || "127.0.0.1";
 export const PRINTER_SHARE_NAME = process.env.PRINTER_SHARE_NAME || "POS_PRINTER"; // the Windows printer share name
 
 // Email Scheduler Configs

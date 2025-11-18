@@ -4,7 +4,6 @@ import path from "path";
 import cors from "cors";
 // config
 dotenv.config();
-const PORT = Number(process.env.PORT) || 4000;
 
 // routes
 import authRouter from "./routes/auth.routes";
@@ -36,6 +35,7 @@ import { logRequest } from "./middleware/log";
 import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
 import prisma from "./config/prisma";
+import { SERVER_PORT } from "./config/envs";
 
 const app = express();
 
@@ -75,8 +75,8 @@ prisma
     console.log("✅ Connected to the database via Prisma");
     const time = new Date().toUTCString();
     console.log(`🕒 Server started at ${time}`);
-    app.listen(PORT, async () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    app.listen(SERVER_PORT, async () => {
+      console.log(`🚀 Server running on http://localhost:${SERVER_PORT}`);
     });
   })
   .catch((err: any) => {

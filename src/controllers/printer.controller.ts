@@ -5,10 +5,10 @@ import { buildReceiptFromSale } from "../services/receipt.builder";
 import { PRINTER_SHARE_NAME } from "../config/envs";
 
 const _linePrinter = async ({ lines, cut, openDrawer, codepage }: IPrintPayload) => {
-  console.log(`[printing started] ${PRINTER_SHARE_NAME}`, JSON.stringify({ lines, cut, openDrawer, codepage }));
+  console.log(`[printing started]`, JSON.stringify({ lines, cut, openDrawer, codepage }));
   try {
     const buf = buildEscposBuffer(lines, { cut, openDrawer, codepage });
-    await sendRawToWindowsQueue(buf, PRINTER_SHARE_NAME);
+    await sendRawToWindowsQueue(buf);
     return { ok: true };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

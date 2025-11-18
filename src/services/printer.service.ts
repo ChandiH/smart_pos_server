@@ -4,6 +4,7 @@ import os from "node:os";
 import { spawn } from "node:child_process";
 import iconv from "iconv-lite";
 import z from "zod";
+import { PRINTER_HOST, PRINTER_SHARE_NAME } from "../config/envs";
 
 /**
  * Simple ESC/POS line schema
@@ -94,7 +95,7 @@ export function buildEscposBuffer(
 }
 
 /** ----- Windows queue sender (no native deps) ----- */
-export async function sendRawToWindowsQueue(buf: Buffer, shareName: string) {
+export async function sendRawToWindowsQueue(buf: Buffer) {
   // 1) Write to a temp .bin file
   const tmp = path.join(os.tmpdir(), `pos-${Date.now()}.bin`);
   await fs.writeFile(tmp, buf);
@@ -102,7 +103,7 @@ export async function sendRawToWindowsQueue(buf: Buffer, shareName: string) {
   // 2) Use `copy /b` to the local shared printer queue
   // Example: copy /b "C:\Temp\pos-123.bin" "\\127.0.0.1\XP80"
   await new Promise<void>((resolve, reject) => {
-    const printerPath = `\\\\${process.env.PRINTER_HOST || '127.0.0.1'}\\${shareName}`;
+    const printerPath = `\\\\${PRINTER_HOST}\\${PRINTER_SHARE_NAME}`;
     console.log("PRINT PATH:", printerPath);
     const p = spawn("cmd.exe", ["/c", "copy", "/b", tmp, printerPath], {
       windowsHide: true,

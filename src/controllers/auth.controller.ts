@@ -9,6 +9,7 @@ import {
 } from "../models/auth.model";
 import { getEmployee } from "../models/employee.model";
 import { verifyPassword } from "../utils/hash";
+import { SECRET_KEY } from "../config/envs";
 
 interface LoginBody {
   username: string;
@@ -50,9 +51,7 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
       return res.status(400).json({ error: { username: "Employee not found." } });
     }
 
-    const secret = process.env.SECRET_KEY;
-
-    if (!secret) {
+    if (!SECRET_KEY) {
       console.error("SECRET_KEY is not defined in the environment.");
       return res.status(500).json({ error: "Internal server error" });
     }
@@ -71,7 +70,7 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
         employee_email: employee.employee_email,
         employee_phone: employee.employee_phone,
       },
-      secret,
+      SECRET_KEY,
       {
         algorithm: "HS256",
       }
