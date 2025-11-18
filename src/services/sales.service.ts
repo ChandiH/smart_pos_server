@@ -103,12 +103,14 @@ export const insertSalesData = async (salesData: InsertSalesPayload): Promise<nu
       });
     }
 
-    if (paymentMethod == "credit" && customerId && creditPayment.greaterThan(0)) {
+    if (paymentMethod == "credit" && customerId && !creditPayment.equals(0)) {
       console.log("Credit Payment Transaction", customerId, creditPayment);
       await tx.customer.update({
         where: { customer_id: customerId },
         data: {
-          credits: { decrement: creditPayment },
+          credits: creditPayment.greaterThan(0)
+            ? { decrement: creditPayment }
+            : { increment: creditPayment.abs() },
         },
       });
     }
@@ -133,6 +135,8 @@ export const insertSalesData = async (salesData: InsertSalesPayload): Promise<nu
       const lineProfit = retailPrice.minus(discount).minus(costPrice).times(new Prisma.Decimal(quantity));
       profit = profit.plus(lineProfit);
     }
+    // subtract rewardsPoints from total profit
+    profit = profit.minus(new Prisma.Decimal(rewardsPoints));
 
     const orderRecord = await tx.sales_history.create({
       data: {
@@ -150,13 +154,36 @@ export const insertSalesData = async (salesData: InsertSalesPayload): Promise<nu
     });
 
     const orderId = orderRecord.order_id;
-
+    // Update customer visit count and rewards points
     if (customerId !== null) {
+//      await tx.customer.update({
+//        where: { customer_id: customerId },
+//        data: {
+//         visit_count: { increment: 1 },
+//          rewards_points: { increment: rewardsPoints },
+      const customer = await tx.customer.findUnique({
+        where: { customer_id: customerId },
+        select: { rewards_points: true, credits: true },
+      });
+
+      if (!customer) throw new Error("Customer not found");
+
+      let updatedPoints = toDecimal(customer.rewards_points).plus(rewardsPoints);
+      let updatedCredits = toDecimal(customer.credits);
+
+      // Loyalty → Credit automatic conversion
+      // Every 100 points → -100 credit
+      while (updatedPoints.greaterThanOrEqualTo(100)) {
+        updatedPoints = updatedPoints.minus(100);
+        updatedCredits = updatedCredits.minus(100); // Assuming credits are in smaller units
+      }
+
       await tx.customer.update({
         where: { customer_id: customerId },
         data: {
           visit_count: { increment: 1 },
-          rewards_points: { increment: rewardsPoints },
+          rewards_points: updatedPoints,
+          credits: updatedCredits,
         },
       });
     }
