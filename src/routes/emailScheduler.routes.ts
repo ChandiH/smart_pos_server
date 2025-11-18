@@ -8,11 +8,15 @@ import { scheduleJob, sendPOSReport } from "../controllers/emailSchedular.contro
 const router = express.Router();
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,            // 587 for TLS, 465 for SSL
+  secure: true,
   auth: {
     user: SCHEDULAR_EMAIL,
     pass: EMAIL_PASSWORD,
   },
+    debug: true,
+  logger: true
 });
 
 // Start with saved time
@@ -49,6 +53,7 @@ router.post("/set-schedule", (req: Request, res: Response) => {
 
 // Manual send now
 router.post("/send-now", async (_req: Request, res: Response) => {
+  console.log(SCHEDULAR_EMAIL, EMAIL_PASSWORD)
   await sendPOSReport(transporter, REPORTS_DIR);
   res.json({ success: true, message: "✅ Report sent manually!" });
 });

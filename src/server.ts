@@ -73,6 +73,8 @@ prisma
   .$connect()
   .then(async () => {
     console.log("✅ Connected to the database via Prisma");
+    const time = new Date().toUTCString();
+    console.log(`🕒 Server started at ${time}`);
     app.listen(PORT, async () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
     });

@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 
 export const DATABASE_URL = process.env.DATABASE_URL || "";
+export const DATABASE_DOCKER = process.env.DATABASE_CONTAINER === "docker";
 
 // Printer Configs
 export const PRINTER_SHARE_NAME = process.env.PRINTER_SHARE_NAME || "POS_PRINTER"; // the Windows printer share name

@@ -3,7 +3,7 @@ import cron, { ScheduledTask } from "node-cron";
 import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
-import { DATABASE_URL, DEFAULT_RECEIVER_EMAIL, SCHEDULAR_EMAIL } from "../config/envs";
+import { DATABASE_DOCKER, DATABASE_URL, DEFAULT_RECEIVER_EMAIL, SCHEDULAR_EMAIL } from "../config/envs";
 import prisma from "../config/prisma";
 
 // === Backup function ===
@@ -18,10 +18,15 @@ async function generateDBBackup(REPORTS_DIR: string): Promise<string> {
 			const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 			const backupFilePath = path.join(REPORTS_DIR, `POS_Backup_${timestamp}.sql`);
 
-			const command = `pg_dump ${DATABASE_URL} -f "${backupFilePath}"`;
-			exec(command, (error) => {
-				if (error) reject(error);
-				else resolve(backupFilePath);
+			const nativeCommand = `pg_dump ${DATABASE_URL} -f "${backupFilePath}"`;
+			const dockerCommand = `docker exec -i postgres-db pg_dump -U postgres smart_pos_db`;
+			exec(DATABASE_DOCKER ? dockerCommand : nativeCommand, { maxBuffer: 1024 * 1024 * 500 }, (error, stdout, stderr) => {
+				if (error) {
+					return reject(error);
+				}
+				const fs = require('fs');
+				fs.writeFileSync(backupFilePath, stdout);  // write container output to host file
+				resolve(backupFilePath);
 			});
 		} catch (err) {
 			reject(err);
@@ -42,13 +47,13 @@ async function getPOSStats() {
 	const totalSales: any = await prisma.$queryRaw`
     SELECT COALESCE(SUM(total_amount),0) AS total_sales
     FROM sales_history
-    WHERE created_at >= '${startISO}' AND created_at <= '${endISO}';
+    WHERE created_at >= ${todayStart} AND created_at <= ${todayEnd};
   `;
 
 	const totalProfit: any = await prisma.$queryRaw`
     SELECT COALESCE(SUM(profit),0) AS total_profit
     FROM sales_history
-    WHERE created_at >= '${startISO}' AND created_at <= '${endISO}';
+    WHERE created_at >= ${todayStart} AND created_at <= ${todayEnd};
   `;
 
 	const totalStock: any = await prisma.$queryRaw`SELECT COALESCE(SUM(quantity),0) AS total_stock FROM inventory;`;
