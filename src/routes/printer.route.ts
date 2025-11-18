@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { PrintRaw, PrintReceipt } from "../controllers/printer.controller";
+import { PrintRaw, PrintReciept } from "../controllers/printer.controller";
 
 const router = Router();
 
 router.post("/raw", PrintRaw);
-router.post("/receipt", PrintReceipt);
+router.post("/receipt", PrintReciept);
 
 export default router;
