@@ -3,12 +3,14 @@ import fs from "fs";
 
 export const DATABASE_URL = process.env.DATABASE_URL || "";
 
+// Printer Configs
+export const PRINTER_SHARE_NAME = process.env.PRINTER_SHARE_NAME || "POS_PRINTER"; // the Windows printer share name
+
 // Email Scheduler Configs
 export const SCHEDULAR_EMAIL = process.env.SCHEDULAR_EMAIL || "";
 export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD || "";
 export const DEFAULT_RECEIVER_EMAIL = process.env.DEFAULT_RECEIVER_EMAIL || "";
 
-// === CONFIG ===
 export let DEFAULT_SCHEDULE_TIME = "00:00"; // Default time
 export const REPORTS_DIR = path.join(process.cwd(), "reports");
 export const CONFIG_FILE = path.join(process.cwd(), "email_schedule.json");
