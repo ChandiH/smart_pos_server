@@ -1,17 +1,35 @@
+// printer.controller.ts
 import type { RequestHandler } from "express";
-import { buildEscposBuffer, PrintPayload, sendRawToWindowsQueue } from "../services/printer.service";
+import { buildEscposBuffer, sendRawToWindowsQueue } from "../services/printer.service";
+import { buildReceiptFromSale } from "../services/receipt.builder";
 
-const PRINTER_SHARE = process.env.PRINTER_SHARE || "POS_PRINTER"; // the Windows printer share name
+const PRINTER_SHARE = process.env.PRINTER_SHARE || "POS_PRINTER";
 
 export const PrintReciept: RequestHandler = async (req, res) => {
-  console.log("printing started", JSON.stringify(req.body));
+  console.log("Receipt build started");
+
   try {
-    const { lines, cut, openDrawer, codepage } = PrintPayload.parse(req.body);
-    const buf = buildEscposBuffer(lines, { cut, openDrawer, codepage });
-    await sendRawToWindowsQueue(buf, PRINTER_SHARE);
-    res.json({ ok: true });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!req.body?.salesData) {
+      return res.status(400).json({ ok: false, error: "Missing salesData" });
+    }
+
+    // Build the ESC/POS friendly receipt structure
+    const payload = await buildReceiptFromSale(req.body.salesData);
+
+    // Convert structures to raw printer bytes
+    const buffer = buildEscposBuffer(payload.lines, {
+      cut: payload.cut,
+      openDrawer: payload.openDrawer,
+      codepage: payload.codepage,
+    });
+
+    console.log("Sending to printer:", PRINTER_SHARE);
+
+    await sendRawToWindowsQueue(buffer, PRINTER_SHARE);
+
+    return res.json({ ok: true });
   } catch (e: any) {
-    res.status(400).json({ ok: false, error: e.message });
+    console.log("Print Error:", e);
+    return res.status(400).json({ ok: false, error: e.message });
   }
 };

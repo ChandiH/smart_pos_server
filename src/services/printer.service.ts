@@ -36,10 +36,15 @@ export function buildEscposBuffer(
   chunks.push(Buffer.from([0x1b, 0x40])); // ESC @
 
   for (const line of lines) {
-    if ("hr" in line) {
-      chunks.push(encode("--------------------------------\n"));
+    if (line && typeof line === "object" && Buffer.isBuffer((line as any).raw)) {
+      chunks.push((line as any).raw);
       continue;
     }
+    if ("hr" in line) {
+      chunks.push(encode("------------------------------------------------\n", opts.codepage));
+      continue;
+    } 
+    
     if ("qrcode" in line) {
       const data = Buffer.from(line.qrcode, "utf8");
       // Model 2, size 5, ECC M – adjust if needed
@@ -97,7 +102,9 @@ export async function sendRawToWindowsQueue(buf: Buffer, shareName: string) {
   // 2) Use `copy /b` to the local shared printer queue
   // Example: copy /b "C:\Temp\pos-123.bin" "\\127.0.0.1\XP80"
   await new Promise<void>((resolve, reject) => {
-    const p = spawn("cmd.exe", ["/c", "copy", "/b", tmp, `\\\\127.0.0.1\\${shareName}`], {
+    const printerPath = `\\\\${process.env.PRINTER_HOST || '127.0.0.1'}\\${shareName}`;
+    console.log("PRINT PATH:", printerPath);
+    const p = spawn("cmd.exe", ["/c", "copy", "/b", tmp, printerPath], {
       windowsHide: true,
     });
     let stderr = "";
