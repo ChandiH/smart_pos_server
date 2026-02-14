@@ -3,52 +3,72 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 INSERT INTO access_type (access_type_id, access_name)
 VALUES
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1), 'configuration'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2), 'report'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3), 'employee'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4), 'employeeDetails'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 5), 'addEmployee'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 6), 'inventory'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 7), 'productForm'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 8), 'stockUpdateForm'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 9), 'productCatalog'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 10), 'customerForm'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 11), 'customers'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 12), 'supplierForm'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 13), 'supplier'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 14), 'supplierDetails'),
-  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 15), 'addBranch');
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:report:view'), 'report:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:cashier:view'), 'cashier:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:view'), 'inventory:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:manage'), 'inventory:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:manage'), 'customers:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:view'), 'customers:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:manage'), 'suppliers:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:view'), 'suppliers:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:roles:manage'), 'roles:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:view'), 'employee:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:manage'), 'employee:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:configuration:manage'), 'configuration:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:view'), 'branch:view'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:manage'), 'branch:manage'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:profile:view'), 'profile:view');
 
-INSERT INTO user_role (role_id, role_name, role_desc,user_access)
+INSERT INTO user_role (role_id, role_name, role_desc)
 VALUES
-    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), 'Owner', 'Responsible for overall management and ownership of the supermarket.',
-      ARRAY[
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
-      ]),
-    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), 'Finance Manager', 'Responsible for financial reporting and analysis.',
-      ARRAY[
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
-      ]),
-    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), 'Branch Manager', 'Manages the day-to-day operations of a specific branch.',
-      ARRAY[
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
-      ]),
-    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), 'Cashier', 'Handles customer transactions at the checkout counter.',
-      ARRAY[
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
-        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
-      ]);
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), 'Owner', 'Responsible for overall management and ownership of the supermarket.'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), 'Finance Manager', 'Responsible for financial reporting and analysis.'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), 'Branch Manager', 'Manages the day-to-day operations of a specific branch.'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), 'Cashier', 'Handles customer transactions at the checkout counter.');
+
+INSERT INTO user_role_access (role_id, access_type_id)
+VALUES
+    -- Owner (all access)
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:report:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:cashier:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:roles:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:configuration:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:profile:view')),
+    -- Finance Manager
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:report:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:profile:view')),
+    -- Branch Manager
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:report:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:suppliers:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:employee:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:branch:manage')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:profile:view')),
+    -- Cashier
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:cashier:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:inventory:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:customers:view')),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:profile:view'));
 
 -- INSERT INTO payment_method (payment_method_id, payment_method_name)
 -- VALUES 

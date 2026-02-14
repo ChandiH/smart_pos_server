@@ -29,7 +29,15 @@ export const getEmployee = async (id: string) => {
       user_role: {
         select: {
           role_name: true,
-          user_access: true,
+          user_role_access: {
+            select: {
+              access_type: {
+                select: {
+                  access_name: true,
+                },
+              },
+            },
+          },
         },
       },
     },

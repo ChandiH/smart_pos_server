@@ -5,14 +5,19 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE TABLE user_role (
     role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_name VARCHAR(100) NOT NULL UNIQUE,
-    role_desc VARCHAR(200) NOT NULL,
-    user_access UUID[] NOT NULL
+    role_desc VARCHAR(200) NOT NULL
 );
 
 -- Access type
 CREATE TABLE access_type (
     access_type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     access_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE user_role_access (
+    role_id UUID NOT NULL,
+    access_type_id UUID NOT NULL,
+    PRIMARY KEY (role_id, access_type_id)
 );
 
 -- Category
@@ -236,3 +241,14 @@ ALTER TABLE working_hour
     ADD CONSTRAINT fk_updated_by
     FOREIGN KEY (updated_by)
     REFERENCES employee(employee_id);
+
+ALTER TABLE user_role_access
+    ADD CONSTRAINT fk_user_role_access_role
+    FOREIGN KEY (role_id)
+    REFERENCES user_role (role_id)
+    ON DELETE CASCADE;
+ALTER TABLE user_role_access
+    ADD CONSTRAINT fk_user_role_access_access
+    FOREIGN KEY (access_type_id)
+    REFERENCES access_type (access_type_id)
+    ON DELETE CASCADE;

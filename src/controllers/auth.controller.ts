@@ -49,6 +49,8 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
       return res.status(500).json({ error: "Internal server error" });
     }
 
+    const scope = employee.user_role.user_role_access.map((access) => access.access_type.access_name);
+
     const token = jwt.sign(
       {
         employee_username: username,
@@ -59,7 +61,7 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
         role_id: employee.role_id,
         employee_image: employee.employee_image,
         role_name: employee.user_role.role_name,
-        user_access: employee.user_role.user_access,
+        scope,
         employee_email: employee.employee_email,
         employee_phone: employee.employee_phone,
       },
