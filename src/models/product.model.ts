@@ -1,5 +1,5 @@
-import { prisma } from "../config/prisma";
-import { product, product_variants, supplier } from "../prisma";
+import prisma from "../config/prisma";
+import { product, product_variants, supplier } from "@prisma/client";
 
 export const getProducts = async () => {
   return await prisma.product.findMany({

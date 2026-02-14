@@ -118,3 +118,12 @@ export async function sendRawToWindowsQueue(buf: Buffer) {
     });
   });
 }
+
+export async function sendDrawerPulse(): Promise<void> {
+  const pulse = Buffer.from([0x1b, 0x70, 0x00, 0x32, 0x32]); // ESC p, pin 0, 50ms
+
+  // Some printers need 1 line feed after kick
+  const buf = Buffer.concat([pulse, Buffer.from("\n")]);
+
+  return sendRawToWindowsQueue(buf);
+}

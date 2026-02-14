@@ -15,7 +15,7 @@ import {
   updateProductVariants,
 } from "../models/product.model";
 import { getInventoryByProductId } from "../models/inventory.model";
-import { product, product_variants } from "../prisma";
+import { product, product_variants } from "@prisma/client";
 
 type AddProductVariantsBody = {
   variants: Omit<product_variants, "variant_id">[];

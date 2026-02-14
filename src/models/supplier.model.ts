@@ -1,5 +1,5 @@
 import prisma from "../config/prisma";
-import { supplier } from "../prisma";
+import { supplier } from "@prisma/client";
 
 export const getSuppliers = async () => {
   return await prisma.supplier.findMany({

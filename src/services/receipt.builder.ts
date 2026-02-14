@@ -344,9 +344,8 @@ export async function buildReceiptFromSale(salesData: any): Promise<IPrintPayloa
 
   // Discount big (if any)
   if (discountTotal > 0) {
-    lines.push({ raw: Buffer.from([0x1B, 0x21, 0x28]) } as any); // select size
-    pushLine(lines, `DISCOUNT : ${fmt(discountTotal)}`, { align: "C" });
-    lines.push({ raw: Buffer.from([0x1B, 0x21, 0x00]) } as any); // reset
+    lines.push({ hr: true } as any);
+    pushLine(lines, `ඔබ ලැබූ ලාභය : ${fmt(discountTotal)}`, {  align: "C", bold: true });
     lines.push({ hr: true } as any);
   }
 
@@ -357,7 +356,7 @@ export async function buildReceiptFromSale(salesData: any): Promise<IPrintPayloa
   return {
     lines,
     cut: true,
-    openDrawer: paymentMethod === "cash",
+    openDrawer: false,
     codepage: "cp437",
   };
 }

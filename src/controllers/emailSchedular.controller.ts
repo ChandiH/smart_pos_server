@@ -18,14 +18,14 @@ async function generateDBBackup(REPORTS_DIR: string): Promise<string> {
 			const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 			const backupFilePath = path.join(REPORTS_DIR, `POS_Backup_${timestamp}.sql`);
 
-			const nativeCommand = `pg_dump ${DATABASE_URL} -f "${backupFilePath}"`;
-			const dockerCommand = `docker exec -i postgres-db pg_dump -U postgres smart_pos_db`;
+			const nativeCommand = `pg_dump ${DATABASE_URL}`;
+			const dockerCommand = `docker exec postgres-db pg_dump -U postgres smart_pos_db`;
 			exec(DATABASE_DOCKER ? dockerCommand : nativeCommand, { maxBuffer: 1024 * 1024 * 500 }, (error, stdout, stderr) => {
 				if (error) {
 					return reject(error);
 				}
 				const fs = require('fs');
-				fs.writeFileSync(backupFilePath, stdout);  // write container output to host file
+				fs.writeFileSync(backupFilePath, stdout, "utf8");  // write container output to host file
 				resolve(backupFilePath);
 			});
 		} catch (err) {
