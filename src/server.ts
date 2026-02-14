@@ -49,6 +49,11 @@ app.use(logRequest);
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/static/image", express.static(path.join(__dirname, "public/image")));
+app.get("/health", (_req, res) => res.json({ ok: true }));
+app.use("/auth", authRouter);
+
+app.use(verifyToken);
+
 app.post("/upload", upload.single("file"), (req, res) => {
   return res.status(200).json({ message: "File uploaded successfully!", file: req.file });
 });
@@ -56,14 +61,11 @@ app.post("/upload-multiple", upload.array("files"), (req, res) => {
   return res.status(200).json({ message: "Files uploaded successfully!", files: req.files });
 });
 
-app.get("/health", (_req, res) => res.json({ ok: true }));
 app.use("/print", printerRouter);
 app.use("/email", emailSchedulerRouter);
-app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/employee", upload.single("file"), employeeRouter);
 app.use("/product", upload.array("files"), productRouter);
-app.use("/customer", verifyToken, customerRouter);
 
 simpleRoutes.forEach(([path, router]) => {
   app.use(path, router);

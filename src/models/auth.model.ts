@@ -68,6 +68,3 @@ export const resetPassword = async (user_id: string, password: string) => {
   });
 };
 
-export const checkPassword = async (username: string, password: string) => {
-  return await prisma.$queryRaw`SELECT 1 FROM user_credentials WHERE username = ${username} AND password = crypt(${password}, password) LIMIT 1`;
-};

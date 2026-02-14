@@ -1,17 +1,23 @@
 import type { RequestHandler } from "express";
 import jwt, { type JwtPayload, type Secret } from "jsonwebtoken";
-import { SECRET_KEY } from "../config/envs";
+import { JWT_AUDIENCE, JWT_ISSUER, SECRET_KEY } from "../config/envs";
 
 const extractToken = (tokenHeader: string | string[] | undefined): string | null => {
-  if (!tokenHeader) {
-    return null;
-  }
+  if (!tokenHeader) return null;
 
   return Array.isArray(tokenHeader) ? tokenHeader[0] ?? null : tokenHeader;
 };
 
+const extractBearerToken = (authHeader: string | string[] | undefined): string | null => {
+  const header = extractToken(authHeader);
+  if (!header) return null;
+  const [scheme, token] = header.split(" ");
+  if (scheme?.toLowerCase() !== "bearer" || !token) return null;
+  return token;
+};
+
 export const verifyToken: RequestHandler = (req, res, next) => {
-  const token = extractToken(req.headers["x-access-token"]);
+  const token = extractBearerToken(req.headers.authorization) ?? extractToken(req.headers["x-access-token"]);
 
   if (!token) {
     return res.status(403).json({
@@ -26,14 +32,14 @@ export const verifyToken: RequestHandler = (req, res, next) => {
     });
   }
 
-  jwt.verify(token, SECRET_KEY as Secret, (err, decoded) => {
+  jwt.verify(token, SECRET_KEY as Secret, { issuer: JWT_ISSUER, audience: JWT_AUDIENCE }, (err, decoded) => {
     if (err) {
       return res.status(401).json({
         message: "Unauthorized",
       });
     }
 
-    console.log("Accessing the server", decoded as JwtPayload | string);
+    res.locals.user = decoded as JwtPayload | string;
     next();
   });
 };

@@ -2,7 +2,10 @@ import path from "path";
 import fs from "fs";
 
 export const SERVER_PORT = Number(process.env.PORT) || 4000;
-export const SECRET_KEY = process.env.SECRET_KEY || "your_jwt_secret";
+export const SECRET_KEY = process.env.SECRET_KEY || "";
+export const JWT_ISSUER = process.env.JWT_ISSUER || "smart-pos";
+export const JWT_AUDIENCE = process.env.JWT_AUDIENCE || "smart-pos-client";
+export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "8h";
 
 export const DATABASE_URL = process.env.DATABASE_URL || "";
 export const DATABASE_DOCKER = process.env.DATABASE_CONTAINER === "docker";

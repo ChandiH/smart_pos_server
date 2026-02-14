@@ -1,15 +1,9 @@
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import {
-  checkPassword,
-  getUserCredentialsByUsername,
-  isUsernameTaken,
-  register,
-  resetPassword,
-} from "../models/auth.model";
+import { getUserCredentialsByUsername, isUsernameTaken, register, resetPassword } from "../models/auth.model";
 import { getEmployee } from "../models/employee.model";
 import { verifyPassword } from "../utils/hash";
-import { SECRET_KEY } from "../config/envs";
+import { JWT_AUDIENCE, JWT_EXPIRES_IN, JWT_ISSUER, SECRET_KEY } from "../config/envs";
 
 interface LoginBody {
   username: string;
@@ -33,7 +27,6 @@ interface ResetPasswordBody {
 
 export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
 
   try {
     const user_credentials = await getUserCredentialsByUsername(username);
@@ -73,10 +66,13 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
       SECRET_KEY,
       {
         algorithm: "HS256",
+        expiresIn: JWT_EXPIRES_IN,
+        issuer: JWT_ISSUER,
+        audience: JWT_AUDIENCE,
       }
     );
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, token_type: "Bearer", expires_in: JWT_EXPIRES_IN });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error });
@@ -147,7 +143,7 @@ export const ResetPasswordHandler: RequestHandler<unknown, unknown, ResetPasswor
       });
     }
 
-    const isPasswordSame = await checkPassword(username, newPassword);
+    const isPasswordSame = await verifyPassword(newPassword, userCredentials.password);
     if (isPasswordSame) {
       return res.status(400).json({ error: { newPassword: "Password same as previous." } });
     }
