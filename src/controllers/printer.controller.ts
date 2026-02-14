@@ -2,6 +2,7 @@
 import type { RequestHandler } from "express";
 import { buildEscposBuffer, sendRawToWindowsQueue, IPrintPayload, PrintPayload } from "../services/printer.service";
 import { buildReceiptFromSale } from "../services/receipt.builder";
+import { sendDrawerPulse } from "../services/drawer.service";
 import { PRINTER_SHARE_NAME } from "../config/envs";
 
 const _linePrinter = async ({ lines, cut, openDrawer, codepage }: IPrintPayload) => {
@@ -47,5 +48,17 @@ export const PrintReciept: RequestHandler = async (req, res) => {
   } catch (e: any) {
     console.log("Print Error:", e);
     return res.status(400).json({ ok: false, error: e.message });
+  }
+};
+
+export const OpenDrawerOnly: RequestHandler = async (_req, res) => {
+  try {
+    console.log("[drawer] Sending ESC/P pulse...");
+    await sendDrawerPulse();
+
+    return res.json({ ok: true, drawer: "opened" });
+  } catch (e: any) {
+    console.error("Drawer pulse error:", e);
+    return res.status(500).json({ ok: false, error: e.message });
   }
 };

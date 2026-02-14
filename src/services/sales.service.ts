@@ -1,4 +1,4 @@
-import { Prisma } from "../prisma";
+import { Prisma } from "@prisma/client";
 import prisma from "../config/prisma";
 
 type DecimalLike = Prisma.Decimal | number | string;

@@ -7,7 +7,7 @@ import {
   isPhoneNumberExist,
   updateSupplier,
 } from "../models/supplier.model";
-import { supplier } from "../prisma";
+import { supplier } from "@prisma/client";
 
 type SupplierBody = Omit<supplier, "supplier_id">;
 

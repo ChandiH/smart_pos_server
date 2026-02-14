@@ -5,3 +5,4 @@ onlyBuiltDependencies:
   - canvas
   - esbuild
   - prisma
+  - canvas
