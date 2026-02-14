@@ -31,7 +31,7 @@ const simpleRoutes: Array<[string, Router]> = [
 ];
 
 // middleware
-import { logRequest } from "./middleware/log";
+import { logErrors, logRequest } from "./middleware/log";
 import { verifyToken } from "./middleware/authJWT";
 import upload from "./middleware/upload";
 import prisma from "./config/prisma";
@@ -70,6 +70,8 @@ app.use("/product", upload.array("files"), productRouter);
 simpleRoutes.forEach(([path, router]) => {
   app.use(path, router);
 });
+
+app.use(logErrors);
 
 prisma
   .$connect()
