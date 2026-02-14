@@ -6,7 +6,7 @@ export const getDailySalesForbranch = async (year_month: string, branch_id: stri
       TO_CHAR(created_at::date, 'YYYY-MM-DD') AS day,
       SUM(total_amount) AS total_sales
     FROM sales_history
-    WHERE branch_id = ${branch_id}
+    WHERE branch_id = ${branch_id}::uuid
       AND TO_CHAR(created_at, 'YYYY-MM') = ${year_month}
     GROUP BY TO_CHAR(created_at::date, 'YYYY-MM-DD')
     ORDER BY day
@@ -29,7 +29,7 @@ export const getSalesView = async (id: string) => {
     LEFT JOIN branch b ON b.branch_id = s.branch_id
     LEFT JOIN employee e ON s.cashier_id = e.employee_id
     WHERE TO_CHAR(s.created_at, 'YYYY-MM-DD') = TO_CHAR(now()::date, 'YYYY-MM-DD')
-      AND b.branch_id = ${id}
+      AND b.branch_id = ${id}::uuid
     ORDER BY s.created_at DESC
   `;
 };
@@ -91,56 +91,78 @@ export const getMonths = async () => {
 };
 
 export const getTopSellingProduct = async () => {
-  return await prisma.$queryRaw`
-    WITH current_month_sales AS (
-      SELECT
-        p.product_name,
-        SUM(
-          CASE
-            WHEN DATE_TRUNC('month', c.created_at::timestamp) = DATE_TRUNC('month', CURRENT_DATE::timestamp)
-            THEN c.quantity
-            ELSE 0
-          END
-        ) AS current_month_count
-      FROM
-        cart c
-        LEFT JOIN product p ON p.product_id = c.product_id
-      WHERE
-        DATE_TRUNC('month', c.created_at::timestamp) = DATE_TRUNC('month', CURRENT_DATE::timestamp)
-      GROUP BY
-        p.product_name
-      ORDER BY
-        current_month_count DESC
-      LIMIT 5
-      
-    ),
-    last_month_sales AS (
-      SELECT
-        p.product_name,
-        SUM(
-          CASE
-            WHEN DATE_TRUNC('month', c.created_at::timestamp) =
-              DATE_TRUNC('month', (CURRENT_DATE - INTERVAL '1 month')::timestamp)
-            THEN c.quantity
-            ELSE 0
-          END
-        ) AS last_month_count
-      FROM
-        cart c
-        LEFT JOIN product p ON p.product_id = c.product_id
-      WHERE
-        DATE_TRUNC('month', c.created_at::timestamp) =
-          DATE_TRUNC('month', (CURRENT_DATE - INTERVAL '1 month')::timestamp)
-      GROUP BY
-        p.product_name
-    )
-    SELECT
-      cm.product_name,
-      cm.current_month_count,
-      COALESCE(lm.last_month_count, 0) AS last_month_count
-    FROM
-      current_month_sales cm
-      LEFT JOIN last_month_sales lm ON cm.product_name = lm.product_name
-    ORDER BY
-      cm.current_month_count DESC;`;
+  const getMonthRange = (date: Date) => {
+    const start = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
+    const end = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1));
+    return { start, end };
+  };
+
+  const now = new Date();
+  const currentRange = getMonthRange(now);
+  const lastMonthAnchor = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+  const lastRange = getMonthRange(lastMonthAnchor);
+
+  const currentMonth = await prisma.cart.groupBy({
+    by: ["product_id"],
+    where: {
+      created_at: {
+        gte: currentRange.start,
+        lt: currentRange.end,
+      },
+    },
+    _sum: {
+      quantity: true,
+    },
+    orderBy: {
+      _sum: {
+        quantity: "desc",
+      },
+    },
+    take: 5,
+  });
+
+  if (!currentMonth.length) {
+    return [];
+  }
+
+  const productIds = currentMonth.map((entry) => entry.product_id);
+  const products = await prisma.product.findMany({
+    where: {
+      product_id: {
+        in: productIds,
+      },
+    },
+    select: {
+      product_id: true,
+      product_name: true,
+    },
+  });
+
+  const productNameById = new Map(products.map((product) => [product.product_id, product.product_name]));
+
+  const lastMonth = await prisma.cart.groupBy({
+    by: ["product_id"],
+    where: {
+      product_id: {
+        in: productIds,
+      },
+      created_at: {
+        gte: lastRange.start,
+        lt: lastRange.end,
+      },
+    },
+    _sum: {
+      quantity: true,
+    },
+  });
+
+  const lastMonthById = new Map(
+    lastMonth.map((entry) => [entry.product_id, Number(entry._sum.quantity ?? 0)])
+  );
+
+  return currentMonth.map((entry) => ({
+    product_name: productNameById.get(entry.product_id) ?? null,
+    current_month_count: Number(entry._sum.quantity ?? 0),
+    last_month_count: lastMonthById.get(entry.product_id) ?? 0,
+  }));
 };
