@@ -6,33 +6,33 @@ DECLARE
     items jsonb;
     item jsonb;
 	
-    order_number integer;
+    order_number uuid;
     branches_id uuid;
 BEGIN
     order_data := sales_data->'order';
     INSERT INTO sales_history (order_id, customer_id, cashier_id, total_amount, profit, payment_method_id, reference_id,
     branch_id,rewards_points,product_count)
-    SELECT
-        (MAX(order_id) + 1),
-        (order_data->>'customer_id')::integer,
-        (order_data->>'cashier_id')::integer,
+    VALUES (
+        gen_random_uuid(),
+        NULLIF(order_data->>'customer_id', '')::uuid,
+        (order_data->>'cashier_id')::uuid,
         (order_data->>'total_amount')::numeric,
         (order_data->>'profit')::numeric,
-        (order_data->>'payment_method_id')::integer,
+        (order_data->>'payment_method_id')::uuid,
         (order_data->>'reference_id'),
         (order_data->>'branch_id')::uuid,
         (order_data->>'rewards_points')::numeric,
         (order_data->>'product_count')::integer
-    FROM sales_history
+    )
     RETURNING order_id INTO order_number;
 
-    IF (order_data->>'customer_id')::integer IS NOT NULL THEN
+    IF (order_data->>'customer_id')::uuid IS NOT NULL THEN
         UPDATE customer
         SET visit_count = visit_count + 1
-        WHERE customer_id = (order_data->>'customer_id')::integer;
+        WHERE customer_id = (order_data->>'customer_id')::uuid;
         UPDATE customer
         SET rewards_points = rewards_points +(order_data->>'rewards_points')::numeric
-        WHERE customer_id =(order_data->>'customer_id')::integer;
+        WHERE customer_id =(order_data->>'customer_id')::uuid;
     END IF;
 
     items := sales_data->'products';
@@ -116,7 +116,7 @@ $$ LANGUAGE plpgsql;
 --Sales History Today for current user
 CREATE OR REPLACE FUNCTION get_sales_data_by_branch(id uuid)
 RETURNS TABLE (
-    order_id integer,
+    order_id uuid,
     customer varchar(255),
     cashier_name  varchar(255),
     branch_name  varchar(255),
@@ -155,8 +155,8 @@ BEGIN
 	   
      where to_char(s.created_at, 'YYYY-MM-DD') = to_char(now()::date, 'YYYY-MM-DD')  
      and b.branch_id = id
-   order by 
-   s.order_id desc;
+    order by 
+    s.created_at desc;
 END;
 $$ LANGUAGE plpgsql;
 

@@ -6,7 +6,7 @@ export const getUserRoles = async () => {
 
 export const getUserRole = async (role_id: string) => {
   return await prisma.user_role.findUnique({
-    where: { role_id: Number(role_id) },
+    where: { role_id },
   });
 };
 
@@ -20,14 +20,14 @@ export const getAccessEnum = async (access_name: string) => {
   });
 };
 
-export const updateUserAccess = async (role_id: number, access: number[]) => {
+export const updateUserAccess = async (role_id: string, access: string[]) => {
   return await prisma.user_role.update({
     where: { role_id },
     data: { user_access: access },
   });
 };
 
-export const addUserRole = async (role_name: string, role_desc: string, user_access: number[]) => {
+export const addUserRole = async (role_name: string, role_desc: string, user_access: string[]) => {
   return await prisma.user_role.create({
     data: {
       role_name,
@@ -39,6 +39,6 @@ export const addUserRole = async (role_name: string, role_desc: string, user_acc
 
 export const deleteUserRole = async (role_id: string) => {
   return await prisma.user_role.delete({
-    where: { role_id: Number(role_id) },
+    where: { role_id },
   });
 };

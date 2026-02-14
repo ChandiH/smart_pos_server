@@ -3,10 +3,11 @@ import prisma from "../config/prisma";
 
 type DecimalLike = Prisma.Decimal | number | string;
 type NumberLike = number | string | null | undefined;
+type StringLike = string | null | undefined;
 
 export interface SalesOrderDetails {
-  customer_id?: NumberLike;
-  cashier_id: number | string;
+  customer_id?: StringLike;
+  cashier_id: string;
   total_amount: DecimalLike;
   payment_method: string | null;
   reference: string | null;
@@ -63,7 +64,26 @@ const toOptionalNumber = (value: NumberLike): number | null => {
   return numericValue;
 };
 
-export const insertSalesData = async (salesData: InsertSalesPayload): Promise<number> => {
+const toRequiredString = (value: StringLike, fieldName: string): string => {
+  if (value === null || value === undefined || (typeof value === "string" ? value.trim() === "" : true)) {
+    throw new Error(`Missing required field ${fieldName}`);
+  }
+
+  return value;
+};
+
+const toOptionalString = (value: StringLike): string | null => {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (typeof value === "string" && value.trim() === "") {
+    throw new Error("Invalid empty string provided");
+  }
+
+  return value;
+};
+
+export const insertSalesData = async (salesData: InsertSalesPayload): Promise<string> => {
   const { order, products } = salesData;
 
   if (!order) {
@@ -78,8 +98,8 @@ export const insertSalesData = async (salesData: InsertSalesPayload): Promise<nu
     throw new Error("Order branch_id is required");
   }
 
-  const cashierId = toRequiredNumber(order.cashier_id, "order.cashier_id");
-  const customerId = toOptionalNumber(order.customer_id);
+  const cashierId = toRequiredString(order.cashier_id, "order.cashier_id");
+  const customerId = toOptionalString(order.customer_id);
   const paymentMethod = order.payment_method;
   const totalAmount = toDecimal(order.total_amount);
   const rewardsPoints = toDecimal(order.rewards_points ?? 0);

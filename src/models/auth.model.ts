@@ -4,10 +4,10 @@ import { hashPassword } from "../utils/hash";
 export type RegisterPayload = {
   employee_name: string;
   employee_userName: string;
-  role_id: number;
+  role_id: string;
   employee_email: string;
   employee_phone: string;
-  branch_id: number;
+  branch_id: string;
   employee_image: string;
 };
 
@@ -33,7 +33,7 @@ export const register = async ({
         role_id,
         employee_email,
         employee_phone,
-        branch_id: branch_id.toString(),
+        branch_id,
         employee_image,
       },
     });
@@ -60,7 +60,7 @@ export const isUsernameTaken = async (username: string) => {
   );
 };
 
-export const resetPassword = async (user_id: number, password: string) => {
+export const resetPassword = async (user_id: string, password: string) => {
   const hashedPassword = await hashPassword(password);
   return await prisma.user_credentials.updateMany({
     where: { user_id },

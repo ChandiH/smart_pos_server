@@ -17,7 +17,7 @@ export const getEmployees = async () => {
   });
 };
 
-export const getEmployee = async (id: number) => {
+export const getEmployee = async (id: string) => {
   return await prisma.employee.findUnique({
     where: { employee_id: id },
     include: {
@@ -51,20 +51,20 @@ export const getEmployeesByBranchID = async (branch_id: string) => {
 
 export const getEmployeesByRole = async (role_id: string) => {
   return await prisma.employee.findMany({
-    where: { role_id: Number(role_id) },
+    where: { role_id },
   });
 };
 
 export const updateEmployee = async (
   employee_name: string,
-  role_id: number,
+  role_id: string,
   employee_email: string,
   employee_phone: string,
   branch_id: string,
   id: string
 ) => {
   return await prisma.employee.update({
-    where: { employee_id: Number(id) },
+    where: { employee_id: id },
     data: {
       employee_name,
       role_id,
@@ -77,7 +77,7 @@ export const updateEmployee = async (
 
 export const updateImage = async (employee_id: string, imageURL: string) => {
   return await prisma.employee.update({
-    where: { employee_id: Number(employee_id) },
+    where: { employee_id },
     data: {
       employee_image: imageURL,
     },

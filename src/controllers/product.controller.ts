@@ -180,7 +180,7 @@ export const GetProductsWithCategory: RequestHandler = async (_req, res) => {
 
 export const GetProductsBySupplierId: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  return await getProductsBySupplierId(Number(id))
+  return await getProductsBySupplierId(id)
     .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };

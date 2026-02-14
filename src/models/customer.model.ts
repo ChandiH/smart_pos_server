@@ -6,7 +6,7 @@ export const getCustomers = () => {
 
 export const getCustomer = (id: string) => {
   return prisma.customer.findUnique({
-    where: { customer_id: Number(id) },
+    where: { customer_id: id },
   });
 };
 
@@ -34,7 +34,7 @@ export const updateCustomer = (
   customer_address: string
 ) => {
   return prisma.customer.update({
-    where: { customer_id: Number(id) },
+    where: { customer_id: id },
     data: {
       customer_name,
       customer_email,

@@ -1,29 +1,54 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 INSERT INTO access_type (access_type_id, access_name)
 VALUES
-  (1, 'configuration'),
-  (2, 'report'),
-  (3, 'employee'),
-  (4, 'employeeDetails'),
-  (5, 'addEmployee'),
-  (6, 'inventory'),
-  (7, 'productForm'),
-  (8, 'stockUpdateForm'),
-  (9, 'productCatalog'),
-  (10, 'customerForm'),
-  (11, 'customers'),
-  (12, 'supplierForm'),
-  (13, 'supplier'),
-  (14, 'supplierDetails'),
-  (15, 'addBranch');
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1), 'configuration'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2), 'report'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3), 'employee'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4), 'employeeDetails'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 5), 'addEmployee'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 6), 'inventory'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 7), 'productForm'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 8), 'stockUpdateForm'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 9), 'productCatalog'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 10), 'customerForm'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 11), 'customers'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 12), 'supplierForm'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 13), 'supplier'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 14), 'supplierDetails'),
+  (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 15), 'addBranch');
 
 INSERT INTO user_role (role_id, role_name, role_desc,user_access)
 VALUES
-    (1, 'Owner', 'Responsible for overall management and ownership of the supermarket.','{1,2,3,4}'),
-    (2, 'Finance Manager', 'Responsible for financial reporting and analysis.', '{1,2,3,4}'),
-    (3, 'Branch Manager', 'Manages the day-to-day operations of a specific branch.','{1,2,3,4}'),
-    (4, 'Cashier', 'Handles customer transactions at the checkout counter.','{1,2,3,4}');
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), 'Owner', 'Responsible for overall management and ownership of the supermarket.',
+      ARRAY[
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
+      ]),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), 'Finance Manager', 'Responsible for financial reporting and analysis.',
+      ARRAY[
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
+      ]),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), 'Branch Manager', 'Manages the day-to-day operations of a specific branch.',
+      ARRAY[
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
+      ]),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), 'Cashier', 'Handles customer transactions at the checkout counter.',
+      ARRAY[
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 1),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 2),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 3),
+        uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'access_type:' || 4)
+      ]);
 
 -- INSERT INTO payment_method (payment_method_id, payment_method_name)
 -- VALUES 
@@ -34,16 +59,16 @@ VALUES
 
 INSERT INTO discount (discount_id, discount_name , discount_desc , discount_percentage)
 VALUES
-    (1, 'Summer Sale', 'Get discounts on various summer products', 15.00),
-    (2, 'Back to School', 'Special discounts on school supplies', 10.50),
-    (3, 'Holiday Season', 'Festive discounts for holiday shoppers', 20.00),
-    (4, 'Weekend Special', 'Limited-time weekend discounts', 12.75),
-    (5, 'New Year Clearance', 'Clearance sale for old inventory', 30.25),
-    (6, 'Valentine''s Day', 'Discounts on gifts for your loved ones', 14.00),
-    (7, 'Spring Cleaning', 'Save on cleaning supplies', 18.50),
-    (8, 'Easter Sale', 'Special offers for Easter weekend', 10.00),
-    (9, 'Black Friday', 'Biggest discounts of the year on Black Friday', 35.00),
-    (10, 'Cyber Monday', 'Online-only deals for Cyber Monday', 25.50);
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 1), 'Summer Sale', 'Get discounts on various summer products', 15.00),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 2), 'Back to School', 'Special discounts on school supplies', 10.50),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 3), 'Holiday Season', 'Festive discounts for holiday shoppers', 20.00),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 4), 'Weekend Special', 'Limited-time weekend discounts', 12.75),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 5), 'New Year Clearance', 'Clearance sale for old inventory', 30.25),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 6), 'Valentine''s Day', 'Discounts on gifts for your loved ones', 14.00),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 7), 'Spring Cleaning', 'Save on cleaning supplies', 18.50),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 8), 'Easter Sale', 'Special offers for Easter weekend', 10.00),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 9), 'Black Friday', 'Biggest discounts of the year on Black Friday', 35.00),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'discount:' || 10), 'Cyber Monday', 'Online-only deals for Cyber Monday', 25.50);
 
 INSERT INTO branch (branch_id, branch_city, branch_address, branch_phone, branch_email)
 VALUES
@@ -55,118 +80,118 @@ VALUES
 
 INSERT INTO supplier (supplier_id, supplier_name ,supplier_email ,supplier_phone ,supplier_address )
 VALUES
-    (1, 'Mega Suppliers Inc.', 'mega@suppliers.lk', '666765678', '345 Cinnamon St, Colombo 02'),
-    (2, 'Global Imports Co.', 'info@globalico.lk', '911234567', '789 Ruby St, Ratnapura 70000'),
-    (3, 'Superior Distributors Ltd.','info@sdistributors.lk', '444555666', '567 Timber St, Baduraliya 80200'),
-    (4, 'Prime Wholesale Supplies', 'sales@prime.lk', '333444555', '432 Cocoa St, Matale 80050'),
-    (5, 'Best Buy Traders', 'info@bestbuyt.lk', '888999000', '876 Tea Gardens, Nuwara Eliya 22250'),
-    (6,  'Quality Goods Exporters', 'info@qgexporters.lk', '777999888', '654 Timber St, Kalutara 12000');
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 1), 'Mega Suppliers Inc.', 'mega@suppliers.lk', '666765678', '345 Cinnamon St, Colombo 02'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 2), 'Global Imports Co.', 'info@globalico.lk', '911234567', '789 Ruby St, Ratnapura 70000'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 3), 'Superior Distributors Ltd.','info@sdistributors.lk', '444555666', '567 Timber St, Baduraliya 80200'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 4), 'Prime Wholesale Supplies', 'sales@prime.lk', '333444555', '432 Cocoa St, Matale 80050'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 5), 'Best Buy Traders', 'info@bestbuyt.lk', '888999000', '876 Tea Gardens, Nuwara Eliya 22250'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 6),  'Quality Goods Exporters', 'info@qgexporters.lk', '777999888', '654 Timber St, Kalutara 12000');
 
 
 INSERT INTO employee (employee_id, employee_name, role_id, hired_date, employee_email, employee_phone, branch_id, employee_image)
 VALUES
-    (1, 'Somesh Chandimal', 1, '2022-01-15', 'somesh@example.com', '112233445', '45ba25bb-eab9-461f-a93b-559e4e8c74e4','employee-image-placeholder.jpg'),
-    (2, 'John Doe',  2, '2022-05-15', 'johndoe@example.com', '112243445', '45ba25bb-eab9-461f-a93b-559e4e8c74e4','employee-image-placeholder.jpg'),
-    (3, 'Jane Smith',  2, '2021-12-10', 'janesmith@example.com', '998877665', 'aeda1973-4148-474a-8153-c199958a59c6','employee-image-placeholder.jpg'),
-    (4, 'Robert Johnson',  2, '2023-02-28', 'robertjohnson@example.com', '777766655', 'f6fed7de-dba7-4988-b73b-b775c7577bc2','employee-image-placeholder.jpg'),
-    (5, 'Mary Wilson', 2, '2022-09-30', 'marywilson@example.com', '333444555', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
-    (6, 'Michael Lee',  3, '2020-07-05', 'michaellee@example.com', '222555444', '45ba25bb-eab9-461f-a93b-559e4e8c74e4' , 'employee-image-placeholder.jpg'),
-    (7, 'Lisa Garcia', 3, '2021-10-20', 'lisagarcia@example.com', '666555444', 'aeda1973-4148-474a-8153-c199958a59c6' , 'employee-image-placeholder.jpg'),
-    (8, 'David Martinez',  3, '2022-04-15', 'davidmartinez@example.com', '777444555', 'f6fed7de-dba7-4988-b73b-b775c7577bc2' , 'employee-image-placeholder.jpg'),
-    (9, 'Sarah Brown', 3, '2021-03-25', 'sarahbrown@example.com', '555444333', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
-    (10, 'William Smith',  4, '2022-01-05', 'williamsmith@example.com', '777888999', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
-    (11, 'Karen Davis',  4, '2023-06-30', 'karendavis@example.com', '444555666', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
-    (12, 'James Taylor',  4, '2022-08-15', 'jamestaylor@example.com', '555747888', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
-    (13, 'Jennifer Clark',  4, '2021-11-10', 'jenniferclark@example.com', '999888777', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
-    (14, 'Joseph Johnson', 4, '2023-01-15', 'josephjohnson@example.com', '555666777', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
-    (15, 'Nancy Moore',  4, '2021-04-20', 'nancymoore@example.com', '444666555', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
-    (16, 'Robert White',  4, '2020-11-05', 'robertwhite@example.com', '333777666', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
-    (17, 'Linda Harris', 4, '2022-02-28', 'lindaharris@example.com', '222777888', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
-    (18, 'John Miller',  4, '2023-03-10', 'johnmiller@example.com', '444555444', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
-    (19, 'Patricia Garcia',  4, '2022-07-01', 'patriciagarcia@example.com', '777555444', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
-    (20, 'Robert Brown',  4, '2020-12-25', 'robertbrown@example.com', '666444555', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg');
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 1), 'Somesh Chandimal', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 1), '2022-01-15', 'somesh@example.com', '112233445', '45ba25bb-eab9-461f-a93b-559e4e8c74e4','employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 2), 'John Doe',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), '2022-05-15', 'johndoe@example.com', '112243445', '45ba25bb-eab9-461f-a93b-559e4e8c74e4','employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 3), 'Jane Smith',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), '2021-12-10', 'janesmith@example.com', '998877665', 'aeda1973-4148-474a-8153-c199958a59c6','employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 4), 'Robert Johnson',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), '2023-02-28', 'robertjohnson@example.com', '777766655', 'f6fed7de-dba7-4988-b73b-b775c7577bc2','employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 5), 'Mary Wilson', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 2), '2022-09-30', 'marywilson@example.com', '333444555', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 6), 'Michael Lee',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), '2020-07-05', 'michaellee@example.com', '222555444', '45ba25bb-eab9-461f-a93b-559e4e8c74e4' , 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 7), 'Lisa Garcia', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), '2021-10-20', 'lisagarcia@example.com', '666555444', 'aeda1973-4148-474a-8153-c199958a59c6' , 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 8), 'David Martinez',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), '2022-04-15', 'davidmartinez@example.com', '777444555', 'f6fed7de-dba7-4988-b73b-b775c7577bc2' , 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 9), 'Sarah Brown', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 3), '2021-03-25', 'sarahbrown@example.com', '555444333', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 10), 'William Smith',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2022-01-05', 'williamsmith@example.com', '777888999', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 11), 'Karen Davis',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2023-06-30', 'karendavis@example.com', '444555666', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 12), 'James Taylor',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2022-08-15', 'jamestaylor@example.com', '555747888', '45ba25bb-eab9-461f-a93b-559e4e8c74e4', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 13), 'Jennifer Clark',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2021-11-10', 'jenniferclark@example.com', '999888777', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 14), 'Joseph Johnson', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2023-01-15', 'josephjohnson@example.com', '555666777', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 15), 'Nancy Moore',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2021-04-20', 'nancymoore@example.com', '444666555', 'aeda1973-4148-474a-8153-c199958a59c6', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 16), 'Robert White',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2020-11-05', 'robertwhite@example.com', '333777666', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 17), 'Linda Harris', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2022-02-28', 'lindaharris@example.com', '222777888', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 18), 'John Miller',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2023-03-10', 'johnmiller@example.com', '444555444', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 19), 'Patricia Garcia',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2022-07-01', 'patriciagarcia@example.com', '777555444', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg'),
+    (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 20), 'Robert Brown',  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'role:' || 4), '2020-12-25', 'robertbrown@example.com', '666444555', 'd0fdf18f-40af-46d3-9475-81465cf61994', 'employee-image-placeholder.jpg');
 
 
 INSERT INTO user_credentials (user_id, username, password) 
 VALUES
-(1, 'somesh', '$2b$12$JotH3Y0O2ChThIspRWQvqeEBrUQkgvJLL5Ch402.mXhLPzL6fsuxG'),
-(2,'johndoe', crypt('password1',gen_salt('bf'))),
-(3,'janesmith', crypt('password2',gen_salt('bf'))),
-(4,'robertjohnson', crypt('password3',gen_salt('bf'))),
-(5,'marywilson', crypt('password4',gen_salt('bf'))),
-(6,'michaellee', crypt('password5',gen_salt('bf'))),
-(7,'lisagarcia', crypt('password6',gen_salt('bf'))),
-(8,'davidmartinez', crypt('password7',gen_salt('bf'))),
-(9,'sarahbrown', crypt('password8',gen_salt('bf'))),
-(10,'williamsmith', crypt('password9',gen_salt('bf'))),
-(11,'karendavis', crypt('password10',gen_salt('bf'))),
-(12,'jamestaylor', crypt('password11',gen_salt('bf'))),
-(13,'jenniferclark', crypt('password12',gen_salt('bf'))),
-(14,'josephjohnson', crypt('password13',gen_salt('bf'))),
-(15,'nancymoore', crypt('password14',gen_salt('bf'))),
-(16,'robertwhite', crypt('password15',gen_salt('bf'))),
-(17,'lindaharris', crypt('password16',gen_salt('bf'))),
-(18,'johnmiller', crypt('password17',gen_salt('bf'))),
-(19,'patriciagarcia', crypt('password18',gen_salt('bf'))),
-(20,'robertbrown', crypt('password19',gen_salt('bf')));
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 1), 'somesh', '$2b$12$JotH3Y0O2ChThIspRWQvqeEBrUQkgvJLL5Ch402.mXhLPzL6fsuxG'),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 2),'johndoe', crypt('password1',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 3),'janesmith', crypt('password2',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 4),'robertjohnson', crypt('password3',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 5),'marywilson', crypt('password4',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 6),'michaellee', crypt('password5',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 7),'lisagarcia', crypt('password6',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 8),'davidmartinez', crypt('password7',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 9),'sarahbrown', crypt('password8',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 10),'williamsmith', crypt('password9',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 11),'karendavis', crypt('password10',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 12),'jamestaylor', crypt('password11',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 13),'jenniferclark', crypt('password12',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 14),'josephjohnson', crypt('password13',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 15),'nancymoore', crypt('password14',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 16),'robertwhite', crypt('password15',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 17),'lindaharris', crypt('password16',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 18),'johnmiller', crypt('password17',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 19),'patriciagarcia', crypt('password18',gen_salt('bf'))),
+(uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || 20),'robertbrown', crypt('password19',gen_salt('bf')));
 
 
 INSERT INTO category (category_id, category_name)
 VALUES
-   (1, 'Biscuits'),
-   (2, 'Snacks'),
-   (3, 'Beverages'),
-   (4, 'Dairy'),
-   (5, 'Cooking Ingredients'),
-   (6, 'Dental Care'),
-   (7, 'Stationary/Books');
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 1), 'Biscuits'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 2), 'Snacks'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 3), 'Beverages'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 4), 'Dairy'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 5), 'Cooking Ingredients'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 6), 'Dental Care'),
+   (uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 7), 'Stationary/Books');
 
 
 INSERT INTO product (product_id, product_name, product_desc, category_id,
  product_image, stock_type, supplier_id, product_barcode, created_at)
 VALUES
-    ('b34ea334-9f36-4c3e-92a1-449fdae018e7', 'Munchee Cream Cracker 100g', 'Delicious cream cracker biscuits from Munchee. Ideal for snacking.', 1,
-     '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '1234-5678', '2022-03-10'),
-    ('6782cdfd-6476-4b95-974d-456a9383bbd0', 'Maliban Potato Cracker 110g','Delcios cracker in potatoe falvour',1,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '2341-5678', '2022-03-10'),
-    ('c52c8756-9213-45ac-87cc-b3e49fac9095', 'Maliban Lemon Puff 200g', 'Delicious lemon puff biscuits from Maliban. Ideal for snacking.', 1,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '3456-1812', '2022-03-10'),
-    ('13f9f76c-0407-4092-a71a-375de6452c74', 'Doritos Cool Ranch Tortilla Chips','Delicious tortilla chips from Doritos. Ideal for snacking.', 2,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '4567-8123', '2022-03-10'),
-    ('4525dfa6-601c-4b79-a74b-c406acf73370',  'Pringles Original Potato Crisps ','Delicious potato crisps from Pringles. Ideal for snacking.', 2,
-    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '5678-1235', '2022-03-10'),
-    ('38ec3114-66a3-4f71-b018-e63e8e286a8f',  'Coca-Cola 1.5L',  'Refreshing cola drink from Coca-Cola. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '6781-2346', '2022-03-10'),
-    ('421179a8-d49f-49fa-b542-fd1a997b2cfb', 'Sprite 1.5L', 'Refreshing lemon-lime drink from Sprite. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '7812-3446', '2022-03-10'),
-    ('5e51e5e5-1d84-4f41-956a-70db73e8e7b6', 'Fanta 1.5L', 'Refreshing orange drink from Fanta. Ideal for quenching your thirst.', 3,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '8123-4561', '2022-03-10'),
-    ('8a6752b9-e9ca-44c6-a9c0-cc562a5ac21b', 'Kotmale Set Yoghurt 80g', 'Delicious natural yogurt. Perfect for a healthy snack.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 2, '1234-5644', '2022-03-10'),
-    ('f2ea548c-0b0a-4124-9f97-4f5c211534c8', 'Kotmale Cheddar Cheese 250g', 'High-quality cheddar cheese. Great for sandwiches and recipes.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '1345-6781', '2022-03-10'),
-    ('ef8a2608-3168-4cec-9e5c-9f03f5555699', 'Kotmale Fresh Milk 1L', 'High-quality fresh milk. Ideal for drinking and cooking.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '3456-2812', '2022-03-10'),
-    ('e53ec0ef-eec0-4e3f-8e75-79e2e29c9b5d', 'Kotmale Salted Butter 200g', 'Premium salted butter. Perfect for cooking and baking.', 4,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '5678-9012', '2022-03-11'),
-    ('0acf7d7e-b925-4422-b8c3-9e9e2069dcf4', 'Coconut Milk 400ml', 'High-quality coconut milk . Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '8812-3456', '2022-03-10'),
-    ('63de162b-3ffa-4b1e-9963-53c24e90b18c', 'Coconut Oil 500ml', 'High-quality coconut oil from Carl. Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '8123-4567', '2022-03-10'),
-    ('fe476643-4e56-40b4-a9ef-a8063256654f', 'Carl Coconut Vinegar 500ml', 'High-quality coconut vinegar from Carl. Ideal for cooking.', 5,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '1234-1678', '2022-03-10'),
-    ('d87c4075-3991-4168-9a8a-cf41183474a2', 'Colgate Toothpaste 100g', 'Colgate toothpaste for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 1, '2345-6781', '2022-03-10'),
-    ('3b0913d5-e5fe-44bc-833a-bdd633267f63', 'Colgate one Toothbrush packet ', 'Colgate toothbrush for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 3, '3456-7812', '2022-03-10'),
-    ('c813f8a5-19ea-4687-94ab-fd9e189ccdd6', 'Colgate Mouthwash 500ml', 'Colgate mouthwash for healthy teeth and gums.', 6,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 4, '4567-9123', '2022-03-10'),
-    ('98f6c185-4401-4252-8ab8-60dc63836f0a', 'Parker Pen 12 set', 'Parker pen for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '5678-1234', '2022-03-10'),
-    ('5dba6b8a-349c-43e3-8449-ffa0e6849e2d', 'A4 Paper 400 Packet', 'A4 paper for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 6, '6781-2345', '2022-03-10'),
-    ('dbf199c1-3968-4fc3-b4af-e7f99838521f', 'Pencil 24 set', 'Pencil for writing.', 7,
-        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', 5, '7812-3456', '2022-03-10') ;
+    ('b34ea334-9f36-4c3e-92a1-449fdae018e7', 'Munchee Cream Cracker 100g', 'Delicious cream cracker biscuits from Munchee. Ideal for snacking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 1),
+     '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 1), '1234-5678', '2022-03-10'),
+    ('6782cdfd-6476-4b95-974d-456a9383bbd0', 'Maliban Potato Cracker 110g','Delcios cracker in potatoe falvour', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 1),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 2), '2341-5678', '2022-03-10'),
+    ('c52c8756-9213-45ac-87cc-b3e49fac9095', 'Maliban Lemon Puff 200g', 'Delicious lemon puff biscuits from Maliban. Ideal for snacking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 1),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 2), '3456-1812', '2022-03-10'),
+    ('13f9f76c-0407-4092-a71a-375de6452c74', 'Doritos Cool Ranch Tortilla Chips','Delicious tortilla chips from Doritos. Ideal for snacking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 2),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 3), '4567-8123', '2022-03-10'),
+    ('4525dfa6-601c-4b79-a74b-c406acf73370',  'Pringles Original Potato Crisps ','Delicious potato crisps from Pringles. Ideal for snacking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 2),
+    '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 4), '5678-1235', '2022-03-10'),
+    ('38ec3114-66a3-4f71-b018-e63e8e286a8f',  'Coca-Cola 1.5L',  'Refreshing cola drink from Coca-Cola. Ideal for quenching your thirst.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 3),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 5), '6781-2346', '2022-03-10'),
+    ('421179a8-d49f-49fa-b542-fd1a997b2cfb', 'Sprite 1.5L', 'Refreshing lemon-lime drink from Sprite. Ideal for quenching your thirst.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 3),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 6), '7812-3446', '2022-03-10'),
+    ('5e51e5e5-1d84-4f41-956a-70db73e8e7b6', 'Fanta 1.5L', 'Refreshing orange drink from Fanta. Ideal for quenching your thirst.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 3),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 1), '8123-4561', '2022-03-10'),
+    ('8a6752b9-e9ca-44c6-a9c0-cc562a5ac21b', 'Kotmale Set Yoghurt 80g', 'Delicious natural yogurt. Perfect for a healthy snack.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 4),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 2), '1234-5644', '2022-03-10'),
+    ('f2ea548c-0b0a-4124-9f97-4f5c211534c8', 'Kotmale Cheddar Cheese 250g', 'High-quality cheddar cheese. Great for sandwiches and recipes.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 4),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 3), '1345-6781', '2022-03-10'),
+    ('ef8a2608-3168-4cec-9e5c-9f03f5555699', 'Kotmale Fresh Milk 1L', 'High-quality fresh milk. Ideal for drinking and cooking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 4),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 6), '3456-2812', '2022-03-10'),
+    ('e53ec0ef-eec0-4e3f-8e75-79e2e29c9b5d', 'Kotmale Salted Butter 200g', 'Premium salted butter. Perfect for cooking and baking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 4),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 3), '5678-9012', '2022-03-11'),
+    ('0acf7d7e-b925-4422-b8c3-9e9e2069dcf4', 'Coconut Milk 400ml', 'High-quality coconut milk . Ideal for cooking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 5),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 5), '8812-3456', '2022-03-10'),
+    ('63de162b-3ffa-4b1e-9963-53c24e90b18c', 'Coconut Oil 500ml', 'High-quality coconut oil from Carl. Ideal for cooking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 5),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 6), '8123-4567', '2022-03-10'),
+    ('fe476643-4e56-40b4-a9ef-a8063256654f', 'Carl Coconut Vinegar 500ml', 'High-quality coconut vinegar from Carl. Ideal for cooking.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 5),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 4), '1234-1678', '2022-03-10'),
+    ('d87c4075-3991-4168-9a8a-cf41183474a2', 'Colgate Toothpaste 100g', 'Colgate toothpaste for healthy teeth and gums.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 6),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 1), '2345-6781', '2022-03-10'),
+    ('3b0913d5-e5fe-44bc-833a-bdd633267f63', 'Colgate one Toothbrush packet ', 'Colgate toothbrush for healthy teeth and gums.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 6),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 3), '3456-7812', '2022-03-10'),
+    ('c813f8a5-19ea-4687-94ab-fd9e189ccdd6', 'Colgate Mouthwash 500ml', 'Colgate mouthwash for healthy teeth and gums.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 6),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 4), '4567-9123', '2022-03-10'),
+    ('98f6c185-4401-4252-8ab8-60dc63836f0a', 'Parker Pen 12 set', 'Parker pen for writing.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 7),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 5), '5678-1234', '2022-03-10'),
+    ('5dba6b8a-349c-43e3-8449-ffa0e6849e2d', 'A4 Paper 400 Packet', 'A4 paper for writing.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 7),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 6), '6781-2345', '2022-03-10'),
+    ('dbf199c1-3968-4fc3-b4af-e7f99838521f', 'Pencil 24 set', 'Pencil for writing.', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'category:' || 7),
+        '{"product-image-placeholder.jpg","placeholder-300x400.png","placeholder-200x200.png"}', 'items', uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'supplier:' || 5), '7812-3456', '2022-03-10') ;
 
     
 INSERT INTO inventory (product_id, branch_id, quantity,updated_on,  reorder_level)
@@ -217,8 +242,16 @@ VALUES
     ('5dba6b8a-349c-43e3-8449-ffa0e6849e2d', 'f6fed7de-dba7-4988-b73b-b775c7577bc2', 10, '2023-07-30 10:00:00', 2);
 
 
-insert into customer (customer_id, customer_name ,customer_email ,customer_phone ,customer_address ,
-visit_count ,rewards_points ) values 
+insert into customer (customer_id, customer_name ,customer_email ,customer_phone ,customer_address , visit_count ,rewards_points )
+select
+  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'customer:' || customer_id),
+  customer_name,
+  customer_email,
+  customer_phone,
+  customer_address,
+  visit_count,
+  rewards_points
+from (values
  (1, 'Ruth Lawles', 'rlawles0@seattletimes.com', '5921508750', '1693 Atwood Trail', 1, 44.9),
  (2, 'Mersey Roller', 'mroller1@wikispaces.com', '4985745753', '21472 Fisk Crossing', 2, 108.06),
  (3, 'Hildegaard Fawdry', 'hfawdry2@yolasite.com', '5268053265', '9 Riverside Parkway', 3, 62.65),
@@ -264,11 +297,24 @@ visit_count ,rewards_points ) values
  (43, 'Jessica Robeson', 'jrobeson16@blogger.com', '1497335402', '90 Drewry Court', 43, 7.25),
  (44, 'Corissa Varty', 'cvarty17@stanford.edu', '3918785556', '24060 Continental Drive', 44, 52.83),
  (45, 'Maynord Nafziger', 'mnafziger18@noaa.gov', '3941403854', '84187 Crownhardt Road', 45, 68.69),
- (46, 'Fowler Chantler', 'fchantler19@angelfire.com', '9981381006', '184 Texas Court', 46, 55.48);
+ (46, 'Fowler Chantler', 'fchantler19@angelfire.com', '9981381006', '184 Texas Court', 46, 55.48)
+) as v(customer_id, customer_name, customer_email, customer_phone, customer_address, visit_count, rewards_points);
 
 
 INSERT INTO sales_history (order_id, customer_id, cashier_id, branch_id, created_at, total_amount, profit, rewards_points, payment_method, reference, product_count)
-VALUES   
+SELECT
+  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'order:' || order_id),
+  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'customer:' || customer_id),
+  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'employee:' || cashier_id),
+  branch_id,
+  created_at,
+  total_amount,
+  profit,
+  rewards_points,
+  payment_method,
+  reference,
+  product_count
+FROM (VALUES
     (1, 1,10,'45ba25bb-eab9-461f-a93b-559e4e8c74e4','2023-08-15 10:30:00+05:30',100.00,0.00,0.00,'1','110',NULL),
     (2, 2,10,'45ba25bb-eab9-461f-a93b-559e4e8c74e4','2023-08-15 14:45:00+05:30',75.50,0.00,0.00,'2','12485',NULL),
     (3, 3,11,'45ba25bb-eab9-461f-a93b-559e4e8c74e4','2023-08-20 16:20:00+05:30',200.75,0.00,0.00,'1','280',NULL),
@@ -316,11 +362,18 @@ VALUES
     (45, 17,19,'d0fdf18f-40af-46d3-9475-81465cf61994','2023-10-13 10:59:40.975847+05:30',3750.00,1349.00,1.88,'1','4000',3),
     (46, 6,15,'aeda1973-4148-474a-8153-c199958a59c6','2023-10-15 11:02:24.11861+05:30',920.00,-53.00,0.46,'1','1000',5),
     (47, 3,7,'aeda1973-4148-474a-8153-c199958a59c6','2023-10-16 11:08:24.749376+05:30',1480.00,376.00,0.74,'1','1500',7),
-    (48, 29,7,'aeda1973-4148-474a-8153-c199958a59c6','2023-10-17 11:17:36.926934+05:30',600.00,199.00,0.30,'1','1000',2);
+    (48, 29,7,'aeda1973-4148-474a-8153-c199958a59c6','2023-10-17 11:17:36.926934+05:30',600.00,199.00,0.30,'1','1000',2)
+) AS v(order_id, customer_id, cashier_id, branch_id, created_at, total_amount, profit, rewards_points, payment_method, reference, product_count);
 
 
 INSERT INTO cart (order_id, product_id, quantity,  sub_total_amount, created_at)
-VALUES
+SELECT
+  uuid_generate_v5('00000000-0000-0000-0000-000000000000', 'order:' || order_id),
+  product_id,
+  quantity,
+  sub_total_amount,
+  created_at
+FROM (VALUES
     (1,'b34ea334-9f36-4c3e-92a1-449fdae018e7',3,90.00,'2023-08-15'),
     (1,'6782cdfd-6476-4b95-974d-456a9383bbd0',2,95.00,'2023-08-15'),
     (1,'c52c8756-9213-45ac-87cc-b3e49fac9095',1,50.00,'2023-08-15'),
@@ -398,12 +451,13 @@ VALUES
     (47,'13f9f76c-0407-4092-a71a-375de6452c74',4,799.00,'2023-10-16'),
     (47,'421179a8-d49f-49fa-b542-fd1a997b2cfb',2,458.00,'2023-10-16'),
     (47,'38ec3114-66a3-4f71-b018-e63e8e286a8f',1,219.00,'2023-10-16'),
-    (48,'f2ea548c-0b0a-4124-9f97-4f5c211534c8',2,599.00,'2023-10-17');
+    (48,'f2ea548c-0b0a-4124-9f97-4f5c211534c8',2,599.00,'2023-10-17')
+) AS v(order_id, product_id, quantity, sub_total_amount, created_at);
 
 
 INSERT INTO variable_options(
-	 variable_name, variable_value)
-	VALUES ('rewards_points_percentage', '0.05');
+	 variable_id, variable_name, variable_value)
+	VALUES ('25b577ea-5e3e-45b7-af60-50ae948ac429', 'rewards_points_percentage', '0.05');
 
 INSERT INTO product_variants(variant_id, product_id, label, buying_price, retail_price, discount)
 VALUES 

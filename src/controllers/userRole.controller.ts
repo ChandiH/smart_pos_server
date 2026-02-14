@@ -1,16 +1,16 @@
 import type { RequestHandler } from "express";
-import { addUserRole, deleteUserRole, getAccessList, getUserRoles, updateUserAccess } from "../models/userRole.model";
+import { addUserRole, deleteUserRole, getAccessList, getUserRole, getUserRoles, updateUserAccess } from "../models/userRole.model";
 import { getEmployeesByRole } from "../models/employee.model";
 
 interface UpdateUserAccessBody {
-  role_id: number;
-  access: number[];
+  role_id: string;
+  access: string[];
 }
 
 interface AddUserRoleBody {
   role_name: string;
   role_desc: string;
-  user_access: number[];
+  user_access: string[];
 }
 
 export const GetUserRoles: RequestHandler = async (_req, res) => {
@@ -42,11 +42,12 @@ export const AddUserRole: RequestHandler<unknown, unknown, AddUserRoleBody> = as
 export const DeleteUserRole: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
-  if (id === "1") {
-    return res.status(400).json({ error: "Owner can't be Deleted" });
-  }
-
   try {
+    const role = await getUserRole(id);
+    if (role?.role_name === "Owner") {
+      return res.status(400).json({ error: "Owner can't be Deleted" });
+    }
+
     const response = await getEmployeesByRole(id);
     const employees = response.length;
 

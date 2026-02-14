@@ -235,10 +235,10 @@ export async function buildReceiptFromSale(salesData: any): Promise<IPrintPayloa
   const dateStr = new Date().toLocaleDateString();
   const timeStr = new Date().toLocaleTimeString();
   const lastSale = await prisma.sales_history.findFirst({
-    orderBy: { order_id: "desc" },
-    select: { order_id: true }
+    orderBy: { created_at: "desc" },
+    select: { order_id: true },
   });
-  const invoiceNo = (lastSale?.order_id ?? 0) + 1;
+  const invoiceNo = order?.order_id ?? lastSale?.order_id ?? "N/A";
 
   const lr = (l: string, r: string) =>
     l + " ".repeat(Math.max(1, LINE_WIDTH - l.length - r.length)) + r;

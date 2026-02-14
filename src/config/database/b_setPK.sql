@@ -2,12 +2,8 @@
 CREATE OR REPLACE FUNCTION BeforeInsertUserRole()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM user_role) THEN
-       NEW.role_id = 1;
-   ELSE
-       -- Find the maximum role_id value and increment it by 1
-       SELECT MAX(role_id) + 1 INTO NEW.role_id FROM user_role;
+   IF NEW.role_id IS NULL THEN
+       NEW.role_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -24,12 +20,8 @@ EXECUTE FUNCTION BeforeInsertUserRole();
 CREATE OR REPLACE FUNCTION BeforeInsertAccessType()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM access_type) THEN
-       NEW.access_type_id = 1;
-   ELSE
-       -- Find the maximum access_type_id value and increment it by 1
-       SELECT MAX(access_type_id) + 1 INTO NEW.access_type_id FROM access_type;
+   IF NEW.access_type_id IS NULL THEN
+       NEW.access_type_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -46,12 +38,8 @@ EXECUTE FUNCTION BeforeInsertAccessType();
 CREATE OR REPLACE FUNCTION BeforeInsertCategory()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM category) THEN
-       NEW.category_id = 1;
-   ELSE
-       -- Find the maximum category_id value and increment it by 1
-       SELECT MAX(category_id) + 1 INTO NEW.category_id FROM category;
+   IF NEW.category_id IS NULL THEN
+       NEW.category_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -88,12 +76,8 @@ EXECUTE FUNCTION BeforeInsertProduct();
 CREATE OR REPLACE FUNCTION BeforeInsertCart()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM cart) THEN
-       NEW.cart_id = 1;
-   ELSE
-       -- Find the maximum cart_id value and increment it by 1
-       SELECT MAX(cart_id) + 1 INTO NEW.cart_id FROM cart;
+   IF NEW.cart_id IS NULL THEN
+       NEW.cart_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -111,12 +95,8 @@ EXECUTE FUNCTION BeforeInsertCart();
 CREATE OR REPLACE FUNCTION BeforeInsertSalesHistory()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM sales_history) THEN
-       NEW.order_id = 1;
-   ELSE
-       -- Find the maximum order_id value and increment it by 1
-       SELECT MAX(order_id) + 1 INTO NEW.order_id FROM sales_history;
+   IF NEW.order_id IS NULL THEN
+       NEW.order_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -134,12 +114,8 @@ EXECUTE FUNCTION BeforeInsertSalesHistory();
 CREATE OR REPLACE FUNCTION BeforeInsertCustomer()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM customer) THEN
-       NEW.customer_id = 1;
-   ELSE
-       -- Find the maximum customer_id value and increment it by 1
-       SELECT MAX(customer_id) + 1 INTO NEW.customer_id FROM customer;
+   IF NEW.customer_id IS NULL THEN
+       NEW.customer_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -156,12 +132,8 @@ EXECUTE FUNCTION BeforeInsertCustomer();
 CREATE OR REPLACE FUNCTION BeforeInsertEmployee()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM employee) THEN
-       NEW.employee_id = 1;
-   ELSE
-       -- Find the maximum employee_id value and increment it by 1
-       SELECT MAX(employee_id) + 1 INTO NEW.employee_id FROM employee;
+   IF NEW.employee_id IS NULL THEN
+       NEW.employee_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -178,12 +150,8 @@ EXECUTE FUNCTION BeforeInsertEmployee();
 CREATE OR REPLACE FUNCTION BeforeInsertSupplier()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM supplier) THEN
-       NEW.supplier_id = 1;
-   ELSE
-       -- Find the maximum supplier_id value and increment it by 1
-       SELECT MAX(supplier_id) + 1 INTO NEW.supplier_id FROM supplier;
+   IF NEW.supplier_id IS NULL THEN
+       NEW.supplier_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -201,12 +169,8 @@ EXECUTE FUNCTION BeforeInsertSupplier();
 CREATE OR REPLACE FUNCTION BeforeInsertPaymentMethod()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM payment_method) THEN
-       NEW.payment_method_id  = 1;
-   ELSE
-       -- Find the maximum id value and increment it by 1
-       SELECT MAX(payment_method_id) + 1 INTO NEW.payment_method_id FROM payment_method;
+   IF NEW.payment_method_id IS NULL THEN
+       NEW.payment_method_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -225,12 +189,8 @@ EXECUTE FUNCTION BeforeInsertPaymentMethod();
 CREATE OR REPLACE FUNCTION BeforeInsertDiscount()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM discount) THEN
-       NEW.discount_id = 1;
-   ELSE
-       -- Find the maximum id value and increment it by 1
-       SELECT MAX(discount_id) + 1 INTO NEW.discount_id FROM discount;
+   IF NEW.discount_id IS NULL THEN
+       NEW.discount_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -248,12 +208,8 @@ EXECUTE FUNCTION BeforeInsertDiscount();
 CREATE OR REPLACE FUNCTION BeforeInsertBranch()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM branch) THEN
-       NEW.branch_id = 1;
-   ELSE
-       -- Find the maximum id value and increment it by 1
-       SELECT MAX(branch_id) + 1 INTO NEW.branch_id FROM branch;
+   IF NEW.branch_id IS NULL THEN
+       NEW.branch_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -269,12 +225,8 @@ EXECUTE FUNCTION BeforeInsertBranch();
 CREATE OR REPLACE FUNCTION BeforeInsertVariable_options()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM variable_options) THEN
-       NEW.variable_id = 1;
-   ELSE
-       -- Find the maximum id value and increment it by 1
-        SELECT MAX(variable_id) + 1 INTO NEW.variable_id FROM variable_options;
+   IF NEW.variable_id IS NULL THEN
+       NEW.variable_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;
@@ -290,12 +242,8 @@ EXECUTE FUNCTION BeforeInsertVariable_options();
 CREATE OR REPLACE FUNCTION BeforeInsertWorking_hour()
 RETURNS TRIGGER AS $$
 BEGIN
-   -- Check if the table is empty
-   IF NOT EXISTS (SELECT 1 FROM working_hour) THEN
-       NEW.record_id = 1;
-   ELSE
-       -- Find the maximum id value and increment it by 1
-        SELECT MAX(record_id) + 1 INTO NEW.record_id FROM working_hour;
+   IF NEW.record_id IS NULL THEN
+       NEW.record_id = gen_random_uuid();
    END IF;
    RETURN NEW;
 END;

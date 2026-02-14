@@ -54,7 +54,7 @@ export const UpdateSupplier: RequestHandler = async (req, res) => {
   console.log(id, req.body);
 
   try {
-    return await updateSupplier(Number(id), { supplier_name, supplier_email, supplier_phone, supplier_address })
+    return await updateSupplier(id, { supplier_name, supplier_email, supplier_phone, supplier_address })
       .then((data) => res.status(200).json({ data }))
       .catch((err) => res.status(400).json({ error: err }));
   } catch (error) {

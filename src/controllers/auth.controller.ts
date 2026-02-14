@@ -19,10 +19,10 @@ interface LoginBody {
 interface RegisterBody {
   employee_name: string;
   employee_userName: string;
-  role_id: number;
+  role_id: string;
   employee_email: string;
   employee_phone: string;
-  branch_id: number;
+  branch_id: string;
 }
 
 interface ResetPasswordBody {

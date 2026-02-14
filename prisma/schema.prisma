@@ -8,7 +8,7 @@ datasource db {
 }
 
 model access_type {
-  access_type_id Int    @id @default(autoincrement())
+  access_type_id String @id @default(uuid()) @db.Uuid
   access_name    String @unique @db.VarChar(100)
 }
 
@@ -26,8 +26,8 @@ model branch {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model cart {
-  cart_id          Int            @id @default(autoincrement())
-  order_id         Int?
+  cart_id          String         @id @default(uuid()) @db.Uuid
+  order_id         String?        @db.Uuid
   product_id       String         @db.Uuid
   quantity         Int
   sub_total_amount Decimal?       @db.Decimal(1000, 2)
@@ -37,13 +37,13 @@ model cart {
 }
 
 model category {
-  category_id   Int       @id @default(autoincrement())
+  category_id   String    @id @default(uuid()) @db.Uuid
   category_name String    @unique @db.VarChar(50)
   product       product[]
 }
 
 model customer {
-  customer_id      Int             @id @default(autoincrement())
+  customer_id      String          @id @default(uuid()) @db.Uuid
   customer_name    String          @db.VarChar(255)
   customer_email   String?         @unique @db.VarChar(255)
   customer_phone   String          @unique @db.VarChar(13)
@@ -56,16 +56,16 @@ model customer {
 }
 
 model discount {
-  discount_id         Int     @id @default(autoincrement())
+  discount_id         String  @id @default(uuid()) @db.Uuid
   discount_name       String  @unique @db.VarChar(255)
   discount_desc       String? @db.VarChar(200)
   discount_percentage Decimal @db.Decimal(5, 2)
 }
 
 model employee {
-  employee_id            Int               @id @default(autoincrement())
+  employee_id            String            @id @default(uuid()) @db.Uuid
   employee_name          String            @db.VarChar(255)
-  role_id                Int
+  role_id                String            @db.Uuid
   hired_date             DateTime?         @default(now()) @db.Timestamptz(6)
   employee_email         String?           @unique @db.VarChar(255)
   employee_phone         String            @unique @db.VarChar(13)
@@ -98,9 +98,9 @@ model product {
   product_id      String             @id @default(uuid()) @db.Uuid
   product_name    String             @unique @db.VarChar(100)
   product_desc    String?            @db.VarChar(200)
-  category_id     Int
+  category_id     String             @db.Uuid
   product_image   String[]           @db.VarChar
-  supplier_id     Int
+  supplier_id     String             @db.Uuid
   product_barcode String             @unique @db.VarChar(255)
   stock_type      String             @db.VarChar(50)
   removed         Boolean?           @default(false)
@@ -125,9 +125,9 @@ model product_variants {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model sales_history {
-  order_id       Int       @id @default(autoincrement())
-  customer_id    Int?
-  cashier_id     Int
+  order_id       String    @id @default(uuid()) @db.Uuid
+  customer_id    String?   @db.Uuid
+  cashier_id     String    @db.Uuid
   branch_id      String    @db.Uuid
   created_at     DateTime? @default(now()) @db.Timestamptz(6)
   total_amount   Decimal?  @db.Decimal(1000, 2)
@@ -143,7 +143,7 @@ model sales_history {
 }
 
 model supplier {
-  supplier_id      Int       @id @default(autoincrement())
+  supplier_id      String    @id @default(uuid()) @db.Uuid
   supplier_name    String    @db.VarChar(200)
   supplier_email   String?   @unique @db.VarChar(255)
   supplier_phone   String    @unique @db.VarChar(13)
@@ -152,7 +152,7 @@ model supplier {
 }
 
 model user_credentials {
-  user_id    Int       @id
+  user_id    String    @id @db.Uuid
   username   String    @unique @db.VarChar(30)
   password   String    @unique @db.VarChar(200)
   updated_on DateTime? @default(now()) @db.Timestamptz(6)
@@ -160,15 +160,15 @@ model user_credentials {
 }
 
 model user_role {
-  role_id     Int        @id @default(autoincrement())
+  role_id     String     @id @default(uuid()) @db.Uuid
   role_name   String     @unique @db.VarChar(100)
   role_desc   String     @db.VarChar(200)
-  user_access Int[]
+  user_access String[]   @db.Uuid
   employee    employee[]
 }
 
 model variable_options {
-  variable_id    Int       @id @default(autoincrement())
+  variable_id    String    @id @default(uuid()) @db.Uuid
   variable_name  String    @unique @db.VarChar(100)
   created_at     DateTime? @default(now()) @db.Timestamptz(0)
   variable_value Decimal?  @db.Decimal(1000, 2)
@@ -176,12 +176,12 @@ model variable_options {
 }
 
 model working_hour {
-  employee_id Int
+  employee_id String   @db.Uuid
   branch_id   String   @db.Uuid
   date        String   @db.VarChar(12)
   shift_on    String   @db.VarChar(5)
   shift_off   String   @db.VarChar(5)
-  updated_by  Int
+  updated_by  String   @db.Uuid
   present     Boolean
   total_hours Decimal? @db.Decimal(100, 2)
   employee    employee @relation("working_hour_employee_idToemployee", fields: [employee_id], references: [employee_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_id")

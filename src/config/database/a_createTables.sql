@@ -1,22 +1,23 @@
 -- Create Tables
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- User roles
 CREATE TABLE user_role (
-    role_id INTEGER PRIMARY KEY,
+    role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_name VARCHAR(100) NOT NULL UNIQUE,
     role_desc VARCHAR(200) NOT NULL,
-    user_access INTEGER[] NOT NULL
+    user_access UUID[] NOT NULL
 );
 
 -- Access type
 CREATE TABLE access_type (
-    access_type_id INTEGER PRIMARY KEY,
+    access_type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     access_name VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- Category
 CREATE TABLE category (
-    category_id INTEGER PRIMARY KEY,
+    category_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     category_name VARCHAR(50) NOT NULL UNIQUE
 );
 
@@ -24,12 +25,12 @@ CREATE TABLE product (
     product_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     product_name VARCHAR(100) NOT NULL UNIQUE,
     product_desc VARCHAR(200),
-    category_id INTEGER NOT NULL,
+    category_id UUID NOT NULL,
     product_image VARCHAR [] , 
     buying_price NUMERIC(1000, 2) NOT NULL,
     retail_price NUMERIC(1000, 2) NOT NULL,
     discount NUMERIC(1000, 2),
-    supplier_id INTEGER NOT NULL,
+    supplier_id UUID NOT NULL,
     product_barcode VARCHAR(255) NOT NULL UNIQUE,
     removed BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -38,7 +39,7 @@ CREATE TABLE product (
 
 CREATE TABLE inventory (
     product_id UUID NOT NULL,
-    branch_id INTEGER NOT NULL,
+    branch_id UUID NOT NULL,
     quantity INTEGER check (quantity >= 0),
     reorder_level INTEGER ,
     updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -46,8 +47,8 @@ CREATE TABLE inventory (
 );
 
 CREATE TABLE cart (
-    cart_id INTEGER  PRIMARY KEY,
-    order_id INTEGER ,
+    cart_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_id UUID ,
     product_id UUID NOT NULL,
     quantity INTEGER NOT NULL check (quantity > 0),
     sub_total_amount NUMERIC(1000, 2) check (sub_total_amount > 0),
@@ -56,15 +57,15 @@ CREATE TABLE cart (
 
 -- Orders
 CREATE TABLE sales_history (
-    order_id INTEGER  PRIMARY KEY,
-    customer_id INTEGER,
-    cashier_id INTEGER NOT NULL,
-    branch_id INTEGER NOT NULL,
+    order_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    customer_id UUID,
+    cashier_id UUID NOT NULL,
+    branch_id UUID NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(1000,2) check (total_amount > 0),
     profit NUMERIC(1000,2) DEFAULT 0.00,
     rewards_points NUMERIC(1000,2) DEFAULT 0.00,
-    payment_method_id INTEGER ,
+    payment_method_id UUID ,
     reference_ID VARCHAR(255) ,
     product_count INTEGER
     
@@ -72,7 +73,7 @@ CREATE TABLE sales_history (
 
 --Customer
 CREATE TABLE customer (
-    customer_id INTEGER  PRIMARY KEY,
+    customer_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     customer_name VARCHAR(255) NOT NULL,
     customer_email VARCHAR(255) UNIQUE,
     customer_phone VARCHAR(13) NOT NULL UNIQUE,
@@ -84,7 +85,7 @@ CREATE TABLE customer (
 
 --user credentials
 CREATE TABLE user_credentials (
-    user_id INTEGER PRIMARY KEY,
+    user_id UUID PRIMARY KEY,
     username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(200) NOT NULL UNIQUE,
     updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -92,13 +93,13 @@ CREATE TABLE user_credentials (
 
 -- Employee
 CREATE TABLE employee (
-    employee_id INTEGER  PRIMARY KEY,
+    employee_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     employee_name VARCHAR(255) NOT NULL,
-    role_id INTEGER NOT NULL,
+    role_id UUID NOT NULL,
     hired_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     employee_email VARCHAR(255) UNIQUE,
     employee_phone VARCHAR(13) NOT NULL UNIQUE ,
-    branch_id INTEGER NOT NULL,
+    branch_id UUID NOT NULL,
     employee_image VARCHAR(255),
     branch_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 	role_updated_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -106,7 +107,7 @@ CREATE TABLE employee (
 
 -- Supplier
 CREATE TABLE supplier (
-    supplier_id INTEGER  PRIMARY KEY,
+    supplier_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     supplier_name VARCHAR(200) NOT NULL ,
     supplier_email VARCHAR(255) UNIQUE,
     supplier_phone VARCHAR(13) NOT NULL UNIQUE,
@@ -115,13 +116,13 @@ CREATE TABLE supplier (
 
 -- Payment method
 CREATE TABLE payment_method (
-    payment_method_id INTEGER  PRIMARY KEY,
+    payment_method_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     payment_method_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Discount
 CREATE TABLE discount (
-    discount_id INTEGER  PRIMARY KEY,
+    discount_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     discount_name VARCHAR(255) NOT NULL UNIQUE,
     discount_desc VARCHAR(200),
     discount_percentage NUMERIC(5, 2) NOT NULL
@@ -129,7 +130,7 @@ CREATE TABLE discount (
 
 -- Branch
 CREATE TABLE branch (
-    branch_id INTEGER  PRIMARY KEY,
+    branch_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     branch_city VARCHAR(255) NOT NULL UNIQUE ,
     branch_address VARCHAR(200) NOT NULL ,
     branch_phone VARCHAR(13) NOT NULL UNIQUE,
@@ -139,7 +140,7 @@ CREATE TABLE branch (
 
 -- Variable options
 CREATE TABLE variable_options (
-    variable_id integer PRIMARY KEY,
+    variable_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     variable_name VARCHAR(100) unique NOT NULL,
     created_at timestamp(0) with time zone DEFAULT CURRENT_TIMESTAMP,
     variable_value numeric(1000,2),
@@ -148,12 +149,12 @@ CREATE TABLE variable_options (
 
 -- Working hour
 CREATE TABLE working_hour (
-    record_id INTEGER PRIMARY KEY,
-    employee_id INTEGER NOT NULL,
+    record_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    employee_id UUID NOT NULL,
     date VARCHAR(12) NOT NULL,
     shift_on VARCHAR(5) NOT NULL,
     shift_off VARCHAR(5) NOT NULL,
-    updated_by INTEGER NOT NULL,
+    updated_by UUID NOT NULL,
     present BOOLEAN NOT NULL,
     total_hours numeric(100,2)
 );

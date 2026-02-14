@@ -118,7 +118,7 @@ export const getProductWithCategory = async () => {
 
 export const getProductsBySupplierId = async (id: supplier["supplier_id"]) => {
   return await prisma.product.findMany({
-    where: { supplier_id: Number(id) },
+    where: { supplier_id: id },
     include: {
       category: true,
     },

@@ -7,7 +7,7 @@ export const getAllCategories = async () => {
 export const getCategory = async (id: string) => {
   return await prisma.category.findUnique({
     where: {
-      category_id: Number(id),
+      category_id: id,
     },
   });
 };
@@ -23,7 +23,7 @@ export const addCategory = async (category_name: string) => {
 export const updateCategory = async (id: string, category_name: string) => {
   return await prisma.category.update({
     where: {
-      category_id: Number(id),
+      category_id: id,
     },
     data: {
       category_name,

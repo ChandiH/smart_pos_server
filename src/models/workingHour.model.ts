@@ -39,11 +39,11 @@ export const getEmployeeRecordByDateBranch = async (date: string, branch_id: str
 };
 
 export const addEmployeeRecord = async (
-  employee_id: number,
+  employee_id: string,
   date: string,
   shift_on: string,
   shift_off: string,
-  updated_by: number,
+  updated_by: string,
   present: boolean,
   total_hours: number,
   branch_id: string
