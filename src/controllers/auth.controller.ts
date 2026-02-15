@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { type SignOptions } from "jsonwebtoken";
 import { getUserCredentialsByUsername, isUsernameTaken, register, resetPassword } from "../models/auth.model";
 import { getEmployee } from "../models/employee.model";
 import { verifyPassword } from "../utils/hash";
@@ -51,6 +51,13 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
 
     const scope = employee.user_role.user_role_access.map((access) => access.access_type.access_name);
 
+    const signOptions: SignOptions = {
+      algorithm: "HS256",
+      expiresIn: JWT_EXPIRES_IN as SignOptions["expiresIn"],
+      issuer: JWT_ISSUER,
+      audience: JWT_AUDIENCE,
+    };
+
     const token = jwt.sign(
       {
         employee_username: username,
@@ -66,12 +73,7 @@ export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, re
         employee_phone: employee.employee_phone,
       },
       SECRET_KEY,
-      {
-        algorithm: "HS256",
-        expiresIn: JWT_EXPIRES_IN,
-        issuer: JWT_ISSUER,
-        audience: JWT_AUDIENCE,
-      }
+      signOptions
     );
 
     return res.status(200).json({ token, token_type: "Bearer", expires_in: JWT_EXPIRES_IN });

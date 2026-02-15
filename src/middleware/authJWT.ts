@@ -34,8 +34,11 @@ export const verifyToken: RequestHandler = (req, res, next) => {
 
   jwt.verify(token, SECRET_KEY as Secret, { issuer: JWT_ISSUER, audience: JWT_AUDIENCE }, (err, decoded) => {
     if (err) {
+      const isExpired = typeof err === "object" && err !== null && "name" in err && err.name === "TokenExpiredError";
       return res.status(401).json({
-        message: "Unauthorized",
+        message: isExpired ? "Token expired" : "Unauthorized",
+        error: isExpired ? "TOKEN_EXPIRED" : "UNAUTHORIZED",
+        logout: isExpired,
       });
     }
 

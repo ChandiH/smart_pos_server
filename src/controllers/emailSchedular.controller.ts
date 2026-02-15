@@ -41,9 +41,6 @@ async function getPOSStats() {
 	const todayEnd = new Date();
 	todayEnd.setHours(23, 59, 59, 999);
 
-	const startISO = todayStart.toISOString();
-	const endISO = todayEnd.toISOString();
-
 	const totalSales: any = await prisma.$queryRaw`
     SELECT COALESCE(SUM(total_amount),0) AS total_sales
     FROM sales_history
