@@ -1,22 +1,14 @@
-import { Router, type RequestHandler } from "express";
-import cartController from "../controllers/cart.controller";
-
-type CartController = {
-  insertSalesData: RequestHandler;
-  getRewardsPointsPercentage: RequestHandler;
-  updateRewardsPointsPercentage: RequestHandler;
-};
-
-const {
-  insertSalesData,
-  getRewardsPointsPercentage,
-  updateRewardsPointsPercentage,
-} = cartController as CartController;
+import { Router } from "express";
+import {
+  GetRewardsPointsPercentage,
+  InsertSalesData,
+  UpdateRewardsPointsPercentage,
+} from "../controllers/cart.controller";
 
 const router = Router();
 
-router.post("/insert", insertSalesData);
-router.get("/rewards-points-percentage", getRewardsPointsPercentage);
-router.put("/rewards-points-percentage", updateRewardsPointsPercentage);
+router.post("/insert", InsertSalesData);
+router.get("/rewards-points-percentage", GetRewardsPointsPercentage);
+router.put("/rewards-points-percentage", UpdateRewardsPointsPercentage);
 
 export default router;

@@ -1,143 +1,133 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
+import { product, product_variants, supplier } from "@prisma/client";
 
-type ProductRow = Record<string, unknown>;
+export const getProducts = async () => {
+  return await prisma.product.findMany({
+    include: {
+      category: true,
+      variants: true,
+    },
+    orderBy: {
+      product_id: "asc",
+    },
+  });
+};
 
-const getProducts = (): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    "select product.*, category.category_name from product inner join category on product.category_id = category.category_id order by product_id asc"
+export const getProduct = async (id: product["product_id"]) => {
+  return await prisma.product.findUnique({
+    where: { product_id: id },
+    include: {
+      variants: true,
+      category: true,
+      supplier: true,
+      inventory: true,
+    },
+  });
+};
+
+export const addProduct = async (
+  data: Omit<product, "product_id" | "product_image" | "removed" | "created_at" | "updated_on">
+) => {
+  return await prisma.product.create({
+    data,
+  });
+};
+
+export const addProductWithVariants = async (
+  data: Omit<product, "product_id" | "product_image" | "removed" | "created_at" | "updated_on">,
+  variants: Omit<product_variants, "variant_id" | "product_id">[]
+) => {
+  return await prisma.$transaction(async (tx) => {
+    const newProduct = await tx.product.create({
+      data,
+    });
+
+    if (variants.length === 0) {
+      return newProduct;
+    }
+
+    const newVariants = await Promise.all(
+      variants.map((variant) =>
+        tx.product_variants.create({
+          data: {
+            discount: variant.discount,
+            buying_price: variant.buying_price,
+            retail_price: variant.retail_price,
+            label: variant.label,
+            product_id: newProduct.product_id,
+          },
+        })
+      )
+    );
+
+    return { ...newProduct, variants: [...newVariants] };
+  });
+};
+
+export const deleteProduct = async (id: product["product_id"]) => {
+  return await prisma.product.update({
+    where: { product_id: id },
+    data: { removed: true },
+  });
+};
+
+export const updateProduct = async (
+  id: product["product_id"],
+  data: Omit<product, "product_id" | "removed" | "created_at" | "updated_on">
+) => {
+  return await prisma.product.update({
+    where: { product_id: id },
+    data,
+  });
+};
+
+export const addProductVariants = async (variants: Omit<product_variants, "variant_id">[]) => {
+  return prisma.$transaction(
+    variants.map((variant) =>
+      prisma.product_variants.create({
+        data: variant,
+      })
+    )
   );
 };
 
-const getProduct = (id: string): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>("select * from product where product_id = $1", [
-    id,
-  ]);
-};
-
-const addProduct = (
-  product_name: string,
-  product_desc: string,
-  category_id: number | string,
-  product_image: string[],
-  buying_price: number | string,
-  retail_price: number | string,
-  discount: number | string,
-  supplier_id: number | string,
-  product_barcode: string
-): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    `insert into product(
-     product_name, product_desc, category_id, product_image, buying_price, retail_price, discount, supplier_id, product_barcode)
-     values ($1 , $2, $3, $4, $5, $6, $7, $8, $9 ) returning *`,
-    [
-      product_name,
-      product_desc,
-      category_id,
-      product_image,
-      buying_price,
-      retail_price,
-      discount,
-      supplier_id,
-      product_barcode,
-    ]
+export const updateProductVariants = async (variants: product_variants[]) => {
+  return prisma.$transaction(
+    variants.map((variant) =>
+      prisma.product_variants.update({
+        where: { variant_id: variant.variant_id },
+        data: variant,
+      })
+    )
   );
 };
 
-const deleteProduct = (id: string): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    "update product set removed=true where product_id=$1",
-    [id]
-  );
+export const deleteProductVariant = async (variant_id: product_variants["product_id"]) => {
+  return prisma.product_variants.delete({
+    where: { variant_id },
+  });
 };
 
-const updateProduct = (
-  product_name: string,
-  product_desc: string,
-  category_id: number | string,
-  buying_price: number | string,
-  retail_price: number | string,
-  discount: number | string,
-  supplier_id: number | string,
-  product_barcode: string,
-  product_image: string[],
-  id: string
-): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    `update product
-    set product_name= $1 ,product_desc= $2, category_id= $3, 
-     buying_price= $4, retail_price= $5, discount= $6, supplier_id= $7, product_barcode = $8,product_image = Array[$9]
-    where product_id= $10 returning *`,
-    [
-      product_name,
-      product_desc,
-      category_id,
-      buying_price,
-      retail_price,
-      discount,
-      supplier_id,
-      product_barcode,
-      product_image,
-      id,
-    ]
-  );
+export const getProductWithCategory = async () => {
+  return await prisma.product.findMany({
+    include: {
+      category: true,
+    },
+  });
 };
 
-const updateProductDiscount = (
-  product_id: string,
-  discount: number | string
-): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    `update product
-  set discount= $1 where product_id= $2`,
-    [discount, product_id]
-  );
+export const getProductsBySupplierId = async (id: supplier["supplier_id"]) => {
+  return await prisma.product.findMany({
+    where: { supplier_id: id },
+    include: {
+      category: true,
+    },
+  });
 };
 
-const getProductWithCategory = (): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    `select product.* , category.category_name from product left join category on product.category_id = category.category_id`
-  );
+export const isBarcodeTaken = async (barcode: string): Promise<boolean> => {
+  const result = await prisma.product.findUnique({
+    where: { product_barcode: barcode },
+  });
+  return result !== null;
 };
-
-const getProductsBySupplierId = (
-  id: string
-): Promise<QueryResult<ProductRow>> => {
-  return pool.query<ProductRow>(
-    `select product.* , category.category_name from product left join category on product.category_id = category.category_id where supplier_id = $1`,
-    [id]
-  );
-};
-
-const isBarcodeTaken = async (barcode: string): Promise<boolean> => {
-  const result = await pool.query(
-    `SELECT 1 FROM product where product_barcode = $1 LIMIT 1`,
-    [barcode]
-  );
-  return (result.rowCount ?? 0) > 0;
-};
-
-const productModel = {
-  getProducts,
-  getProduct,
-  addProduct,
-  deleteProduct,
-  updateProduct,
-  updateProductDiscount,
-  getProductWithCategory,
-  getProductsBySupplierId,
-  isBarcodeTaken,
-};
-
-export {
-  getProducts,
-  getProduct,
-  addProduct,
-  deleteProduct,
-  updateProduct,
-  updateProductDiscount,
-  getProductWithCategory,
-  getProductsBySupplierId,
-  isBarcodeTaken,
-};
-export default productModel;

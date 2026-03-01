@@ -1,36 +1,21 @@
-import { Router, type RequestHandler } from "express";
-import inventoryController from "../controllers/inventory.controller";
-import categoryController from "../controllers/category.controller";
-
-type InventoryController = {
-  getInventory: RequestHandler;
-  getInventoryByBranchId: RequestHandler;
-  getInevntoryByProductId: RequestHandler;
-  updateInventory: RequestHandler;
-};
-
-type CategoryController = {
-  getCategories: RequestHandler;
-  addCategory: RequestHandler;
-};
-
-const {
-  getInventory,
-  getInventoryByBranchId,
-  getInevntoryByProductId,
-  updateInventory,
-} = inventoryController as InventoryController;
-
-const { getCategories, addCategory } =
-  categoryController as CategoryController;
+import { Router } from "express";
+import {
+  GetInventory,
+  GetInventoryByBranchId,
+  GetInventoryByProductId,
+  GetInventoryWithProduct,
+  UpdateInventory,
+} from "../controllers/inventory.controller";
+import { AddNewCategory, GetCategories } from "../controllers/category.controller";
 
 const router = Router();
 
-router.get("/", getInventory);
-router.get("/category", getCategories);
-router.post("/category", addCategory);
-router.get("/product/:id", getInevntoryByProductId);
-router.get("/branch/:id", getInventoryByBranchId);
-router.post("/", updateInventory);
+router.get("/", GetInventory);
+router.get("/category", GetCategories);
+router.post("/category", AddNewCategory);
+router.get("/product/:id", GetInventoryByProductId);
+router.get("/branch/:id", GetInventoryByBranchId);
+router.get("/withproduct", GetInventoryWithProduct);
+router.post("/", UpdateInventory);
 
 export default router;

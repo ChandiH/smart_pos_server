@@ -1,37 +1,30 @@
-import { Router, type RequestHandler } from "express";
-import productController from "../controllers/product.controller";
-
-type ProductController = {
-  getProducts: RequestHandler;
-  getProduct: RequestHandler;
-  addProduct: RequestHandler;
-  deleteProduct: RequestHandler;
-  updateProduct: RequestHandler;
-  getProductsWithCategory: RequestHandler;
-  getProductsBySupplierId: RequestHandler;
-  updateProductDiscount: RequestHandler;
-};
-
-const {
-  getProducts,
-  getProduct,
-  addProduct,
-  deleteProduct,
-  updateProduct,
-  getProductsWithCategory,
-  getProductsBySupplierId,
-  updateProductDiscount,
-} = productController as ProductController;
+import { Router } from "express";
+import {
+  AddProduct,
+  AddProductVariants,
+  AddProductWithVariants,
+  DeleteProduct,
+  DeleteProductVariants,
+  GetProduct,
+  GetProducts,
+  GetProductsBySupplierId,
+  GetProductsWithCategory,
+  UpdateProduct,
+  UpdateProductVariants,
+} from "../controllers/product.controller";
 
 const router = Router();
 
-router.get("/", getProducts);
-router.post("/", addProduct);
-router.get("/withcategory", getProductsWithCategory);
-router.get("/supplier/:id", getProductsBySupplierId);
-router.put("/discount/:id", updateProductDiscount);
-router.get("/:id", getProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.get("/", GetProducts);
+router.post("/", AddProduct);
+router.post("/withvariants", AddProductWithVariants);
+router.get("/withcategory", GetProductsWithCategory);
+router.get("/supplier/:id", GetProductsBySupplierId);
+router.post("/variants", AddProductVariants);
+router.put("/variants", UpdateProductVariants);
+router.delete("/variants/:id", DeleteProductVariants);
+router.get("/:id", GetProduct);
+router.put("/:id", UpdateProduct);
+router.delete("/:id", DeleteProduct);
 
 export default router;

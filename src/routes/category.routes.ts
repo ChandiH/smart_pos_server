@@ -1,21 +1,11 @@
-import { Router, type RequestHandler } from "express";
-import categoryController from "../controllers/category.controller";
-
-type CategoryController = {
-  getCategories: RequestHandler;
-  getCategory: RequestHandler;
-  addCategory: RequestHandler;
-  updateCategory: RequestHandler;
-};
+import { Router } from "express";
+import { AddNewCategory, GetCategories, GetCategoryByID, UpdateCategoryByID } from "../controllers/category.controller";
 
 const router = Router();
 
-const { getCategories, getCategory, addCategory, updateCategory } =
-  categoryController as CategoryController;
-
-router.get("/", getCategories);
-router.post("/", addCategory);
-router.get("/:id", getCategory);
-router.put("/:id", updateCategory);
+router.get("/", GetCategories);
+router.post("/", AddNewCategory);
+router.get("/:id", GetCategoryByID);
+router.put("/:id", UpdateCategoryByID);
 
 export default router;

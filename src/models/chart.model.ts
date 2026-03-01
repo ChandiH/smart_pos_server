@@ -1,111 +1,191 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
 
-type ChartRow = Record<string, unknown>;
-
-const getDailySalesForbranch = (
-  year_month: string,
-  branch_id: string
-): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    "SELECT day,total_sales FROM branch_monthly_sales($1,$2) order by day ",
-    [year_month, branch_id]
-  );
+export const fetchSalesByBranchAndRange = async (branch_id: string, start: Date, end: Date) => {
+  return await prisma.sales_history.findMany({
+    where: {
+      branch_id,
+      created_at: {
+        gte: start,
+        lt: end,
+      },
+    },
+    select: {
+      created_at: true,
+      total_amount: true,
+    },
+  });
 };
 
-const getSalesView = (id: string): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>("SELECT * FROM get_sales_data_by_branch($1)", [
-    id,
-  ]);
+export const fetchSalesViewByBranchAndRange = async (branch_id: string, start: Date, end: Date) => {
+  return await prisma.sales_history.findMany({
+    where: {
+      branch_id,
+      created_at: {
+        gte: start,
+        lt: end,
+      },
+    },
+    select: {
+      order_id: true,
+      created_at: true,
+      total_amount: true,
+      payment_method: true,
+      product_count: true,
+      customer: {
+        select: {
+          customer_name: true,
+        },
+      },
+      branch: {
+        select: {
+          branch_city: true,
+        },
+      },
+      employee: {
+        select: {
+          employee_name: true,
+        },
+      },
+    },
+    orderBy: {
+      created_at: "desc",
+    },
+  });
 };
 
-const getMonthlySummary = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    `select sum(profit) as gross_profit ,sum(total_amount) as net_sale, count(order_id)::Integer as total_orders
-    from sales_history
-    where to_char(created_at, 'YYYY-MM') = to_char(now()::date, 'YYYY-MM')
-	group by to_char(created_at, 'YYYY-MM')
-`
-  );
+export const fetchMonthlySummaryTotals = async (start: Date, end: Date) => {
+  return await prisma.sales_history.aggregate({
+    where: {
+      created_at: {
+        gte: start,
+        lt: end,
+      },
+    },
+    _sum: {
+      profit: true,
+      total_amount: true,
+    },
+    _count: {
+      order_id: true,
+    },
+  });
 };
 
-const getTopSellingBranch = (
-  target_month: string
-): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>("SELECT * FROM get_top_branch_sales($1)", [
-    target_month,
-  ]);
+export const fetchBranchSalesTotals = async (start: Date, end: Date, limit: number) => {
+  return await prisma.sales_history.groupBy({
+    by: ["branch_id"],
+    where: {
+      created_at: {
+        gte: start,
+        lt: end,
+      },
+    },
+    _sum: {
+      total_amount: true,
+    },
+    orderBy: {
+      _sum: {
+        total_amount: "desc",
+      },
+    },
+    take: limit,
+  });
 };
 
-const getMonths = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(`
-  SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '2 months', 'YYYY-MM') AS month_name
-UNION
-SELECT TO_CHAR(date_trunc('month', current_date) - INTERVAL '1 month', 'YYYY-MM')
-UNION
-SELECT TO_CHAR(date_trunc('month', current_date), 'YYYY-MM')
-order by month_name desc;
-`);
+export const fetchBranchSalesTotalsForIds = async (start: Date, end: Date, branchIds: string[]) => {
+  if (!branchIds.length) {
+    return [];
+  }
+
+  return await prisma.sales_history.groupBy({
+    by: ["branch_id"],
+    where: {
+      branch_id: {
+        in: branchIds,
+      },
+      created_at: {
+        gte: start,
+        lt: end,
+      },
+    },
+    _sum: {
+      total_amount: true,
+    },
+  });
 };
 
-const getTopSellingProduct = (): Promise<QueryResult<ChartRow>> => {
-  return pool.query<ChartRow>(
-    `WITH current_month_sales AS (
-      SELECT
-        p.product_name,
-        SUM(CASE WHEN DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE) THEN c.quantity ELSE 0 END) AS current_month_count
-      FROM
-        cart c
-        LEFT JOIN product p ON p.product_id = c.product_id
-      WHERE
-        DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE) 
-      GROUP BY
-        p.product_name
-      ORDER BY
-        current_month_count DESC
-      LIMIT 5
-      
-    ),
-    last_month_sales AS (
-      SELECT
-        p.product_name,
-        SUM(CASE WHEN DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') THEN c.quantity ELSE 0 END) AS last_month_count
-      FROM
-        cart c
-        LEFT JOIN product p ON p.product_id = c.product_id
-      WHERE
-        DATE_TRUNC('month', c.created_at) = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') -- Filter by last month
-      GROUP BY
-        p.product_name
-    )
-    SELECT
-      cm.product_name,
-      cm.current_month_count,
-      COALESCE(lm.last_month_count, 0) AS last_month_count
-    FROM
-      current_month_sales cm
-      LEFT JOIN last_month_sales lm ON cm.product_name = lm.product_name
-    ORDER BY
-      cm.current_month_count DESC;
-    `
-  );
+export const fetchBranchesByIds = async (branchIds: string[]) => {
+  if (!branchIds.length) {
+    return [];
+  }
+
+  return await prisma.branch.findMany({
+    where: {
+      branch_id: {
+        in: branchIds,
+      },
+    },
+    select: {
+      branch_id: true,
+      branch_city: true,
+    },
+  });
 };
 
-const chartModel = {
-  getDailySalesForbranch,
-  getMonthlySummary,
-  getSalesView,
-  getTopSellingBranch,
-  getMonths,
-  getTopSellingProduct,
+export const fetchCartTotalsByProductRange = async (start: Date, end: Date, productIds?: string[], limit?: number) => {
+  const where = {
+    ...(productIds?.length
+      ? {
+          product_id: {
+            in: productIds,
+          },
+        }
+      : {}),
+    created_at: {
+      gte: start,
+      lt: end,
+    },
+  };
+
+  if (limit) {
+    return await prisma.cart.groupBy({
+      by: ["product_id"],
+      where,
+      _sum: {
+        quantity: true,
+      },
+      orderBy: {
+        _sum: {
+          quantity: "desc",
+        },
+      },
+      take: limit,
+    });
+  }
+
+  return await prisma.cart.groupBy({
+    by: ["product_id"],
+    where,
+    _sum: {
+      quantity: true,
+    },
+  });
 };
 
-export {
-  getDailySalesForbranch,
-  getMonthlySummary,
-  getSalesView,
-  getTopSellingBranch,
-  getMonths,
-  getTopSellingProduct,
+export const fetchProductsByIds = async (productIds: string[]) => {
+  if (!productIds.length) {
+    return [];
+  }
+
+  return await prisma.product.findMany({
+    where: {
+      product_id: {
+        in: productIds,
+      },
+    },
+    select: {
+      product_id: true,
+      product_name: true,
+    },
+  });
 };
-export default chartModel;

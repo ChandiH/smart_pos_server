@@ -1,21 +1,11 @@
-import { Router, type RequestHandler } from "express";
-import branchController from "../controllers/branch.controller";
-
-type BranchController = {
-  getBranches: RequestHandler;
-  getBranch: RequestHandler;
-  addBranch: RequestHandler;
-  updateBranch: RequestHandler;
-};
-
-const { getBranches, getBranch, addBranch, updateBranch } =
-  branchController as BranchController;
+import { Router } from "express";
+import { AddBranch, GetBranchByID, GetBranches, UpdateBranchByID } from "../controllers/branch.controller";
 
 const router = Router();
 
-router.get("/", getBranches);
-router.get("/:id", getBranch);
-router.post("/", addBranch);
-router.put("/:id", updateBranch);
+router.get("/", GetBranches);
+router.get("/:id", GetBranchByID);
+router.post("/", AddBranch);
+router.put("/:id", UpdateBranchByID);
 
 export default router;

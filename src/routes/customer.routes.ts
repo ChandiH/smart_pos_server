@@ -1,21 +1,11 @@
-import { Router, type RequestHandler } from "express";
-import customerController from "../controllers/customer.controller";
-
-type CustomerController = {
-  getCustomers: RequestHandler;
-  getCustomer: RequestHandler;
-  addCustomer: RequestHandler;
-  updateCustomer: RequestHandler;
-};
-
-const { getCustomers, getCustomer, addCustomer, updateCustomer } =
-  customerController as CustomerController;
+import { Router } from "express";
+import { AddCustomer, GetCustomerByID, GetCustomers, UpdateCustomer } from "../controllers/customer.controller";
 
 const router = Router();
 
-router.get("/", getCustomers);
-router.get("/:id", getCustomer);
-router.post("/", addCustomer);
-router.put("/:id", updateCustomer);
+router.get("/", GetCustomers);
+router.get("/:id", GetCustomerByID);
+router.post("/", AddCustomer);
+router.put("/:id", UpdateCustomer);
 
 export default router;

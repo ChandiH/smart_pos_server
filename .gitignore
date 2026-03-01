@@ -7,10 +7,20 @@ coverage/
 *.tsbuildinfo
 
 # Environment files
-.env
+.env*
 
 # Uploaded assets
 public/image/
 
 # Misc
 .DS_Store
+
+/src/generated/prisma
+/src/prisma/*.mjs
+/src/prisma/*.js
+/src/prisma/*.d.ts
+/src/prisma/*.wasm
+/src/prisma/*.node
+/src/prisma/*.json
+/src/prisma/runtime/
+

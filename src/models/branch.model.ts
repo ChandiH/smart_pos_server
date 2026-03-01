@@ -1,51 +1,49 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
 
-type BranchRow = Record<string, unknown>;
-
-const getBranches = (): Promise<QueryResult<BranchRow>> => {
-  return pool.query<BranchRow>("select * from branch");
+export const getBranches = async () => {
+  return await prisma.branch.findMany();
 };
 
-const getBranch = (id: string): Promise<QueryResult<BranchRow>> => {
-  return pool.query<BranchRow>("select * from branch where branch_id = $1", [
-    id,
-  ]);
+export const getBranch = async (id: string) => {
+  return await prisma.branch.findUnique({
+    where: {
+      branch_id: id,
+    },
+  });
 };
 
-const addBranch = (
+export const addBranch = async (
   branch_city: string,
   branch_address: string,
   branch_phone: string,
   branch_email: string
-): Promise<QueryResult<BranchRow>> => {
-  return pool.query<BranchRow>(
-    `INSERT INTO branch(
-      branch_city, branch_address, branch_phone, branch_email)
-      VALUES ($1, $2, $3, $4) returning *`,
-    [branch_city, branch_address, branch_phone, branch_email]
-  );
+) => {
+  return await prisma.branch.create({
+    data: {
+      branch_city,
+      branch_address,
+      branch_phone,
+      branch_email,
+    },
+  });
 };
 
-const updateBranch = (
+export const updateBranch = async (
   id: string,
   branch_city: string,
   branch_address: string,
   branch_phone: string,
   branch_email: string
-): Promise<QueryResult<BranchRow>> => {
-  return pool.query<BranchRow>(
-    "update branch set branch_city=$1, branch_address=$2, branch_phone=$3, branch_email=$4 where branch_id=$5 returning *",
-    [branch_city, branch_address, branch_phone, branch_email, id]
-  );
+) => {
+  return await prisma.branch.update({
+    where: {
+      branch_id: id,
+    },
+    data: {
+      branch_city,
+      branch_address,
+      branch_phone,
+      branch_email,
+    },
+  });
 };
-
-const branchModel = {
-  getBranches,
-  getBranch,
-  addBranch,
-  updateBranch,
-};
-
-export { getBranches, getBranch, addBranch, updateBranch };
-export default branchModel;

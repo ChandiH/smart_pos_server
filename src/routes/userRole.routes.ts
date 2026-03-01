@@ -1,28 +1,18 @@
-import { Router, type RequestHandler } from "express";
-import userRoleController from "../controllers/userRole.controller";
-
-type UserRoleController = {
-  getUserRoles: RequestHandler;
-  addUserRole: RequestHandler;
-  getAccessList: RequestHandler;
-  deleteUserRole: RequestHandler;
-  updateUserAccess: RequestHandler;
-};
-
-const {
-  getUserRoles,
-  addUserRole,
-  getAccessList,
-  deleteUserRole,
-  updateUserAccess,
-} = userRoleController as UserRoleController;
+import { Router } from "express";
+import {
+  AddUserRole,
+  DeleteUserRole,
+  GetAccessList,
+  GetUserRoles,
+  UpdateUserAccess,
+} from "../controllers/userRole.controller";
 
 const router = Router();
 
-router.get("/", getUserRoles);
-router.post("/", addUserRole);
-router.post("/update", updateUserAccess);
-router.delete("/:id", deleteUserRole);
-router.get("/access", getAccessList);
+router.get("/", GetUserRoles);
+router.post("/", AddUserRole);
+router.post("/update", UpdateUserAccess);
+router.delete("/:id", DeleteUserRole);
+router.get("/access", GetAccessList);
 
 export default router;

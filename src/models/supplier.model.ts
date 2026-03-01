@@ -1,60 +1,46 @@
-import type { QueryResult } from "pg";
-import { pool } from "../config/config";
+import prisma from "../config/prisma";
+import { supplier } from "@prisma/client";
 
-type SupplierRow = Record<string, unknown>;
-
-const getSuppliers = (): Promise<QueryResult<SupplierRow>> => {
-  return pool.query<SupplierRow>(`SELECT * FROM supplier;`);
+export const getSuppliers = async () => {
+  return await prisma.supplier.findMany({
+    include: {
+      product: true,
+    },
+  });
 };
 
-const getSupplier = (id: string): Promise<QueryResult<SupplierRow>> => {
-  return pool.query<SupplierRow>(
-    `select *  from supplier where supplier_id=$1`,
-    [id]
-  );
+export const getSupplier = async (id: string) => {
+  return await prisma.supplier.findUnique({
+    where: { supplier_id: id },
+    include: {
+      product: true,
+    },
+  });
 };
 
-const addSupplier = (
-  name: string,
-  email: string,
-  phone: string,
-  address: string
-): Promise<QueryResult<SupplierRow>> => {
-  return pool.query<SupplierRow>(
-    "INSERT INTO supplier (supplier_name, supplier_email, supplier_phone, supplier_address) values ($1, $2, $3, $4) returning *",
-    [name, email, phone, address]
-  );
+export const addSupplier = async (data: Omit<supplier, "supplier_id">) => {
+  return await prisma.supplier.create({
+    data,
+  });
 };
 
-const isEmailTaken = async (email: string): Promise<number> => {
-  const result = await pool.query(
-    "SELECT 1 FROM supplier where supplier_email=$1 LIMIT 1",
-    [email]
-  );
-  return result.rowCount ?? 0;
+export const updateSupplier = async (id: supplier["supplier_id"], data: Partial<Omit<supplier, "supplier_id">>) => {
+  return await prisma.supplier.update({
+    where: { supplier_id: id },
+    data,
+  });
 };
 
-const isPhoneNumberExist = async (phone: string): Promise<number> => {
-  const result = await pool.query(
-    "SELECT 1 FROM supplier where supplier_phone=$1 LIMIT 1",
-    [phone]
-  );
-  return result.rowCount ?? 0;
+export const isEmailTaken = async (email: string): Promise<number> => {
+  const result = await prisma.supplier.count({
+    where: { supplier_email: email },
+  });
+  return result;
 };
 
-const supplierModel = {
-  getSuppliers,
-  getSupplier,
-  addSupplier,
-  isEmailTaken,
-  isPhoneNumberExist,
+export const isPhoneNumberExist = async (phone: string): Promise<number> => {
+  const result = await prisma.supplier.count({
+    where: { supplier_phone: phone },
+  });
+  return result;
 };
-
-export {
-  getSuppliers,
-  getSupplier,
-  addSupplier,
-  isEmailTaken,
-  isPhoneNumberExist,
-};
-export default supplierModel;

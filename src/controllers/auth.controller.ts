@@ -1,83 +1,62 @@
 import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
-import Auth from "../models/auth.model";
-import Employee from "../models/employee.model";
-
-type AuthLoginRow = {
-  employee_id?: number;
-};
-
-type EmployeeRow = {
-  employee_id: number;
-  employee_name: string;
-  branch_id: number;
-  branch_name: string;
-  role_id: number;
-  employee_image: string;
-  role_name: string;
-  user_access: unknown;
-  employee_email: string;
-  employee_phone: string;
-};
-
-type AuthModel = {
-  login: (username: string, password: string) => Promise<{ rows: AuthLoginRow[] }>;
-  register: (payload: RegisterPayload) => Promise<boolean>;
-  isUsernameTaken: (username: string) => Promise<boolean>;
-  checkPassword: (username: string, password: string) => Promise<boolean>;
-  resetPassword: (username: string, password: string) => Promise<boolean>;
-};
-
-type EmployeeModel = {
-  getUserEmployee: (id: number) => Promise<{ rows: EmployeeRow[] }>;
-};
-
-type RegisterPayload = {
-  employee_name: string;
-  employee_userName: string;
-  role_id: number;
-  employee_email: string;
-  employee_phone: string;
-  branch_id: number;
-  employee_image: string;
-};
-
-const authModel = Auth as AuthModel;
-const employeeModel = Employee as EmployeeModel;
+import jwt, { type SignOptions } from "jsonwebtoken";
+import { getUserCredentialsByUsername, isUsernameTaken, register, resetPassword } from "../models/auth.model";
+import { getEmployee } from "../models/employee.model";
+import { verifyPassword } from "../utils/hash";
+import { JWT_AUDIENCE, JWT_EXPIRES_IN, JWT_ISSUER, SECRET_KEY } from "../config/envs";
 
 interface LoginBody {
   username: string;
   password: string;
 }
 
-const login: RequestHandler<unknown, unknown, LoginBody> = async (req, res) => {
+interface RegisterBody {
+  employee_name: string;
+  employee_userName: string;
+  role_id: string;
+  employee_email: string;
+  employee_phone: string;
+  branch_id: string;
+}
+
+interface ResetPasswordBody {
+  username: string;
+  password: string;
+  newPassword: string;
+}
+
+export const Login: RequestHandler<unknown, unknown, LoginBody> = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const authResult = await authModel.login(username, password);
-    const employee_id = authResult.rows[0]?.employee_id;
-
-    if (!employee_id) {
-      return res
-        .status(400)
-        .json({ error: { username: "Invalid username/password." } });
+    const user_credentials = await getUserCredentialsByUsername(username);
+    if (!user_credentials) {
+      return res.status(400).json({ error: { username: "Invalid username." } });
     }
 
-    const employeeResult = await employeeModel.getUserEmployee(employee_id);
-    const employee = employeeResult.rows[0];
+    const isPasswordValid = await verifyPassword(password, user_credentials.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: { username: "Invalid password." } });
+    }
 
+    const employee = await getEmployee(user_credentials.user_id);
     if (!employee) {
-      return res
-        .status(400)
-        .json({ error: { username: "Invalid username/password." } });
+      return res.status(400).json({ error: { username: "Employee not found." } });
     }
 
-    const secret = process.env.SECRET_KEY;
-
-    if (!secret) {
+    if (!SECRET_KEY) {
       console.error("SECRET_KEY is not defined in the environment.");
       return res.status(500).json({ error: "Internal server error" });
     }
+
+    const scope = employee.user_role.user_role_access.map((access) => access.access_type.access_name);
+
+    const signOptions: SignOptions = {
+      algorithm: "HS256",
+      expiresIn: JWT_EXPIRES_IN as SignOptions["expiresIn"],
+      issuer: JWT_ISSUER,
+      audience: JWT_AUDIENCE,
+    };
 
     const token = jwt.sign(
       {
@@ -85,71 +64,41 @@ const login: RequestHandler<unknown, unknown, LoginBody> = async (req, res) => {
         employee_id: employee.employee_id,
         employee_name: employee.employee_name,
         branch_id: employee.branch_id,
-        branch_name: employee.branch_name,
+        branch_name: employee.branch.branch_city,
         role_id: employee.role_id,
         employee_image: employee.employee_image,
-        role_name: employee.role_name,
-        user_access: employee.user_access,
+        role_name: employee.user_role.role_name,
+        scope,
         employee_email: employee.employee_email,
         employee_phone: employee.employee_phone,
       },
-      secret,
-      {
-        algorithm: "HS256",
-      }
+      SECRET_KEY,
+      signOptions
     );
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, token_type: "Bearer", expires_in: JWT_EXPIRES_IN });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error });
   }
 };
 
-interface RegisterBody {
-  employee_name: string;
-  employee_userName: string;
-  role_id: number;
-  employee_email: string;
-  employee_phone: string;
-  branch_id: number;
-}
+export const RegisterUser: RequestHandler<unknown, unknown, RegisterBody> = async (req, res) => {
+  const { employee_name, employee_userName, role_id, employee_email, employee_phone, branch_id } = req.body;
 
-const registerUser: RequestHandler<unknown, unknown, RegisterBody> = async (
-  req,
-  res
-) => {
-  const {
-    employee_name,
-    employee_userName,
-    role_id,
-    employee_email,
-    employee_phone,
-    branch_id,
-  } = req.body;
-
-  if (
-    !employee_name ||
-    !role_id ||
-    !employee_email ||
-    !employee_phone ||
-    !branch_id ||
-    !employee_userName
-  ) {
-    return res
-      .status(400)
-      .json({ error: { role_id: "All fields are required" } });
+  if (!employee_name || !role_id || !employee_email || !employee_phone || !branch_id || !employee_userName) {
+    return res.status(400).json({ error: { role_id: "All fields are required" } });
   }
 
   try {
-    const isUsernameInUse = await authModel.isUsernameTaken(employee_userName);
+    const isUsernameInUse = await isUsernameTaken(employee_userName);
     if (isUsernameInUse) {
       return res.status(400).json({
         error: { employee_userName: "User name is already taken." },
       });
     }
 
-    const result = await authModel.register({
+    const result = await register({
       employee_name,
       employee_userName,
       role_id,
@@ -170,56 +119,40 @@ const registerUser: RequestHandler<unknown, unknown, RegisterBody> = async (
   }
 };
 
-interface ResetPasswordBody {
-  username: string;
-  password: string;
-  newPassword: string;
-}
-
-const resetPasswordHandler: RequestHandler<
-  unknown,
-  unknown,
-  ResetPasswordBody
-> = async (req, res) => {
+export const ResetPasswordHandler: RequestHandler<unknown, unknown, ResetPasswordBody> = async (req, res) => {
   const { username, password, newPassword } = req.body;
 
   try {
-    const isUsernameInUse = await authModel.isUsernameTaken(username);
+    const isUsernameInUse = await isUsernameTaken(username);
     if (!isUsernameInUse) {
-      return res
-        .status(400)
-        .json({ error: { username: "User name is not exist." } });
+      return res.status(400).json({ error: { username: "User name is not exist." } });
     }
 
-    const data = await authModel.login(username, password);
-    const employee_id = data.rows[0]?.employee_id;
-    if (!employee_id) {
-      return res
-        .status(400)
-        .json({ error: { username: "Invalid username/password." } });
+    const userCredentials = await getUserCredentialsByUsername(username);
+    if (!userCredentials) {
+      return res.status(400).json({ error: { username: "Invalid username." } });
+    }
+
+    const isCurrentPasswordValid = await verifyPassword(password, userCredentials.password);
+    if (!isCurrentPasswordValid) {
+      return res.status(400).json({ error: { password: "Invalid current password." } });
     }
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!passwordRegex.test(newPassword)) {
       return res.status(400).json({
         error: {
-          newPassword:
-            "Password must be at least 6 characters long and contain at least one letter and one number",
+          newPassword: "Password must be at least 6 characters long and contain at least one letter and one number",
         },
       });
     }
 
-    const isPasswordSame = await authModel.checkPassword(
-      username,
-      newPassword
-    );
+    const isPasswordSame = await verifyPassword(newPassword, userCredentials.password);
     if (isPasswordSame) {
-      return res
-        .status(400)
-        .json({ error: { newPassword: "Password same as previous." } });
+      return res.status(400).json({ error: { newPassword: "Password same as previous." } });
     }
 
-    const result = await authModel.resetPassword(username, newPassword);
+    const result = await resetPassword(userCredentials.user_id, newPassword);
 
     if (result) {
       return res.status(200).json({ message: "Reset password successful" });
@@ -230,10 +163,4 @@ const resetPasswordHandler: RequestHandler<
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
-};
-
-export default {
-  login,
-  register: registerUser,
-  resetPassword: resetPasswordHandler,
 };

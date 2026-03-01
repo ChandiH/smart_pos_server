@@ -1,19 +1,10 @@
-import { Router, type RequestHandler } from "express";
-import authController from "../controllers/auth.controller";
-
-type AuthController = {
-  login: RequestHandler;
-  register: RequestHandler;
-  resetPassword: RequestHandler;
-};
-
-const { login, register, resetPassword } =
-  authController as AuthController;
+import { Router } from "express";
+import { Login, RegisterUser, ResetPasswordHandler } from "../controllers/auth.controller";
 
 const router = Router();
 
-router.post("/login", login);
-router.post("/register", register);
-router.put("/resetPassword", resetPassword);
+router.post("/login", Login);
+router.post("/register", RegisterUser);
+router.put("/resetPassword", ResetPasswordHandler);
 
 export default router;

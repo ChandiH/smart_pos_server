@@ -1,63 +1,32 @@
 import type { RequestHandler } from "express";
-import Branch from "../models/branch.model";
+import { getBranches, getBranch, updateBranch, addBranch } from "../models/branch.model";
 
-type BranchModel = {
-  getBranches: () => Promise<{ rows: unknown[] }>;
-  getBranch: (id: string) => Promise<{ rows: unknown[] }>;
-  addBranch: (
-    branchCity: string,
-    branchAddress: string,
-    branchPhone: string,
-    branchEmail: string
-  ) => Promise<{ rows: unknown[] }>;
-  updateBranch: (
-    id: string,
-    branchCity: string,
-    branchAddress: string,
-    branchPhone: string,
-    branchEmail: string
-  ) => Promise<{ rows: unknown[] }>;
-};
-
-const branchModel = Branch as BranchModel;
-
-const getBranches: RequestHandler = (_req, res) => {
-  return branchModel
-    .getBranches()
-    .then((data) => res.status(200).json(data.rows))
+export const GetBranches: RequestHandler = async (_req, res) => {
+  return getBranches()
+    .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };
 
-const getBranch: RequestHandler = (req, res) => {
+export const GetBranchByID: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  return branchModel
-    .getBranch(id)
-    .then((data) => res.status(200).json(data.rows))
+  return getBranch(id)
+    .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };
 
-const addBranch: RequestHandler = (req, res) => {
+export const AddBranch: RequestHandler = async (req, res) => {
   const { branch_city, branch_address, branch_phone, branch_email } = req.body;
 
-  return branchModel
-    .addBranch(branch_city, branch_address, branch_phone, branch_email)
-    .then((data) => res.status(200).json(data.rows))
+  return addBranch(branch_city, branch_address, branch_phone, branch_email)
+    .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
 };
 
-const updateBranch: RequestHandler = (req, res) => {
+export const UpdateBranchByID: RequestHandler = async (req, res) => {
   const { id } = req.params;
   const { branch_city, branch_address, branch_phone, branch_email } = req.body;
 
-  return branchModel
-    .updateBranch(id, branch_city, branch_address, branch_phone, branch_email)
-    .then((data) => res.status(200).json(data.rows))
+  return updateBranch(id, branch_city, branch_address, branch_phone, branch_email)
+    .then((data) => res.status(200).json({ data }))
     .catch((err) => res.status(400).json({ error: err }));
-};
-
-export default {
-  getBranches,
-  getBranch,
-  addBranch,
-  updateBranch,
 };
