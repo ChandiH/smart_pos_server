@@ -8,8 +8,9 @@ export const getRewardsPointsPercentage = async () => {
 };
 
 export const updateRewardsPointsPercentage = async (rewardsPointsPercentage: number) => {
-  return await prisma.variable_options.update({
+  return await prisma.variable_options.upsert({
     where: { variable_name: "rewards_points_percentage" },
-    data: { variable_value: rewardsPointsPercentage },
+    update: { variable_value: rewardsPointsPercentage },
+    create: { variable_name: "rewards_points_percentage", variable_value: rewardsPointsPercentage },
   });
 };
