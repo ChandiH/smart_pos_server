@@ -125,31 +125,22 @@ export const ResetPasswordHandler: RequestHandler<unknown, unknown, ResetPasswor
   try {
     const isUsernameInUse = await isUsernameTaken(username);
     if (!isUsernameInUse) {
-      return res.status(400).json({ error: { username: "User name is not exist." } });
+      return res.status(400).json({ error: "User name is not exist."});
     }
 
     const userCredentials = await getUserCredentialsByUsername(username);
     if (!userCredentials) {
-      return res.status(400).json({ error: { username: "Invalid username." } });
+      return res.status(400).json({ error: "Invalid username."});
     }
 
     const isCurrentPasswordValid = await verifyPassword(password, userCredentials.password);
     if (!isCurrentPasswordValid) {
-      return res.status(400).json({ error: { password: "Invalid current password." } });
-    }
-
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if (!passwordRegex.test(newPassword)) {
-      return res.status(400).json({
-        error: {
-          newPassword: "Password must be at least 6 characters long and contain at least one letter and one number",
-        },
-      });
+      return res.status(400).json({ error: "Invalid current password." });
     }
 
     const isPasswordSame = await verifyPassword(newPassword, userCredentials.password);
     if (isPasswordSame) {
-      return res.status(400).json({ error: { newPassword: "Password same as previous." } });
+      return res.status(400).json({ error: "Password same as previous." });
     }
 
     const result = await resetPassword(userCredentials.user_id, newPassword);
